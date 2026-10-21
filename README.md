@@ -1,4 +1,6 @@
-# CLIPDenoising：RGB 校准与 A/C 续训实验
+# CLIPDenoising：结构损失与门控结构损失完整训练
+
+**本分支最新范围：** 新增C（原结构＋L1/结构损失）与G1C（原G1门控结构＋同一损失），各seed 0完整300000步，复用已有B0/G1 seed 0作历史对照。两卡并行，检查通过后自动训练、评测并生成四模型Table 1。正式进度以`runs/c_only/pipeline_state.json`及后续发布的结果为准；代码准备或检查通过不代表训练已完成。详见[本轮协议](docs/C_GatedC_Full300k_20261021.md)。下面A/C续训内容保留为先前工作记录。
 
 **Table 1 对应条件：** [查看前轮六个条件的实际 PSNR/SSIM 与截图参考值](results/ac_20261021/table1/README.md)。B0/G1 为前轮三个训练种子的完整训练结果。当前分支新增[严格配对重跑与完整历史基准协议](docs/AC_Table1_Recovery_20261021.md)，A/C 覆盖相同的四数据集、15 个噪声条件，并单列六项最高噪声强度结果。新一轮的完成状态与有效结果见 [A/C Table 1 执行记录](results/ac_table1_20261021/README.md)。
 
