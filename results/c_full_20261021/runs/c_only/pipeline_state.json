@@ -1,0 +1,309 @@
+{
+  "identity": {
+    "source_hash": "8f102b93c9db2bdf32a6bfa0e10afdfea83ee605dfdd748dd8bf9d864d07f219",
+    "config_sha256": "ec6d751a5d8e1b323165f5126528291d731d03cc9c0fc3426b0c8ad938376d4c"
+  },
+  "status": "failed",
+  "phase": "full300k",
+  "started_at": "2026-10-21T14:17:53Z",
+  "jobs": {
+    "unit_contracts": {
+      "command": [
+        "env",
+        "OMP_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "CUBLAS_WORKSPACE_CONFIG=:4096:8",
+        "/home/imss/cw/CLIPDenoising_C_20261021/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_structure_loss.py",
+        "tests/test_spatial_pfa.py",
+        "tests/test_c_only_contract.py",
+        "tests/test_c_only_evaluation.py"
+      ],
+      "kind": "cpu",
+      "status": "completed",
+      "exit_file": "/home/imss/cw/CLIPDenoising_C_20261021/runs/c_only/jobs/unit_contracts.exit.json",
+      "log": "/home/imss/cw/CLIPDenoising_C_20261021/reports/c_only/jobs/unit_contracts.log",
+      "gpu": null,
+      "started_at": "2026-10-21T14:17:53Z",
+      "process": {
+        "pid": 2617779,
+        "create_time": 1792592273.57,
+        "host": "imss"
+      },
+      "returncode": 0,
+      "ended_at": "2026-10-21T14:18:22Z"
+    },
+    "historical_inputs": {
+      "command": [
+        "env",
+        "OMP_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "CUBLAS_WORKSPACE_CONFIG=:4096:8",
+        "/home/imss/cw/CLIPDenoising_C_20261021/.venv/bin/python",
+        "tools/evaluate_c_only.py",
+        "--paths",
+        "configs/plan_c_only_server.yaml",
+        "--verify-inputs-only",
+        "--audit-output",
+        "/home/imss/cw/CLIPDenoising_C_20261021/reports/c_only/input_parity_audit.json"
+      ],
+      "kind": "cpu",
+      "status": "completed",
+      "exit_file": "/home/imss/cw/CLIPDenoising_C_20261021/runs/c_only/jobs/historical_inputs.exit.json",
+      "log": "/home/imss/cw/CLIPDenoising_C_20261021/reports/c_only/jobs/historical_inputs.log",
+      "gpu": null,
+      "started_at": "2026-10-21T14:17:56Z",
+      "process": {
+        "pid": 2617792,
+        "create_time": 1792592276.58,
+        "host": "imss"
+      },
+      "returncode": 0,
+      "ended_at": "2026-10-21T14:19:12Z"
+    },
+    "actual_C_contract": {
+      "command": [
+        "env",
+        "OMP_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "CUBLAS_WORKSPACE_CONFIG=:4096:8",
+        "/home/imss/cw/CLIPDenoising_C_20261021/.venv/bin/python",
+        "tools/check_c_full_contract.py",
+        "--variant",
+        "C",
+        "--paths",
+        "configs/plan_c_only_server.yaml",
+        "--report",
+        "/home/imss/cw/CLIPDenoising_C_20261021/reports/c_only/actual_C_contract.json",
+        "--legacy-root",
+        "/home/imss/cw/CLIPDenoising_20261020"
+      ],
+      "kind": "check",
+      "status": "completed",
+      "exit_file": "/home/imss/cw/CLIPDenoising_C_20261021/runs/c_only/jobs/actual_C_contract.exit.json",
+      "log": "/home/imss/cw/CLIPDenoising_C_20261021/reports/c_only/jobs/actual_C_contract.log",
+      "gpu": 0,
+      "started_at": "2026-10-21T14:18:03Z",
+      "process": {
+        "pid": 2617895,
+        "create_time": 1792592282.79,
+        "host": "imss"
+      },
+      "returncode": 0,
+      "ended_at": "2026-10-21T14:18:42Z"
+    },
+    "actual_G1C_contract": {
+      "command": [
+        "env",
+        "OMP_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "CUBLAS_WORKSPACE_CONFIG=:4096:8",
+        "/home/imss/cw/CLIPDenoising_C_20261021/.venv/bin/python",
+        "tools/check_c_full_contract.py",
+        "--variant",
+        "G1C",
+        "--paths",
+        "configs/plan_c_only_server.yaml",
+        "--report",
+        "/home/imss/cw/CLIPDenoising_C_20261021/reports/c_only/actual_G1C_contract.json",
+        "--legacy-root",
+        "/home/imss/cw/CLIPDenoising_20261020"
+      ],
+      "kind": "check",
+      "status": "completed",
+      "exit_file": "/home/imss/cw/CLIPDenoising_C_20261021/runs/c_only/jobs/actual_G1C_contract.exit.json",
+      "log": "/home/imss/cw/CLIPDenoising_C_20261021/reports/c_only/jobs/actual_G1C_contract.log",
+      "gpu": 1,
+      "started_at": "2026-10-21T14:18:09Z",
+      "process": {
+        "pid": 2618028,
+        "create_time": 1792592289.03,
+        "host": "imss"
+      },
+      "returncode": 0,
+      "ended_at": "2026-10-21T14:18:52Z"
+    },
+    "smoke_C": {
+      "command": [
+        "env",
+        "OMP_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "CUBLAS_WORKSPACE_CONFIG=:4096:8",
+        "/home/imss/cw/CLIPDenoising_C_20261021/.venv/bin/python",
+        "tools/run_c_only_experiment.py",
+        "--variant",
+        "C",
+        "--stage",
+        "full",
+        "--seed",
+        "0",
+        "--paths",
+        "configs/plan_c_only_server.yaml",
+        "--resume",
+        "--tag",
+        "smoke200",
+        "--stop-after",
+        "200"
+      ],
+      "kind": "train",
+      "status": "completed",
+      "exit_file": "/home/imss/cw/CLIPDenoising_C_20261021/runs/c_only/jobs/smoke_C.exit.json",
+      "log": "/home/imss/cw/CLIPDenoising_C_20261021/reports/c_only/jobs/smoke_C.log",
+      "run_dir": "/home/imss/cw/CLIPDenoising_C_20261021/runs/c_only/full/C/seed0/smoke200",
+      "gpu": 0,
+      "started_at": "2026-10-21T14:19:15Z",
+      "process": {
+        "pid": 2618732,
+        "create_time": 1792592355.38,
+        "host": "imss"
+      },
+      "update": 200,
+      "returncode": 0,
+      "ended_at": "2026-10-21T14:20:45Z"
+    },
+    "smoke_G1C": {
+      "command": [
+        "env",
+        "OMP_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "CUBLAS_WORKSPACE_CONFIG=:4096:8",
+        "/home/imss/cw/CLIPDenoising_C_20261021/.venv/bin/python",
+        "tools/run_c_only_experiment.py",
+        "--variant",
+        "G1C",
+        "--stage",
+        "full",
+        "--seed",
+        "0",
+        "--paths",
+        "configs/plan_c_only_server.yaml",
+        "--resume",
+        "--tag",
+        "smoke200",
+        "--stop-after",
+        "200"
+      ],
+      "kind": "train",
+      "status": "completed",
+      "exit_file": "/home/imss/cw/CLIPDenoising_C_20261021/runs/c_only/jobs/smoke_G1C.exit.json",
+      "log": "/home/imss/cw/CLIPDenoising_C_20261021/reports/c_only/jobs/smoke_G1C.log",
+      "run_dir": "/home/imss/cw/CLIPDenoising_C_20261021/runs/c_only/full/G1C/seed0/smoke200",
+      "gpu": 1,
+      "started_at": "2026-10-21T14:19:21Z",
+      "process": {
+        "pid": 2618782,
+        "create_time": 1792592361.64,
+        "host": "imss"
+      },
+      "update": 200,
+      "returncode": 0,
+      "ended_at": "2026-10-21T14:20:55Z"
+    },
+    "full_C": {
+      "command": [
+        "env",
+        "OMP_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "CUBLAS_WORKSPACE_CONFIG=:4096:8",
+        "/home/imss/cw/CLIPDenoising_C_20261021/.venv/bin/python",
+        "tools/run_c_only_experiment.py",
+        "--variant",
+        "C",
+        "--stage",
+        "full",
+        "--seed",
+        "0",
+        "--paths",
+        "configs/plan_c_only_server.yaml",
+        "--resume"
+      ],
+      "kind": "train",
+      "status": "failed",
+      "exit_file": "/home/imss/cw/CLIPDenoising_C_20261021/runs/c_only/jobs/full_C.exit.json",
+      "log": "/home/imss/cw/CLIPDenoising_C_20261021/reports/c_only/jobs/full_C.log",
+      "run_dir": "/home/imss/cw/CLIPDenoising_C_20261021/runs/c_only/full/C/seed0",
+      "gpu": 0,
+      "started_at": "2026-10-21T14:20:58Z",
+      "process": {
+        "pid": 2619329,
+        "create_time": 1792592458.08,
+        "host": "imss"
+      },
+      "update": 1029,
+      "returncode": -2,
+      "ended_at": "2026-10-21T14:27:58Z"
+    },
+    "full_G1C": {
+      "command": [
+        "env",
+        "OMP_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "CUBLAS_WORKSPACE_CONFIG=:4096:8",
+        "/home/imss/cw/CLIPDenoising_C_20261021/.venv/bin/python",
+        "tools/run_c_only_experiment.py",
+        "--variant",
+        "G1C",
+        "--stage",
+        "full",
+        "--seed",
+        "0",
+        "--paths",
+        "configs/plan_c_only_server.yaml",
+        "--resume"
+      ],
+      "kind": "train",
+      "status": "running",
+      "exit_file": "/home/imss/cw/CLIPDenoising_C_20261021/runs/c_only/jobs/full_G1C.exit.json",
+      "log": "/home/imss/cw/CLIPDenoising_C_20261021/reports/c_only/jobs/full_G1C.log",
+      "run_dir": "/home/imss/cw/CLIPDenoising_C_20261021/runs/c_only/full/G1C/seed0",
+      "gpu": 1,
+      "started_at": "2026-10-21T14:21:04Z",
+      "process": {
+        "pid": 2619383,
+        "create_time": 1792592464.34,
+        "host": "imss"
+      },
+      "update": 1000
+    }
+  },
+  "protocol": {
+    "variants": {
+      "C": "B0 architecture + structure loss",
+      "G1C": "G1 gated architecture + structure loss"
+    },
+    "seeds": [
+      0
+    ],
+    "updates_per_run": 300000,
+    "formal_optimizer_updates": 600000,
+    "batch": 16,
+    "fp32": true,
+    "initialization": "RN50 pretrained encoder; original seed0 decoder initialization",
+    "not_continuation": true,
+    "loss": "L1 + 0.05 * smoothed-gradient structure loss",
+    "baseline": "reuse archived B0/G1 full seed0; no additional baseline training",
+    "inference_rows": 6300,
+    "reused_baseline_rows": 6300,
+    "claim_boundary": "one training seed; no multi-seed robustness claim",
+    "known_runtime_issue": "prior CPU copy/read anomaly unresolved; single CPU thread and fail-closed repeated input checks"
+  },
+  "process": {
+    "pid": 2617774,
+    "create_time": 1792592272.55,
+    "host": "imss"
+  },
+  "updated_at": "2026-10-21T14:27:58Z",
+  "reason": "RuntimeError: Tasks failed/interrupted; preserve logs and resume after diagnosis: full_C",
+  "ended_at": "2026-10-21T14:27:58Z"
+}

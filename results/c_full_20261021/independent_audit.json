@@ -1,0 +1,77 @@
+{
+  "schema": "c_full_independent_publication_audit_v1",
+  "at": "2026-10-21T14:39:49Z",
+  "source_hash": "8f102b93c9db2bdf32a6bfa0e10afdfea83ee605dfdd748dd8bf9d864d07f219",
+  "scientific_commit": "e84673e3d834563b333bb482e196e0334e4f6e0a",
+  "config_sha256": "ec6d751a5d8e1b323165f5126528291d731d03cc9c0fc3426b0c8ad938376d4c",
+  "mode": "snapshot",
+  "publication_ready": false,
+  "pipeline_status": "failed",
+  "pipeline_phase": "full300k",
+  "scope": [
+    "G1C"
+  ],
+  "paused_variants": [
+    "C"
+  ],
+  "two_variant_pipeline_completed": false,
+  "files": [
+    {
+      "path": "reports/c_only/actual_C_contract.json",
+      "bytes": 72224,
+      "sha256": "57ca6aa77926d52179d6d1dd7df90006c476f83a70ecbcb58461b3e8ff906282"
+    },
+    {
+      "path": "reports/c_only/actual_G1C_contract.json",
+      "bytes": 72262,
+      "sha256": "8d0c251de4b888aa769e53c9fcf9b97a49423b552da5bab3b38f34daebabb1ec"
+    },
+    {
+      "path": "reports/c_only/input_parity_audit.json",
+      "bytes": 2141,
+      "sha256": "afbb9e732d36416998df2aa7d47f7869ebe0350ea67ec84e26db7ceffa0bdf8c"
+    },
+    {
+      "path": "reports/c_only/progress.md",
+      "bytes": 605,
+      "sha256": "2dc153fae30811d5afc8f17a9345939f4ae34b94ca22bee807f6171e931e0b58"
+    },
+    {
+      "path": "runs/c_only/full/C/seed0/effective_config.json",
+      "bytes": 6394,
+      "sha256": "a1921a5352d6eff37b5978399507f5fce9e4c2d1f5eec5f09d841f422fd01bdc"
+    },
+    {
+      "path": "runs/c_only/full/C/seed0/manifest.json",
+      "bytes": 22379,
+      "sha256": "140352080f0a86a4dee97ef293815f93d10981a18ac6f0849cc2b4da7b531da7"
+    },
+    {
+      "path": "runs/c_only/full/C/seed0/status.json",
+      "bytes": 1057,
+      "sha256": "3b21202a6932a40b99238ca55a53b17f8d40522a4038a53a6801e4ce97940fdd"
+    },
+    {
+      "path": "runs/c_only/full/G1C/seed0/effective_config.json",
+      "bytes": 6413,
+      "sha256": "b082237d4e0aa3359b00c47c4710ad44a25725a41c35472067246d30479fe4bb"
+    },
+    {
+      "path": "runs/c_only/full/G1C/seed0/manifest.json",
+      "bytes": 22385,
+      "sha256": "c902d523817dd927ce8e543194e912bebe4f6a421dedd045d97fcbe5420372df"
+    },
+    {
+      "path": "runs/c_only/full/G1C/seed0/status.json",
+      "bytes": 1101,
+      "sha256": "3472ccd64b87ea6d5cccda958689bec4b12fd6f66cf2512f3c1cb4b8cf816cf4"
+    },
+    {
+      "path": "runs/c_only/pipeline_state.json",
+      "bytes": 9948,
+      "sha256": "942159e07cf7b2493d5ba1106bbcddbba4e22aca967b953cd648c16d3323648b"
+    }
+  ],
+  "auditor_sha256": "e4b9011f44f0c24a182678613c9ed986efb67e4da8b5bced815f6f0d1a424b4c",
+  "auditor_source": "\nimport contextlib, csv, gc, hashlib, io, json, os, subprocess, sys, tempfile\nfrom pathlib import Path\nPINS = {'scientific_commit': 'e84673e3d834563b333bb482e196e0334e4f6e0a', 'source_hash': '8f102b93c9db2bdf32a6bfa0e10afdfea83ee605dfdd748dd8bf9d864d07f219', 'config_sha256': 'ec6d751a5d8e1b323165f5126528291d731d03cc9c0fc3426b0c8ad938376d4c'}\nROOT = Path('/home/imss/cw/CLIPDenoising_C_20261021')\nSNAPSHOT = True\nADAPTER = Path('/tmp/summarize_g1c_only_20261021_895d2cce516c076a.py')\nADAPTER_SHA256 = '895d2cce516c076a77f6a6718a2a140461b85506306b6e8bffacbdd9fb4458dc'\nos.chdir(ROOT)\nsys.path.insert(0, str(ROOT))\nwith contextlib.redirect_stdout(io.StringIO()):\n    from tools.experiment_common import load_paths, read_json, sha256_file, source_hash, digest, utc_now\n    if source_hash() != PINS['source_hash']:\n        raise RuntimeError('Remote scientific source changed')\n    head = subprocess.check_output(['git','rev-parse','HEAD'], cwd=ROOT, text=True).strip()\n    if head != PINS['scientific_commit']:\n        raise RuntimeError('Remote git HEAD differs from pinned scientific commit')\n    config_path = ROOT / 'configs/plan_c_only_server.yaml'\n    if sha256_file(config_path) != PINS['config_sha256']:\n        raise RuntimeError('Remote paths config differs from pin')\n    paths = load_paths(config_path)\n    if Path(paths['output_root']).resolve() != ROOT/'runs/c_only' or Path(paths['reports_dir']).resolve() != ROOT/'reports/c_only':\n        raise RuntimeError('Unexpected pipeline artifact directories')\n    state_path = ROOT/'runs/c_only/pipeline_state.json'\n    state = read_json(state_path)\n    if state['identity'] != {'source_hash':PINS['source_hash'],'config_sha256':PINS['config_sha256']}:\n        raise RuntimeError('Pipeline identity differs')\n    audit = {'schema':'c_full_independent_publication_audit_v1','at':utc_now(),\n             'source_hash':PINS['source_hash'],'scientific_commit':head,'config_sha256':PINS['config_sha256'],\n             'mode':'snapshot' if SNAPSHOT else 'complete','publication_ready':False,\n             'pipeline_status':state.get('status'),'pipeline_phase':state.get('phase'),\n             'scope':['G1C'],'paused_variants':['C'],'two_variant_pipeline_completed':False}\n    if not SNAPSHOT:\n        if sha256_file(ADAPTER)!=ADAPTER_SHA256:\n            raise RuntimeError('Private single-variant report adapter changed')\n        training_state=read_json(ROOT/'runs/c_only/full/G1C/seed0/status.json')\n        if training_state.get('status')!='completed' or training_state.get('update')!=300000:\n            raise RuntimeError('G1C training is not fully completed')\n        from tools.evaluate_c_only import validated_gate, load_historical, historical_baseline, verify_baseline_checkpoint\n        input_audit = read_json(ROOT/'reports/c_only/input_parity_audit.json')\n        if input_audit.get('accepted') is not True or input_audit.get('status')!='passed' or input_audit.get('source_hash')!=PINS['source_hash']:\n            raise RuntimeError('Historical input preflight was not accepted for the frozen source')\n        csv_path, reference, historical = load_historical(paths)\n        audits = {}\n        for variant,baseline in [('G1C','G1')]:\n            config, checkpoint_path, checkpoint, contract = validated_gate(paths,variant)\n            del checkpoint\n            gc.collect()\n            if config['git_commit'] != head:\n                raise RuntimeError('Training config executed commit differs')\n            old_rows, identity = historical_baseline(csv_path,baseline,reference)\n            old_proof = verify_baseline_checkpoint(paths,baseline,identity)\n            evaluation = read_json(ROOT/f'reports/c_only/evaluation/{variant}/seed0/summary.json')\n            if evaluation['contract'] != contract or evaluation['contract_hash'] != digest(contract):\n                raise RuntimeError('Evaluation contract does not match current validated training')\n            if evaluation['identity']['checkpoint_sha256'] != sha256_file(checkpoint_path):\n                raise RuntimeError('Evaluation checkpoint differs from validated final checkpoint')\n            preflight = read_json(ROOT/f'reports/c_only/actual_{variant}_contract.json')\n            if preflight.get('accepted') is not True or preflight.get('variant')!=variant or preflight.get('source_hash')!=PINS['source_hash']:\n                raise RuntimeError('Actual-model preflight was not accepted')\n            audits[variant] = {'verified_updates':300000,'training_proof_sha256':contract['proof_sha256'],\n                              'contract_hash':digest(contract),'checkpoint_sha256':sha256_file(checkpoint_path),\n                              'baseline_checkpoint_proof':old_proof}\n        official = ROOT/'reports/c_only/g1c_final'\n        original = read_json(official/'summary.json')\n        with tempfile.TemporaryDirectory(prefix='clip_c_full_independent_',dir='/tmp') as temporary:\n            command=[sys.executable,str(ADAPTER),'--project-root',str(ROOT),'--paths',str(config_path),\n                     '--input',str(ROOT/'reports/c_only/evaluation'),'--output',temporary]\n            recalculation=subprocess.run(command,capture_output=True,text=True,timeout=1200)\n            if recalculation.returncode:\n                raise RuntimeError('Private single-G1C independent recomputation failed: '+recalculation.stderr[-2000:])\n            recalculated=read_json(Path(temporary)/'summary.json')\n            if {k:v for k,v in recalculated.items() if k!='completed_at'} != {k:v for k,v in original.items() if k!='completed_at'}:\n                raise RuntimeError('Independently recomputed final summary differs')\n            for name, expected in recalculated['artifact_sha256'].items():\n                source = official/name\n                if not source.resolve().is_relative_to(official.resolve()) or sha256_file(source)!=expected:\n                    raise RuntimeError('Recomputed CSV/report/panel differs: '+name)\n        counts = {'rows':6300,'new_measurement_rows':3150,'reused_baseline_rows':3150,'paired_rows':3150,\n                  'full_condition_rows':120,'table1_rows':6,'table1_seedwise_rows':6,'fixed_panels':6}\n        if any(original.get(k)!=v for k,v in counts.items()) or original.get('completed') is not True:\n            raise RuntimeError('Final report row counts differ from preregistered scope')\n        actual_counts={}\n        with (official/'per_image_results.csv').open(newline='',encoding='utf-8') as stream:\n            for row in csv.DictReader(stream):\n                actual_counts[row['experiment']]=actual_counts.get(row['experiment'],0)+1\n        if actual_counts != {'G1':3150,'G1C':3150}:\n            raise RuntimeError('Actual final CSV lacks the 3150 new + 3150 reused rows')\n        audit.update(publication_ready=True,training=audits,counts=counts,actual_csv_counts=actual_counts,\n                     final_summary_sha256=sha256_file(official/'summary.json'),\n                     recalculated_artifact_sha256=original['artifact_sha256'],\n                     adapter_sha256=ADAPTER_SHA256,\n                     limitation='Single G1C only; C paused by user; old two-variant pipeline incomplete. Independent recomputation uses frozen aggregation plus the pinned private scope adapter; no new inference')\n    candidates = [ROOT/p for p in ['reports/c_only/actual_C_contract.json', 'reports/c_only/actual_G1C_contract.json', 'reports/c_only/input_parity_audit.json', 'reports/c_only/progress.md', 'runs/c_only/pipeline_state.json']]\n    for variant in ['C','G1C']:\n        candidates += [ROOT/f'runs/c_only/full/{variant}/seed0'/p for p in ('manifest.json', 'status.json', 'summary.json', 'training_checks.json', 'input_protection.json', 'effective_config.json', 'checkpoints/latest.json')]\n    if not SNAPSHOT:\n        for directory in [ROOT/'reports/c_only/g1c_final',ROOT/'reports/c_only/evaluation/G1C/seed0']:\n            for item in directory.rglob('*'):\n                if item.is_symlink():\n                    raise RuntimeError('Symlink in public report tree')\n                if item.is_file() and item.suffix.lower() in {'.json','.csv','.md','.png'}:\n                    candidates.append(item)\n    files=[]\n    for item in sorted(set(candidates)):\n        if not item.exists():\n            if SNAPSHOT or '/full/C/' in item.as_posix(): continue\n            raise RuntimeError('Required metadata missing: '+str(item))\n        if item.is_symlink() or not item.is_file() or not item.resolve().is_relative_to(ROOT):\n            raise RuntimeError('Export path is not a regular file inside the frozen root')\n        size=item.stat().st_size\n        if size>64*1024**2: raise RuntimeError('Public artifact is unexpectedly large')\n        files.append({'path':item.relative_to(ROOT).as_posix(),'bytes':size,'sha256':sha256_file(item)})\n    if sum(item['bytes'] for item in files)>1024**3:\n        raise RuntimeError('Public export exceeds its size limit')\n    if read_json(state_path)!=state or source_hash()!=PINS['source_hash']:\n        raise RuntimeError('Pipeline/source changed during audit')\n    audit['files']=files\nprint(json.dumps(audit,allow_nan=False))\n"
+}

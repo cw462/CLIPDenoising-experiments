@@ -1,0 +1,71 @@
+{
+  "schema": "g1c_cpu_readback_failure_diagnostic_v1",
+  "status": "failed_closed",
+  "scientific_commit": "e84673e3d834563b333bb482e196e0334e4f6e0a",
+  "source_hash": "8f102b93c9db2bdf32a6bfa0e10afdfea83ee605dfdd748dd8bf9d864d07f219",
+  "config_hash": "3ba33b76f1d2e6163564f784ab3e29d3ab78d3cdab671a2f07e21599a8ef88d2",
+  "completed_updates": 1634,
+  "failed_attempt_update": 1635,
+  "durable_checkpoint_update": 0,
+  "failed_at": "2026-10-21T14:32:05Z",
+  "stage": "feed_train_data",
+  "location": "tools/run_c_only_experiment.py:274, second feed/Mixup replay completed, raw-batch immutability check",
+  "tensor": {
+    "role": "raw/gt",
+    "device": "cpu",
+    "dtype": "torch.float32",
+    "shape": [
+      16,
+      3,
+      128,
+      128
+    ],
+    "stride": [
+      49152,
+      16384,
+      128,
+      1
+    ],
+    "storage_alias_with_failure_actual": true
+  },
+  "difference": {
+    "byte_count": 1,
+    "byte_offset": 2354463,
+    "first_byte": 61,
+    "second_byte": 63,
+    "byte_xor": "0x02",
+    "float32_bit_xor": "0x02000000",
+    "float_flat_index": 588615,
+    "index_nchw": [
+      11,
+      2,
+      118,
+      71
+    ],
+    "first_float": 0.04313725605607033,
+    "second_float": 0.6901960968971252
+  },
+  "hashes": {
+    "first_read_bytes": "f130f0e93f5e97310ab2400d55c645a93a516f5a62ff86c883ba9175235c224d",
+    "second_read_bytes": "0c7eac4d1ec217eaacbcf200cdf8d95ea0633e7f228585c072c44386fd1683d0",
+    "serialized_raw_gt": "f130f0e93f5e97310ab2400d55c645a93a516f5a62ff86c883ba9175235c224d",
+    "serialized_independent_raw_snapshot_gt": "f130f0e93f5e97310ab2400d55c645a93a516f5a62ff86c883ba9175235c224d",
+    "private_original_failure_payload": "9d1a6a892acafec5b89f61824b0bbcecb6a3c57fc81ee0b47ff0dc9a5dacf92c"
+  },
+  "interpretation": "The saved raw CPU target and independent snapshot match the first byte read. Only the second byte sequence has the one-bit discrepancy. This identifies the CPU read/copy evidence path, not a GPU-tensor discrepancy, and does not establish a hardware or software root cause.",
+  "limitations": [
+    "No claim that single CPU threading repaired the earlier anomaly.",
+    "This failed run is not a valid completed 300000-update result.",
+    "No input tolerance was relaxed and no failed step was automatically retried.",
+    "No evaluation or full-result publication was triggered. C remains paused by user instruction."
+  ],
+  "actions": {
+    "training_restarted": false,
+    "watcher_background_started": false,
+    "check_only_exit_code": 1,
+    "failure_payload_preserved_on_server": true,
+    "failure_payload_local_copy_sha256_verified": true,
+    "public_payload_contains_raw_tensors": false
+  },
+  "public_files_note": "Only failure metadata and this diagnosis are published. The 41,578,592-byte tensor evidence is retained privately."
+}

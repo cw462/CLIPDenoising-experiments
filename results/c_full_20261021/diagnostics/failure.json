@@ -1,0 +1,10 @@
+{
+  "reason": "Repeated actual tensor readback differs",
+  "update": 1635,
+  "timestamp": "2026-10-21T14:32:05Z",
+  "evidence": "/home/imss/cw/CLIPDenoising_C_20261021/runs/c_only/full/G1C/seed0/input_failure/update_001635_1792593125587312191.pth",
+  "sha256": "9d1a6a892acafec5b89f61824b0bbcecb6a3c57fc81ee0b47ff0dc9a5dacf92c",
+  "config_hash": "3ba33b76f1d2e6163564f784ab3e29d3ab78d3cdab671a2f07e21599a8ef88d2",
+  "source_hash": "8f102b93c9db2bdf32a6bfa0e10afdfea83ee605dfdd748dd8bf9d864d07f219",
+  "retry_allowed": false
+}

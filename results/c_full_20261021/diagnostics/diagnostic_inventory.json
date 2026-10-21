@@ -1,0 +1,33 @@
+{
+  "schema": "g1c_diagnostic_inventory_v1",
+  "training_completed": false,
+  "original_snapshot_inventory_unchanged": true,
+  "self_hash_excluded": true,
+  "files": [
+    {
+      "path": "cpu_fixed_buffer_sanity.json",
+      "bytes": 5637,
+      "sha256": "14a9ae97cc8534e5f9fcd2599c1f44fb086f35cdf09b5f8eae73b68a2c47a9c1"
+    },
+    {
+      "path": "ddp_equivalence_report.json",
+      "bytes": 6606,
+      "sha256": "9794d68df9bd08325ff711ffbe300c37d3b5ad1a9f613ea7bd95ec93ffe028f9"
+    },
+    {
+      "path": "ddp_speed_comparison.json",
+      "bytes": 6766,
+      "sha256": "0c69422ec4bff1921c92042ea597b7b97a6b3753b7454791d3f46415d4a18519"
+    },
+    {
+      "path": "diagnostic_summary.json",
+      "bytes": 2884,
+      "sha256": "e5cee8e5fe9467785aa1462c3cecd89f13905ca4feb311d431097428cb6b1747"
+    },
+    {
+      "path": "failure.json",
+      "bytes": 526,
+      "sha256": "e218d31c606c7e129d979e6182aa0b5367805481376b921c89983a2679358568"
+    }
+  ]
+}
