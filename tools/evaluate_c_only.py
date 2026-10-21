@@ -7,6 +7,7 @@ import hashlib
 import json
 import math
 from itertools import zip_longest
+from collections import Counter
 from pathlib import Path
 import sys
 
@@ -30,6 +31,9 @@ VARIANTS = {"C": "B0", "G1C": "G1"}
 HISTORICAL_SHA256 = "d3fead06b10e8b86363fe8f17484fccbce2a3a723b96cfeb49db75524c900635"
 HISTORICAL_SOURCE = "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef"
 UPDATES = 300000
+READBACK_RECOVERY_POLICY = "independent_stable_v1"
+RECOVERY_METADATA_FIELDS = ("readback_recovery_policy", "readback_recovery_events_total",
+                            "readback_recovery_initialization_events", "readback_recovery_sha256")
 PROTOCOL = {
     "version": "c-g1c-full300k-historical-v1", "historical": HISTORICAL_PROTOCOL,
     "evaluation_scope": "reused_four_dataset_full_historical_benchmark",
@@ -43,6 +47,7 @@ PROTOCOL = {
     "data_reuse": "All four datasets were evaluated previously; full CBSD68 includes previous 20 development images. Not an unseen holdout.",
     "preflight": "Raw test images and existing historical CSV may be read for input provenance before training; no new model outcomes accessed",
     "visuals": "First lexicographic image per each of six predefined Table1 cells; C/G1C reconstructions only, not historical baseline reconstructions",
+    "readback_recovery": "If enabled, independently stable observation-copy recoveries are counted and SHA-bound; all original per-update protection checks remain mandatory. Recovery does not establish a root cause or zero anomalies.",
 }
 
 
@@ -142,6 +147,151 @@ def verify_baseline_checkpoint(paths, baseline, identity):
     return {"checkpoint_sha256": identity["checkpoint_sha256"], "identity_verified": True}
 
 
+def _sha256(value):
+    return isinstance(value, str) and len(value) == 64 and all(c in "0123456789abcdef" for c in value)
+
+
+def recovery_policy(config):
+    value = config.get("execution_contract", {}).get("readback_recovery_policy", "strict")
+    if value not in ("strict", READBACK_RECOVERY_POLICY):
+        raise ValueError("Unsupported readback recovery policy")
+    if config.get("runtime", {}).get("readback_recovery_policy", value) != value:
+        raise ValueError("Runtime and execution readback recovery policy differ")
+    return value
+
+
+def recovery_metadata(document, policy, required=True):
+    if not required and not any(name in document for name in RECOVERY_METADATA_FIELDS):
+        return dict(zip(RECOVERY_METADATA_FIELDS, ("strict", 0, 0, None)))
+    if document.get("readback_recovery_policy") != policy:
+        raise ValueError("Readback recovery policy differs between proof documents")
+    for name in RECOVERY_METADATA_FIELDS[1:3]:
+        if type(document.get(name)) is not int or document[name] < 0:
+            raise ValueError("Readback recovery count must be a nonnegative integer")
+    total, initial = (document[name] for name in RECOVERY_METADATA_FIELDS[1:3])
+    if initial > total:
+        raise ValueError("Readback initialization count exceeds total events")
+    sha = document.get("readback_recovery_sha256")
+    if policy == "strict":
+        if total or initial or sha is not None:
+            raise ValueError("Strict readback proof cannot contain recovery events")
+    elif not _sha256(sha):
+        raise ValueError("Readback recovery log lacks a SHA256 binding")
+    return {name: document.get(name) for name in RECOVERY_METADATA_FIELDS}
+
+
+def validate_readback_recovery(path, config):
+    """Audit logged observation-copy recoveries; never waive an input check."""
+    path = Path(path)
+    policy = recovery_policy(config)
+    counts = Counter()
+    if policy == "strict":
+        if path.exists() and path.stat().st_size:
+            raise ValueError("Strict policy has unexpected readback recovery events")
+        log_sha = None
+    else:
+        if not path.is_file():
+            raise ValueError("Missing readback recovery event log")
+        previous_update = 0
+        event_count = 0
+        with path.open(encoding="utf-8") as stream:
+            for line in stream:
+                if not line.strip():
+                    raise ValueError("Blank readback event log record")
+                event = json.loads(line)
+                event_count += 1
+                if (event.get("schema"), event.get("policy"), event.get("status")) != (
+                        "independent_stable_readback_recovery_v1", policy, "recovered"):
+                    raise ValueError("Invalid or unresolved readback recovery event")
+                update = event.get("update")
+                if (type(event.get("event_index")) is not int or event["event_index"] != event_count
+                        or type(update) is not int or not 0 <= update <= UPDATES
+                        or (update > 0 and update < previous_update)):
+                    raise ValueError("Readback recovery event order/update coverage is invalid")
+                if update > 0:  # Resume construction may append separately counted update-zero events.
+                    previous_update = update
+                if any(event.get(field) != config[field] for field in ("config_hash", "source_hash")):
+                    raise ValueError("Readback recovery event source/config mismatch")
+                for field in ("phase", "timestamp", "device", "dtype"):
+                    if not isinstance(event.get(field), str) or not event[field]:
+                        raise ValueError(f"Missing readback event provenance: {field}")
+                shape, stride = event.get("shape"), event.get("stride")
+                if (not isinstance(shape, list) or not isinstance(stride, list) or len(shape) != len(stride)
+                        or any(type(value) is not int or value < 0 for value in shape + stride)):
+                    raise ValueError("Invalid readback tensor shape/stride")
+                first, second, stable = (event.get(field) for field in ("first_sha256", "second_sha256", "stable_sha256"))
+                if not all(_sha256(value) for value in (first, second, stable)) or first == second or stable not in (first, second):
+                    raise ValueError("Readback stable hash is not one of the two observed values")
+                if type(event.get("confirmation_rounds")) is not int or event["confirmation_rounds"] != 3:
+                    raise ValueError("Readback recovery requires three independent confirmation rounds")
+                for field in ("independent_reads_agree", "source_clone_exact", "source_unchanged"):
+                    if event.get(field) is not True:
+                        raise ValueError(f"Readback independent confirmation failed: {field}")
+                confirmations = event.get("confirmation_sha256")
+                if (not isinstance(confirmations, list) or len(confirmations) != 3
+                        or any(not isinstance(item, dict) or any(item.get(key) != stable for key in
+                               ("source_before", "clone", "source_after")) for item in confirmations)):
+                    raise ValueError("Independent readback confirmation SHA256 values differ")
+                different, details = event.get("different_byte_count"), event.get("first_differences")
+                if type(different) is not int or different <= 0 or not isinstance(details, list) or not 1 <= len(details) <= min(16, different):
+                    raise ValueError("Readback event has no valid original discrepancy")
+                offsets = []
+                for item in details:
+                    if (not isinstance(item, dict) or type(item.get("offset")) is not int or item["offset"] < 0
+                            or any(type(item.get(key)) is not int or not 0 <= item[key] <= 255 for key in ("first", "second"))
+                            or item["first"] == item["second"]):
+                        raise ValueError("Invalid original readback byte discrepancy")
+                    offsets.append(item["offset"])
+                if offsets != sorted(set(offsets)):
+                    raise ValueError("Duplicate/out-of-order readback difference offsets")
+                counts[update] += 1
+        log_sha = sha256_file(path)
+    total, initial = sum(counts.values()), counts.get(0, 0)
+    disclosure = {"policy": policy, "events_total": total, "initialization_events": initial,
+                  "training_events": total - initial, "affected_training_updates": len([x for x in counts if x > 0]),
+                  "affected_training_update_numbers": sorted(x for x in counts if x > 0),
+                  "log_sha256": log_sha, "all_logged_events_independently_confirmed": True,
+                  "root_cause_established": False,
+                  "interpretation": "Recovered observation-copy anomalies are disclosed; original dataset, Mixup and optimizer protections remain mandatory. Root cause remains unresolved."}
+    return disclosure, counts
+
+
+def validate_recovery_disclosure(contract):
+    """Validate the evaluated contract's count/SHA disclosure for report reuse."""
+    disclosure = contract.get("readback_recovery")
+    proof, checks = contract.get("input_protection", {}), contract.get("training_checks", {})
+    if disclosure is None:
+        if any(name in document for document in (proof, checks) for name in RECOVERY_METADATA_FIELDS):
+            raise ValueError("Training recovery metadata lacks an evaluation disclosure")
+        return {"policy": "strict", "events_total": 0, "initialization_events": 0,
+                "training_events": 0, "affected_training_updates": 0,
+                "affected_training_update_numbers": [], "log_sha256": None,
+                "all_logged_events_independently_confirmed": True, "root_cause_established": False}
+    policy = disclosure.get("policy")
+    if policy not in ("strict", READBACK_RECOVERY_POLICY):
+        raise ValueError("Unsupported disclosed readback recovery policy")
+    for key in ("events_total", "initialization_events", "training_events", "affected_training_updates"):
+        if type(disclosure.get(key)) is not int or disclosure[key] < 0:
+            raise ValueError("Invalid readback recovery disclosure count")
+    updates = disclosure.get("affected_training_update_numbers")
+    if (not isinstance(updates, list) or any(type(value) is not int or not 1 <= value <= UPDATES for value in updates)
+            or updates != sorted(set(updates)) or len(updates) != disclosure["affected_training_updates"]
+            or disclosure["events_total"] != disclosure["initialization_events"] + disclosure["training_events"]
+            or disclosure["training_events"] < len(updates)
+            or (bool(disclosure["training_events"]) != bool(updates))):
+        raise ValueError("Readback recovery event/update counts disagree")
+    if disclosure.get("all_logged_events_independently_confirmed") is not True or disclosure.get("root_cause_established") is not False:
+        raise ValueError("Recovery disclosure cannot omit confirmation or claim established root cause")
+    expected = dict(zip(RECOVERY_METADATA_FIELDS, (policy, disclosure["events_total"],
+                    disclosure["initialization_events"], disclosure.get("log_sha256"))))
+    for document in (proof, checks):
+        if recovery_metadata(document, policy, required=policy != "strict") != expected:
+            raise ValueError("Readback recovery disclosure differs from completed training proof")
+    if policy != "strict" and contract.get("proof_sha256", {}).get("readback_recovery.jsonl") != disclosure["log_sha256"]:
+        raise ValueError("Evaluated recovery log lacks a contract SHA256 binding")
+    return disclosure
+
+
 def validate_training_documents(config, status, manifest, checks, summary, latest, variant, expected_source, seed=0):
     """Pure validation shared by the filesystem gate and CPU rejection tests."""
     validate_seed(variant, seed)
@@ -201,9 +351,14 @@ def validate_training_documents(config, status, manifest, checks, summary, lates
         raise ValueError("Incomplete per-update protection proof")
     if manifest.get("initialization_contract") != initial or summary.get("training_checks") != checks:
         raise ValueError("Inconsistent initialization/training checks documents")
+    policy = recovery_policy(config)
+    required = "readback_recovery_policy" in config.get("execution_contract", {})
+    metadata = [recovery_metadata(document, policy, required) for document in (manifest, checks, summary)]
+    if any(value != metadata[0] for value in metadata[1:]):
+        raise ValueError("Completion documents disagree on readback recovery events/SHA256")
 
 
-def validate_input_protection(path, proof, config, training_log=None):
+def validate_input_protection(path, proof, config, training_log=None, recovery_path=None):
     if (proof.get("schema"), proof.get("status"), proof.get("update"), proof.get("verified_updates")) != (
             "c_only_input_protection_v1", "passed", UPDATES, UPDATES):
         raise ValueError("Incomplete input protection summary")
@@ -211,6 +366,13 @@ def validate_input_protection(path, proof, config, training_log=None):
         raise ValueError("Input protection source/config mismatch")
     if proof.get("proof_sha256") != sha256_file(path):
         raise ValueError("Input protection SHA256 mismatch")
+    policy = recovery_policy(config)
+    required = "readback_recovery_policy" in config.get("execution_contract", {})
+    recovery, recovery_counts = validate_readback_recovery(recovery_path or Path(path).with_name("readback_recovery.jsonl"), config)
+    expected = dict(zip(RECOVERY_METADATA_FIELDS, (policy, recovery["events_total"],
+                    recovery["initialization_events"], recovery["log_sha256"])))
+    if recovery_metadata(proof, policy, required) != expected:
+        raise ValueError("Input protection readback recovery count/SHA256 mismatch")
     count = 0
     def records(file):
         with file.open(encoding="utf-8") as stream:
@@ -224,6 +386,10 @@ def validate_input_protection(path, proof, config, training_log=None):
         count += 1
         if row.get("update") != count or row.get("dataset_replay_count") != 16:
             raise ValueError("Missing/duplicate input protection update or wrong batch count")
+        if required or "readback_recovery_policy" in row or "readback_recovery_events" in row:
+            if (row.get("readback_recovery_policy") != policy or type(row.get("readback_recovery_events")) is not int
+                    or row["readback_recovery_events"] != recovery_counts.get(count, 0)):
+                raise ValueError("Per-update readback recovery events differ from the event log")
         for field in ("dataset_replay_exact", "dataset_rng_exact", "feed_replay_exact", "raw_unchanged", "feed_rng_exact", "optimizer_inputs_unchanged", "snapshot_copies_exact"):
             if row.get(field) is not True:
                 raise ValueError(f"Input protection failed: {field}")
@@ -250,6 +416,12 @@ def validated_gate(paths, variant, seed=0):
     validate_training_documents(config, status, manifest, checks, summary, latest, variant, source_hash(), seed)
     protection = read_json(run / "input_protection.json")
     validate_input_protection(run / "input_protection.jsonl", protection, config, run / "train.jsonl")
+    recovery, _ = validate_readback_recovery(run / "readback_recovery.jsonl", config)
+    policy = recovery_policy(config)
+    required_recovery = "readback_recovery_policy" in config.get("execution_contract", {})
+    if any(recovery_metadata(document, policy, required_recovery) != recovery_metadata(protection, policy, required_recovery)
+           for document in (manifest, summary, checks)):
+        raise ValueError("Readback recovery proof is not bound to training completion")
     if any(document.get("input_protection_sha256") != protection["proof_sha256"] for document in (manifest, summary, checks)):
         raise ValueError("Input protection proof is not bound to training completion")
     for field, path_key in (("pretrained_sha256", "pretrained_rn50"), ("data_manifest_hash", "data_manifest")):
@@ -272,12 +444,21 @@ def validated_gate(paths, variant, seed=0):
     required = {"params", "optimizer", "scheduler", "rng", "sampler", "scaler", "ema", "pfa_rng"}
     if not required.issubset(checkpoint) or not checkpoint.get("complete_update_boundary") or checkpoint["pfa_rng"] is not None:
         raise ValueError("Incomplete final recovery checkpoint")
+    if required_recovery:
+        expected_recovery = {"policy": policy, "total": recovery["events_total"],
+                             "initialization_events": recovery["initialization_events"], "sha256": recovery["log_sha256"]}
+        if checkpoint.get("readback_recovery") != expected_recovery or checkpoint.get("input_protection_sha256") != protection["proof_sha256"]:
+            raise ValueError("Final checkpoint does not bind exact input/recovery proof logs")
     contract = {"variant": variant, "baseline": VARIANTS[variant], "source_hash": config["source_hash"],
                 "config_hash": config["config_hash"], "pretrained_sha256": config["pretrained_sha256"],
                 "data_manifest_hash": config["data_manifest_hash"], "training_updates": UPDATES,
                 "training_seed": seed, "training_checks": checks, "input_protection": protection,
+                "readback_recovery": recovery,
                 "pixel_opt": config["train"]["pixel_opt"], "full_training": config["full_training"],
                 "proof_sha256": {name: sha256_file(run / name) for name in (*names, "train.jsonl", "input_protection.json", "input_protection.jsonl")}}
+    if policy != "strict":
+        contract["proof_sha256"]["readback_recovery.jsonl"] = recovery["log_sha256"]
+    validate_recovery_disclosure(contract)
     return config, checkpoint_path, checkpoint, contract
 
 

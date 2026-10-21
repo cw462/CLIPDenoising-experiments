@@ -1,0 +1,30 @@
+{
+  "local_tests": {
+    "passed": 73,
+    "groups": {
+      "training_and_recovery": 32,
+      "evaluation": 30,
+      "scheduler": 11
+    }
+  },
+  "server_tests": {
+    "passed": 71,
+    "failed": 2,
+    "failed_tests": [
+      "test_full_scheduler_four_updates_equal_two_save_restore_two[G1C-2]",
+      "test_protection_preserves_ordinary_training_state_and_rng[2]"
+    ],
+    "loss_difference": 3.5762786865234375e-07,
+    "parameter_max_abs_difference": 1.6391277313232422e-07,
+    "interpretation": "Strict CPU equality tests differ at small floating-point scale. Checkpoint pair uses strict policy and identical RNG/sampler/input proofs; difference precedes resume. The separate loss-only failure has no saved state. Failures are retained, not relabelled as passed."
+  },
+  "actual_gpu_concurrency": {
+    "passed": true,
+    "same_seed_input_hashes_exact": true,
+    "recovery_events": 0,
+    "speedup": 1.572362283708393
+  },
+  "formal_launch_gates": "Actual RN50 GPU initialization/PFA/resume contract for all seeds and complete 200-step smokes must pass; then the existing queue starts 300k automatically.",
+  "readback_policy": "independent_stable_v1",
+  "root_cause_established": false
+}

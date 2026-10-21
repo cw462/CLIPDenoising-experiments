@@ -8,6 +8,9 @@ from __future__ import annotations
 
 import argparse
 import copy
+import contextlib
+import contextvars
+import ctypes
 import hashlib
 import json
 import logging
@@ -38,6 +41,8 @@ VARIANTS = {"C": "B0", "G1C": "G1"}
 SCHEMA = "c_only_input_protection_v1"
 PROOF_FLAGS = ("dataset_replay_exact", "dataset_rng_exact", "feed_replay_exact", "raw_unchanged",
                "feed_rng_exact", "optimizer_inputs_unchanged", "snapshot_copies_exact")
+RECOVERY_POLICY = "independent_stable_v1"
+_READBACK_CONTEXT = contextvars.ContextVar("input_readback_protection", default=None)
 
 
 def configure_execution(cuda):
@@ -73,6 +78,10 @@ def configuration(variant, stage, seed, paths, tag=None):
     opt.update(exp=variant, experiment=variant, name=f"full_{variant}_seed{seed}")
     opt["network_g"].update(pfa_rho=0.0, pfa_seed=None)
     opt["runtime"]["cpu_threads"] = int(paths.get("cpu_threads", 1))
+    policy = paths.get("readback_recovery", "strict")
+    if policy not in ("strict", RECOVERY_POLICY):
+        raise ValueError("Unsupported readback recovery policy")
+    opt["runtime"]["readback_recovery_policy"] = policy
     opt["path"].update(pretrain_network_g=None, experiments_root=str(directory),
                        models=str(directory / "checkpoints"), training_states=str(directory / "checkpoints"),
                        log=str(directory), visualization=str(directory / "visuals"))
@@ -95,6 +104,8 @@ def configuration(variant, stage, seed, paths, tag=None):
     }
     opt["execution_contract"] = {
         "schema": SCHEMA, "dataset": "two independent calls under identical RNG; exact bytes",
+        "readback_recovery_policy": policy,
+        "readback_recovery_scope": "Only mismatched observation bytes; three independent source/clone confirmations; no training retry",
         "feed": "two calls on the same raw batch under identical RNG; exact bytes and RNG",
         "snapshot": "source before/after and independent clone/readback bytes must agree",
         "optimizer": "actual input/target unchanged; legacy global PFA RNG consumption allowed",
@@ -130,9 +141,31 @@ def tensor_bytes(value):
     """Two actual reads, including separate CUDA-to-CPU transfers on CUDA."""
     first, second = _bytes_once(value), _bytes_once(value)
     if first != second:
+        context = _READBACK_CONTEXT.get()
+        if context is not None and context.policy == RECOVERY_POLICY:
+            return context.recover_transient_readback(value, first, second)
         raise InputProtectionError("Repeated actual tensor readback differs",
                                    {"actual": value, "first_bytes": first, "second_bytes": second})
     return first
+
+
+def _independent_bytes(value):
+    """Bypass NumPy conversion; CUDA uses a fresh synchronous CPU transfer."""
+    cpu = value.detach().to(device="cpu", copy=True).contiguous()
+    return ctypes.string_at(cpu.data_ptr(), cpu.numel() * cpu.element_size())
+
+
+def _source_bytes(value):
+    if value.device.type == "cpu" and value.is_contiguous():
+        return ctypes.string_at(value.data_ptr(), value.numel() * value.element_size())
+    return _independent_bytes(value)
+
+
+def _integer_equal(first, second):
+    if first.dtype != second.dtype or first.shape != second.shape or first.device != second.device:
+        return False
+    return bool(torch.equal(first.detach().contiguous().reshape(-1).view(torch.uint8),
+                            second.detach().contiguous().reshape(-1).view(torch.uint8)))
 
 
 def tensor_hash(value):
@@ -191,6 +224,84 @@ class Protection:
         self.update = 0
         self.items, self.feed, self.optimized = [], None, False
         self.sampler_state = None
+        self.policy = opt.get("runtime", {}).get("readback_recovery_policy", "strict")
+        if self.policy not in ("strict", RECOVERY_POLICY):
+            raise ValueError("Unsupported readback recovery policy")
+        self.phase = "initialization"
+        self.recovery_path = self.directory / "readback_recovery.jsonl"
+        if self.policy == RECOVERY_POLICY:
+            self.directory.mkdir(parents=True, exist_ok=True)
+            with self.recovery_path.open("a", encoding="utf-8", newline="\n") as stream:
+                stream.flush(); os.fsync(stream.fileno())
+        rows = read_recovery_rows(self.recovery_path) if self.recovery_path.exists() else []
+        self.recovery_total = len(rows)
+        self.recovery_initialization = sum(row["update"] == 0 for row in rows)
+        self.recovery_update_start = self.recovery_total
+
+    @contextlib.contextmanager
+    def scope(self, phase):
+        previous = self.phase
+        self.phase = phase
+        token = _READBACK_CONTEXT.set(self)
+        try:
+            yield
+        finally:
+            _READBACK_CONTEXT.reset(token)
+            self.phase = previous
+
+    def recover_transient_readback(self, value, first, second):
+        """Recover only observation bytes, never mutate/retry training operations."""
+        evidence = {"actual": value, "first_bytes": first, "second_bytes": second}
+        nbytes = value.numel() * value.element_size()
+        if len(first) != nbytes or len(second) != nbytes:
+            raise InputProtectionError("Readback recovery requires complete observations", evidence)
+        stable, confirmations = None, []
+        for _ in range(3):
+            if value.is_cuda:
+                torch.cuda.synchronize(value.device)
+            before = _source_bytes(value)
+            clone = value.detach().clone(memory_format=torch.preserve_format)
+            equal_before = _integer_equal(value, clone)
+            cloned = _independent_bytes(clone)
+            after = _source_bytes(value)
+            equal_after = _integer_equal(value, clone)
+            if not equal_before or not equal_after or before != cloned or before != after:
+                evidence["confirmation_sha256"] = confirmations
+                raise InputProtectionError("Independent readback source/clone confirmation differs", evidence)
+            if stable is None:
+                stable = before
+            if before != stable:
+                raise InputProtectionError("Independent readback confirmations are not stable", evidence)
+            confirmations.append({key: hashlib.sha256(data).hexdigest()
+                                  for key, data in (("source_before", before), ("clone", cloned), ("source_after", after))})
+        if stable not in (first, second):
+            evidence["confirmation_sha256"] = confirmations
+            raise InputProtectionError("Independent readback consensus is a third value", evidence)
+        changed = [index for index, (a, b) in enumerate(zip(first, second)) if a != b]
+        event = {"schema": "independent_stable_readback_recovery_v1", "policy": self.policy,
+            "status": "recovered", "event_index": self.recovery_total + 1, "update": self.update,
+            "phase": self.phase, "timestamp": utc_now(), "source_hash": self.opt["source_hash"],
+            "config_hash": self.opt["config_hash"], "device": str(value.device), "dtype": str(value.dtype),
+            "shape": list(value.shape), "stride": list(value.stride()), "byte_count": nbytes,
+            "first_sha256": hashlib.sha256(first).hexdigest(), "second_sha256": hashlib.sha256(second).hexdigest(),
+            "stable_sha256": hashlib.sha256(stable).hexdigest(), "different_byte_count": len(changed),
+            "first_differences": [{"offset": i, "first": first[i], "second": second[i]} for i in changed[:16]],
+            "confirmation_rounds": 3, "confirmation_sha256": confirmations,
+            "independent_reads_agree": True, "source_clone_exact": True, "source_unchanged": True,
+            "interpretation": "Observation recovered by bounded confirmation; root cause and historical unobserved values are not established"}
+        # A failed write is fatal. Never continue without a durable anomaly record.
+        with self.recovery_path.open("a", encoding="utf-8", newline="\n") as stream:
+            stream.write(json.dumps(event, allow_nan=False) + "\n")
+            stream.flush(); os.fsync(stream.fileno())
+        self.recovery_total += 1
+        self.recovery_initialization += int(self.update == 0)
+        return stable
+
+    def recovery_metadata(self):
+        return {"readback_recovery_policy": self.policy,
+                "readback_recovery_events_total": self.recovery_total,
+                "readback_recovery_initialization_events": self.recovery_initialization,
+                "readback_recovery_sha256": sha256_file(self.recovery_path) if self.policy == RECOVERY_POLICY else None}
 
     def fail(self, reason, evidence=None):
         failure = self.directory / "input_failure"
@@ -213,12 +324,15 @@ class Protection:
         self.update = update
         self.items, self.feed, self.optimized = [], None, False
         self.sampler_state = copy.deepcopy(sampler.state_dict()) if sampler is not None else None
+        self.recovery_update_start = self.recovery_total
 
     def finish_update(self):
         if len(self.items) != 16 or self.feed is None or not self.optimized:
             self.fail("Incomplete input protection coverage", {"items": len(self.items),
                         "feed": self.feed, "optimized": self.optimized})
         return {"update": self.update, "dataset_replay_count": len(self.items),
+                "readback_recovery_policy": self.policy,
+                "readback_recovery_events": self.recovery_total - self.recovery_update_start,
                 "dataset_sha256": digest(self.items), **{flag: True for flag in PROOF_FLAGS},
                 **self.feed}
 
@@ -231,6 +345,10 @@ class ProtectedDataset:
         return len(self.dataset)
 
     def __getitem__(self, index):
+        with self.protection.scope("dataset"):
+            return self._getitem(index)
+
+    def _getitem(self, index):
         guard = self.protection
         evidence = {"index": index, "rng_before": rng_state()}
         try:
@@ -258,7 +376,7 @@ def protect_model(model, protection):
     """Wrap only this model instance; retain the original training implementations."""
     original_feed, original_optimize = model.feed_train_data, model.optimize_parameters
 
-    def feed(data):
+    def feed_impl(data):
         evidence = {"raw": data, "rng_before": rng_state()}
         try:
             raw_snapshot = checked_clone(data)
@@ -288,7 +406,7 @@ def protect_model(model, protection):
             evidence["comparison_failure"] = error.evidence
             protection.fail(str(error), evidence)
 
-    def optimize(update):
+    def optimize_impl(update):
         evidence = {"actual_before": {"lq": model.lq, "gt": model.gt}, "rng_before": rng_state()}
         try:
             before = checked_clone(evidence["actual_before"])
@@ -309,12 +427,22 @@ def protect_model(model, protection):
             evidence["comparison_failure"] = error.evidence
             protection.fail(str(error), evidence)
 
+    def feed(data):
+        with protection.scope("feed_train_data"):
+            return feed_impl(data)
+
+    def optimize(update):
+        with protection.scope("optimize_parameters"):
+            return optimize_impl(update)
+
     model.feed_train_data, model.optimize_parameters = feed, optimize
+    model._readback_protection = protection
     return model
 
 
 def build_protected_model(opt, protection):
-    return protect_model(legacy.build_model(opt), protection)
+    with protection.scope("model_initialization"):
+        return protect_model(legacy.build_model(opt), protection)
 
 
 def build_protected_dataset(opt, paths, protection):
@@ -328,6 +456,12 @@ def guarded_train_update(model, dataset, sampler, current, protection):
 
 
 def initialization_contract(model, opt):
+    protection = getattr(model, "_readback_protection", None)
+    with protection.scope("initialization_contract") if protection is not None else contextlib.nullcontext():
+        return _initialization_contract(model, opt)
+
+
+def _initialization_contract(model, opt):
     if opt["path"].get("pretrain_network_g") is not None:
         raise RuntimeError("Full training cannot load C0 or another restoration checkpoint")
     if not isinstance(model.optimizer_g, torch.optim.AdamW) or model.optimizer_g.state:
@@ -351,12 +485,59 @@ def initialization_contract(model, opt):
 
 
 def validate_proof_row(row):
-    return (row.get("dataset_replay_count") == 16 and all(row.get(flag) is True for flag in PROOF_FLAGS)
+    count = row.get("readback_recovery_events", 0)
+    policy = row.get("readback_recovery_policy", "strict")
+    return (type(count) is int and count >= 0 and policy in ("strict", RECOVERY_POLICY)
+            and (policy != "strict" or count == 0)
+            and row.get("dataset_replay_count") == 16 and all(row.get(flag) is True for flag in PROOF_FLAGS)
             and row.get("input_sha256") == row.get("post_input_sha256")
             and row.get("target_sha256") == row.get("post_target_sha256"))
 
 
-def _restore_logs(directory, update):
+def read_recovery_rows(path):
+    rows = []
+    if not Path(path).exists():
+        return rows
+    for line in Path(path).read_text(encoding="utf-8").splitlines():
+        row = json.loads(line)
+        if (row.get("event_index") != len(rows) + 1 or type(row.get("update")) is not int
+                or row["update"] < 0 or row.get("status") != "recovered"
+                or row.get("schema") != "independent_stable_readback_recovery_v1"
+                or row.get("policy") != RECOVERY_POLICY
+                or row.get("confirmation_rounds") != 3
+                or row.get("stable_sha256") not in (row.get("first_sha256"), row.get("second_sha256"))
+                or row.get("first_sha256") == row.get("second_sha256")
+                or not all(row.get(key) is True for key in ("independent_reads_agree", "source_clone_exact", "source_unchanged"))):
+            raise RuntimeError("Readback recovery event is invalid")
+        confirmations = row.get("confirmation_sha256")
+        if (not isinstance(confirmations, list) or len(confirmations) != 3
+                or any(item != {key: row["stable_sha256"] for key in ("source_before", "clone", "source_after")}
+                       for item in confirmations)):
+            raise RuntimeError("Readback independent confirmations are incomplete")
+        rows.append(row)
+    return rows
+
+
+def _checkpoint_recovery(metadata):
+    return {"policy": metadata["readback_recovery_policy"], "total": metadata["readback_recovery_events_total"],
+            "initialization_events": metadata["readback_recovery_initialization_events"],
+            "sha256": metadata["readback_recovery_sha256"]}
+
+
+def save_guarded_checkpoint(model, sampler, opt, update, elapsed, directory, protection):
+    original = legacy.checkpoint_payload
+    metadata = _checkpoint_recovery(protection.recovery_metadata())
+    proof_sha = sha256_file(directory / "input_protection.jsonl")
+    def payload(*args, **kwargs):
+        return dict(original(*args, **kwargs), readback_recovery=metadata, input_protection_sha256=proof_sha)
+    legacy.checkpoint_payload = payload
+    try:
+        return legacy.save_checkpoint(model, sampler, opt, update, elapsed, directory)
+    finally:
+        legacy.checkpoint_payload = original
+
+
+def _restore_logs(directory, update, policy="strict", checkpoint=None):
     for name in ("train.jsonl", "input_protection.jsonl"):
         path = directory / name
         rows = durable_log_rows(path, update)
@@ -370,6 +551,43 @@ def _restore_logs(directory, update):
             archived.mkdir(exist_ok=True)
             (archived / f"{time.time_ns()}_{name}").write_text(original, encoding="utf-8")
         path.write_text(wanted, encoding="utf-8")
+    if checkpoint is not None and checkpoint.get("input_protection_sha256") is not None:
+        if sha256_file(directory / "input_protection.jsonl") != checkpoint["input_protection_sha256"]:
+            raise RuntimeError("Checkpoint input protection proof SHA differs")
+    path = directory / "readback_recovery.jsonl"
+    metadata = checkpoint.get("readback_recovery") if checkpoint is not None else None
+    if policy == "strict":
+        if path.exists():
+            raise RuntimeError("Strict policy cannot contain recovered observation events")
+        return
+    if checkpoint is not None and (not isinstance(metadata, dict) or metadata.get("policy") != policy):
+        raise RuntimeError("Checkpoint lacks readback recovery binding")
+    wanted_count = metadata["total"] if metadata is not None else 0
+    if type(wanted_count) is not int or wanted_count < 0:
+        raise RuntimeError("Invalid checkpoint readback event count")
+    original = path.read_text(encoding="utf-8") if path.exists() else ""
+    lines = original.splitlines(keepends=True)
+    if len(lines) < wanted_count:
+        raise RuntimeError("Committed readback recovery events are missing")
+    wanted = "".join(lines[:wanted_count])
+    if metadata is not None and hashlib.sha256(wanted.encode("utf-8")).hexdigest() != metadata["sha256"]:
+        raise RuntimeError("Committed readback recovery SHA differs")
+    if original != wanted and original:
+        archived = directory / "interrupted_tails"
+        archived.mkdir(exist_ok=True)
+        (archived / f"{time.time_ns()}_readback_recovery.jsonl").write_text(original, encoding="utf-8")
+    path.write_text(wanted, encoding="utf-8", newline="\n")
+    rows = read_recovery_rows(path)
+    if any(row["update"] > update for row in rows):
+        raise RuntimeError("Readback event exceeds checkpoint boundary")
+    if metadata is not None and sum(row["update"] == 0 for row in rows) != metadata["initialization_events"]:
+        raise RuntimeError("Readback initialization count differs from checkpoint")
+    counts = {}
+    for row in rows:
+        counts[row["update"]] = counts.get(row["update"], 0) + 1
+    for row in durable_log_rows(directory / "input_protection.jsonl", update):
+        if row.get("readback_recovery_policy") != policy or row.get("readback_recovery_events") != counts.get(row["update"], 0):
+            raise RuntimeError("Per-update readback recovery proof differs from event log")
 
 
 def load_latest(directory, opt):
@@ -419,6 +637,16 @@ def run(variant, stage, seed, paths, resume=False, stop_after=None, tag=None):
         atomic_json(directory / "status.json", status)
         current, elapsed, previous_elapsed = 0, 0.0, 0.0
         try:
+            checkpoint = None
+            if (directory / "checkpoints/latest.json").exists():
+                checkpoint, record = load_latest(directory, opt)
+                current, previous_elapsed = checkpoint["update"], checkpoint["elapsed_seconds"]
+                status.update(durable_update=current, checkpoint=record["path"], checkpoint_sha256=record["sha256"])
+            elif resume and (directory / "train.jsonl").exists():
+                raise RuntimeError("No complete checkpoint exists for this prior run")
+            if end < current:
+                raise ValueError("--stop-after precedes the existing checkpoint")
+            _restore_logs(directory, current, opt["runtime"]["readback_recovery_policy"], checkpoint)
             seed_all(seed)
             protection = Protection(directory, opt)
             model = build_protected_model(opt, protection)
@@ -426,17 +654,9 @@ def run(variant, stage, seed, paths, resume=False, stop_after=None, tag=None):
             dataset = build_protected_dataset(opt, paths, protection)
             sampler = legacy.ExactSampler(len(dataset), seed + 20000)
             seed_all(seed + 10000)
-            if (directory / "checkpoints/latest.json").exists():
-                checkpoint, record = load_latest(directory, opt)
+            if checkpoint is not None:
                 legacy.restore_checkpoint(model, sampler, checkpoint)
-                current, previous_elapsed = checkpoint["update"], checkpoint["elapsed_seconds"]
-                status.update(durable_update=current, checkpoint=record["path"], checkpoint_sha256=record["sha256"])
                 del checkpoint
-            elif resume and (directory / "train.jsonl").exists():
-                raise RuntimeError("No complete checkpoint exists for this prior run")
-            if end < current:
-                raise ValueError("--stop-after precedes the existing checkpoint")
-            _restore_logs(directory, current)
             counts = {"total": sum(p.numel() for p in model.net_g.parameters()),
                       "trainable": sum(p.numel() for p in model.net_g.parameters() if p.requires_grad)}
             manifest_path = directory / "manifest.json"
@@ -482,7 +702,7 @@ def run(variant, stage, seed, paths, resume=False, stop_after=None, tag=None):
                         for stream in (log, proof):
                             stream.flush()
                             os.fsync(stream.fileno())
-                        saved = legacy.save_checkpoint(model, sampler, opt, current, elapsed, directory)
+                        saved = save_guarded_checkpoint(model, sampler, opt, current, elapsed, directory, protection)
                         status.update(checkpoint=str(saved), checkpoint_sha256=sha256_file(saved), durable_update=current)
                         atomic_json(directory / "status.json", status)
             # A resumed completed run is revalidated through the same proof/checkpoint path.
@@ -490,22 +710,23 @@ def run(variant, stage, seed, paths, resume=False, stop_after=None, tag=None):
                 raise RuntimeError("Frozen encoder parameter changed")
             if any(parameter.grad is not None for parameter in model.net_g.encoder.parameters()):
                 raise RuntimeError("Frozen encoder acquired gradients")
-            _restore_logs(directory, current)
+            checkpoint, record = load_latest(directory, opt)
+            _restore_logs(directory, current, opt["runtime"]["readback_recovery_policy"], checkpoint)
+            del checkpoint
             proof_sha = sha256_file(directory / "input_protection.jsonl")
             state = "completed" if current == budget else "paused_at_checkpoint"
-            checkpoint, record = load_latest(directory, opt)
-            del checkpoint
+            recovery = protection.recovery_metadata()
             checks = {"initialization_contract": initialization, "encoder_parameters_unchanged": True,
                       "encoder_gradients_absent": True, "encoder_bn_training_after": model.net_g.encoder.training,
                       "input_protection_passed": True, "verified_updates": current,
                       "input_protection_sha256": proof_sha, "loss_finite": True, "update": current,
-                      "complete": current == budget, "last_checkpoint_sha256_verified": True}
+                      "complete": current == budget, "last_checkpoint_sha256_verified": True, **recovery}
             atomic_json(directory / "training_checks.json", checks)
             atomic_json(directory / "input_protection.json", {"schema": SCHEMA,
                         "status": "passed" if current == budget else state,
                         "config_hash": opt["config_hash"], "source_hash": opt["source_hash"],
                         "update": current, "verified_updates": current, "proof_sha256": proof_sha,
-                        "all_checks_passed": True})
+                        "all_checks_passed": True, **recovery})
             if state == "completed":
                 final = directory / "checkpoints/final.pth"
                 if not final.exists():
@@ -514,7 +735,7 @@ def run(variant, stage, seed, paths, resume=False, stop_after=None, tag=None):
                     raise RuntimeError("Final checkpoint differs from the validated latest checkpoint")
                 manifest.update(final_checkpoint=str(final), final_checkpoint_sha256=record["sha256"])
             manifest.update(completed_optimizer_updates=current, total_training_seconds=elapsed,
-                            input_protection_sha256=proof_sha)
+                            input_protection_sha256=proof_sha, **recovery)
             atomic_json(manifest_path, manifest)
             summary = {"status": state, "completed": current == budget, "updates": current,
                        "experiment": variant, "stage": stage, "seed": seed,
@@ -522,7 +743,7 @@ def run(variant, stage, seed, paths, resume=False, stop_after=None, tag=None):
                        "source_hash": opt["source_hash"], "checkpoint_sha256": record["sha256"],
                        "input_protection_sha256": proof_sha, "elapsed_seconds": elapsed,
                        "peak_reserved_mib": torch.cuda.max_memory_reserved() / 1024**2 if cuda else None,
-                       "training_checks": checks}
+                       "training_checks": checks, **recovery}
             atomic_json(directory / "summary.json", summary)
             status.update(status=state, update=current, durable_update=current, checkpoint=record["path"],
                           checkpoint_sha256=record["sha256"], ended_at=utc_now(), updated_at=utc_now(),

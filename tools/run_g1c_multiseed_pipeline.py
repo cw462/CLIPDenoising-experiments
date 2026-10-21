@@ -58,6 +58,9 @@ class G1CMultiSeedQueue(CFullQueue):
                 "historical_trajectory": "full historical per-step inputs unavailable; not claimed bitwise identical",
                 "planned_gpu_assignment": {"0": 0, "1": 1, "2": 1},
                 "concurrency": "one run per GPU until independent two-job throughput validation",
+                "readback_recovery_policy": self.a.get("readback_recovery", "strict"),
+                "readback_limitation": "Independent stable rereads can recover observation discrepancies; "
+                                       "all input replay checks remain required and the root cause is unresolved.",
             }}
         self.python = sys.executable
 

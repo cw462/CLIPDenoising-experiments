@@ -232,6 +232,43 @@ def test_input_only_cli_does_not_require_trained_models(monkeypatch, tmp_path):
     assert result["completed"] and result["matched_inputs"] == 3150
     assert result["new_model_outcome_access"] is False and result["existing_historical_csv_read"] is True
 
+
+def test_multiseed_report_discloses_recoveries_without_claiming_zero_anomalies(multiseed_benchmark, tmp_path):
+    from tools.summarize_g1c_multiseed import summarize as summarize_seeds
+    fixture = multiseed_benchmark
+    for seed, total, initial, affected in ((0, 1, 1, []), (1, 3, 1, [42]), (2, 0, 0, [])):
+        directory = fixture["root"] / "G1C" / f"seed{seed}"
+        item = read_json(directory / "summary.json")
+        contract = item["contract"]
+        log_sha = digest((seed, "recovery_log"))
+        metadata = {"readback_recovery_policy": "independent_stable_v1", "readback_recovery_events_total": total,
+                    "readback_recovery_initialization_events": initial, "readback_recovery_sha256": log_sha}
+        for key in ("training_checks", "input_protection"):
+            contract[key].update(metadata)
+        contract["proof_sha256"] = {"readback_recovery.jsonl": log_sha}
+        contract["readback_recovery"] = {"policy": "independent_stable_v1", "events_total": total,
+            "initialization_events": initial, "training_events": total - initial,
+            "affected_training_updates": len(affected), "affected_training_update_numbers": affected,
+            "log_sha256": log_sha, "all_logged_events_independently_confirmed": True, "root_cause_established": False}
+        item["contract_hash"] = digest(contract)
+        gate = read_json(directory / "access_gate.json")
+        gate["contract_hash"] = item["contract_hash"]
+        atomic_json(directory / "access_gate.json", gate)
+        item["artifact_sha256"]["access_gate.json"] = sha256_file(directory / "access_gate.json")
+        atomic_json(directory / "summary.json", item)
+    output = tmp_path / "recovery_report"
+    result = summarize_seeds(fixture["root"], output, fixture["history"])
+    assert result["readback_recovery_events_total"] == 4
+    assert result["readback_recovery_initialization_events"] == 2
+    assert result["readback_recovery_affected_training_updates"] == 1
+    assert result["readback_root_cause_established"] is False
+    disclosed = read_csv(output / "readback_recovery_seedwise.csv")
+    assert [int(row["recovered_observation_events"]) for row in disclosed] == [1, 3, 0]
+    assert len(read_csv(output / "table1_conditions.csv")) == 6
+    report = (output / "experiment_report.md").read_text(encoding="utf-8")
+    assert "4 independently confirmed" in report and "root cause, which remains unresolved" in report
+    assert "must not be described as zero anomalies" in report
+
 @pytest.fixture
 def multiseed_benchmark(benchmark):
     from tools.evaluate_c_only import protocol_for_seed

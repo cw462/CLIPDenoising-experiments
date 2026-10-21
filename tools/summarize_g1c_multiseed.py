@@ -14,7 +14,8 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools.evaluate_c_only import (DATASET_COUNTS, TABLE1_CONDITIONS, UPDATES, cell_key,
-                                    historical_baseline, historical_index, protocol_for_seed)
+                                    historical_baseline, historical_index, protocol_for_seed,
+                                    validate_recovery_disclosure)
 from tools.evaluation_utils import read_csv, write_csv
 from tools.experiment_common import atomic_json, digest, read_json, sha256_file, utc_now
 from tools.summarize_experiments import aggregate, hierarchical_ood
@@ -31,6 +32,7 @@ PROTOCOL = {
     "ood": "Exclude Gaussian15; equal-weight strengths within families, then families and datasets; official three-family and five-family extension results are separate.",
     "data_reuse": "All four datasets were evaluated previously; full CBSD68 includes development images. This is not an unseen holdout.",
     "claims": "Descriptive three-seed results only; no automatic significance, causal innovation, SOTA or screenshot-reference claim.",
+    "readback_recovery": "Every enabled observation-copy recovery is counted per seed and SHA-bound to completed training. Root cause remains unresolved; passing protection gates does not mean zero readback anomalies.",
     "table1": TABLE1_CONDITIONS,
 }
 
@@ -95,6 +97,7 @@ def validate_completion_contract(contract, identity, seed):
         raise ValueError("Incomplete final input protection proof")
     if any(proof.get(field) != contract[field] for field in ("source_hash", "config_hash")):
         raise ValueError("Input proof/source/config mismatch")
+    validate_recovery_disclosure(contract)
 
 
 def across_seeds(rows, keys, metrics):
@@ -121,7 +124,7 @@ def summarize(evaluation_root, output, historical_csv=None):
     summaries = {seed: read_json(evaluation_root / "G1C" / f"seed{seed}" / "summary.json") for seed in SEEDS}
     historical_csv = Path(historical_csv or summaries[0]["historical_csv"]["path"])
     reference, historical = historical_index(historical_csv)
-    rows, pairs, identities, contracts, panels = [], [], [], [], []
+    rows, pairs, identities, contracts, panels, recovery_rows = [], [], [], [], [], []
     sources, new_checkpoints, baseline_checkpoints = set(), set(), set()
     for seed in SEEDS:
         directory, item = evaluation_root / "G1C" / f"seed{seed}", summaries[seed]
@@ -136,6 +139,15 @@ def summarize(evaluation_root, output, historical_csv=None):
         if item["contract_hash"] != digest(contract):
             raise ValueError("Training contract hash mismatch")
         validate_completion_contract(contract, identity, seed)
+        recovery = validate_recovery_disclosure(contract)
+        recovery_rows.append({"train_seed": seed, "policy": recovery["policy"],
+                              "recovered_observation_events": recovery["events_total"],
+                              "initialization_events": recovery["initialization_events"],
+                              "training_events": recovery["training_events"],
+                              "affected_training_updates": recovery["affected_training_updates"],
+                              "event_log_sha256": recovery["log_sha256"] or "",
+                              "all_logged_events_independently_confirmed": True,
+                              "root_cause_established": False})
         sources.add(identity["source_hash"])
         contracts.append(contract)
         new_checkpoints.add(identity["checkpoint_sha256"])
@@ -210,6 +222,7 @@ def summarize(evaluation_root, output, historical_csv=None):
             new, old = (ood_index[(m, seed, table)] for m in ("G1C", "G1"))
             ood_pairs.append({"train_seed": seed, "table": table, "delta_ood_psnr": new["ood_psnr"] - old["ood_psnr"], "delta_ood_ssim": new["ood_ssim"] - old["ood_ssim"]})
     artifacts = {"per_image_results.csv": rows, "paired_per_image_results.csv": pairs,
+                 "readback_recovery_seedwise.csv": recovery_rows,
                  "condition_seedwise.csv": conditions, "condition_summary.csv": condition_summary,
                  "paired_condition_seedwise.csv": pair_seeds, "paired_condition_summary.csv": pair_summary,
                  "table1_seedwise.csv": table_seed, "table1_conditions.csv": table_summary,
@@ -223,8 +236,12 @@ def summarize(evaluation_root, output, historical_csv=None):
     for source, destination in panels:
         (output / destination).parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, output / destination)
+    recovery_total = sum(row["recovered_observation_events"] for row in recovery_rows)
+    recovery_updates = sum(row["affected_training_updates"] for row in recovery_rows)
+    recovery_initial = sum(row["initialization_events"] for row in recovery_rows)
     lines = ["# G1C vs historical G1: seeds 0, 1, 2", "",
              "All six checkpoints completed 300,000 updates. The three G1C runs passed their full per-update input protection gates; G1 scores are reused historical measurements.", "",
+             f"The G1C logs record {recovery_total} independently confirmed observation-copy recovery events: {recovery_initial} during initialization and {recovery_total - recovery_initial} during training, affecting {recovery_updates} seed-specific training updates. Per-seed counts and event-log SHA256 values are in readback_recovery_seedwise.csv. Original dataset replay, Mixup replay, snapshot and optimizer input checks remained mandatory. These recoveries do not establish the root cause, which remains unresolved; passing the gates must not be described as zero anomalies.", "",
              "Each G1C seed is paired with the same historical G1 initialization seed and identical evaluation noise. Historical per-update samples/RNG trajectories were not recorded for this comparison, so full training trajectories cannot be verified as identical.", "",
              "Values below are the mean and sample standard deviation across three training seeds (ddof=1), after averaging images within each seed. Delta variability is computed from paired seed differences. All four datasets were previously evaluated; no unseen-holdout, significance, causal or SOTA claim is made.", "",
              "| Dataset | Noise | G1 PSNR mean ± SD | G1C PSNR mean ± SD | Paired delta mean ± SD (dB) |",
@@ -238,6 +255,10 @@ def summarize(evaluation_root, output, historical_csv=None):
               "rows": len(rows), "new_measurement_rows": 9450, "reused_baseline_rows": 9450, "paired_rows": len(pairs),
               "condition_seedwise_rows": len(conditions), "condition_summary_rows": len(condition_summary),
               "table1_rows": len(table_summary), "table1_seedwise_rows": len(table_seed), "fixed_panels": len(panels),
+              "readback_recovery_events_total": recovery_total,
+              "readback_recovery_initialization_events": recovery_initial,
+              "readback_recovery_affected_training_updates": recovery_updates,
+              "readback_recovery_seedwise": recovery_rows, "readback_root_cause_established": False,
               "historical_csv": historical, "protocol": PROTOCOL, "protocol_hash": digest(PROTOCOL),
               "evaluation_source_hash": sources.pop(), "checkpoint_identities": identities,
               "source_summary_sha256": {f"seed{seed}": sha256_file(evaluation_root / "G1C" / f"seed{seed}/summary.json") for seed in SEEDS},
