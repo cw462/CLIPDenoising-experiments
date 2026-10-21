@@ -4,6 +4,8 @@ train_dir: data/CBSD432
 test_datasets:
   CBSD68: data/CBSD68
   Kodak24: data/Kodak24
+  McMaster: data/McMaster
+  Urban100: data/Urban100
 output_root: runs/ac
 reports_dir: reports/ac
 data_manifest: data/manifest.json
@@ -26,7 +28,7 @@ cache_decoded_images: true
 minimum_free_gb: 2
 gpu_index: 0
 gpu_indices: [0, 1]
-jobs_per_gpu: 4
+jobs_per_gpu: 1
 checkpoint_every: 1000
 checkpoint_keep: 1
 status_every: 20
@@ -39,3 +41,7 @@ budgets:
   screen: 5000
   confirm: 20000
   confirm_short: 10000
+
+require_triplet: true
+historical_results_csv: /home/imss/cw/CLIPDenoising_20261020/reports/per_image_results.csv
+historical_results_csv_sha256: d3fead06b10e8b86363fe8f17484fccbce2a3a723b96cfeb49db75524c900635

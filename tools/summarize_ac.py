@@ -264,7 +264,7 @@ def render_report(output, stage, rows, scores, statistics, variability, verdicts
     lines = [f"# A/C 联合实验：{title}结果", "", f"生成时间：{utc_now()}。完整评测 {len(rows):,} 条，固定比较拼图 {panels} 张。", "",
              "B0：从 C0 重新建立优化器、仅 L1 的共同续训基线；A/B1：深层相关 PFA；C/B3：原始 PFA 加平滑结构损失。C0 为前轮 B0 seed0 的固定最终检查点，仅评测一次。", "",
              "噪声种子 0/1/2 先在每张图、每个条件内部平均；Gaussian15 单独报告为 ID，其余六条件等权形成 OOD。各数据集单独计算，合并值对数据集等权，不能按图数混合替代。", "",
-             "CBSD68 前 20 张是本轮开发集，剩余 48 张与 Kodak24 是本轮保留集。本研究上一轮已评测完整 CBSD68/Kodak24，因此这些不是整个研究从未见过的测试数据。确认阶段在全部六组最终检查点固定后才访问保留集。", "",
+             "CBSD68 前 20 张是本轮开发集，剩余 48 张与 Kodak24 是本轮保留集。本研究上一轮已评测完整 CBSD68/Kodak24，因此这些不是整个研究从未见过的测试数据。确认阶段在全部六组最终检查点固定后才进行保留集模型评测；此前可以读取原始图像验证数据与噪声输入一致性，该核验不运行模型、不产生去噪指标。", "",
              "## 绝对得分", "", "C0 只计一次；B0/B1/B3 的下表数值为续训种子均值。", "",
              "| 方法 | 数据集 | ID PSNR | OOD PSNR | OOD SSIM |", "|---|---|---:|---:|---:|"]
     score_lookup = {(r["method"], r["training_seed"], r["dataset"], r["category"]): r for r in scores}

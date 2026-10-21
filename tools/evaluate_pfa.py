@@ -203,6 +203,9 @@ def validate_stage_gate(paths, stage, current_source=None):
         raise ValueError("Data manifest changed")
     if sha256_file(paths["pretrained_rn50"]) != contract["pretrained_sha256"]:
         raise ValueError("RN50 changed")
+    if paths.get("require_triplet"):
+        from tools.ac_triplet_gate import validate_triplet_stage
+        validate_triplet_stage(paths, stage, STAGE_SEEDS[stage], current_source)
     return configs, checkpoints, contract
 
 
