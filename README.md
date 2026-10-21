@@ -1,5 +1,9 @@
 # CLIPDenoising：RGB 旁路校准实验与完整结果
 
+**方案 A 已实现并通过 RTX 3070 测试：** [空间相关 PFA 实现与验证说明](docs/方案A_实现过程与验证说明.md)。入口 `run_plan_a.cmd`，配置 `configs/plan_a.yaml`；B0/B1 已各完成 200 步稳定性检查，正式有效性实验尚未运行。
+
+**本机 Windows 已配置完成：** 使用方法见 [本地运行说明](LOCAL_SETUP.zh-CN.md)。双击 `run_demo.cmd` 运行已有基线模型的单图去噪；`run_checks.cmd` 验证环境、真实数据、模型和断点恢复。本机默认 CPU 配置，正式 CUDA 运行配置另见 `configs/local_paths.cuda.yaml`。
+
 本仓库基于 [CLIPDenoising（CVPR 2024）](https://github.com/alwaysuu/CLIPDenoising)，保存末级 RGB 旁路校准的代码、验收工具、训练与评测入口，以及 2026 年 10 月完成的实验记录。上游基准 commit 为 `2647bf815df0299a03d16df34b896fa266ceefda`；下方保留上游 README 与论文引用。
 
 ## 已完成的实验

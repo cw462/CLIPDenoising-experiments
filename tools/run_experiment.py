@@ -150,6 +150,7 @@ def checkpoint_payload(model, sampler, opt, update, elapsed):
         "scheduler": [s.state_dict() for s in model.schedulers], "scaler": None,
         "ema": model.net_g_ema.state_dict() if hasattr(model, "net_g_ema") else None,
         "update": update, "rng": rng_state(), "sampler": sampler.state_dict(),
+        "pfa_rng": model.net_g.pfa.state_dict(),
         "config_hash": opt["config_hash"], "source_hash": opt["source_hash"],
         "experiment": opt["exp"], "stage": opt["stage"], "seed": opt["seed"],
         "elapsed_seconds": elapsed, "complete_update_boundary": True}
@@ -195,6 +196,7 @@ def save_checkpoint(model, sampler, opt, update, elapsed, run):
 
 def restore_checkpoint(model, sampler, ckpt):
     model.net_g.load_state_dict(ckpt["params"], strict=True)
+    model.net_g.pfa.load_state_dict(ckpt.get("pfa_rng"))
     model.optimizer_g.load_state_dict(ckpt["optimizer"])
     if len(model.schedulers) != len(ckpt["scheduler"]):
         raise RuntimeError("Scheduler count mismatch")
