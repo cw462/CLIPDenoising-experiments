@@ -1,0 +1,38 @@
+{
+  "status": "blocked",
+  "recorded_at": "2026-10-21T15:22:28.318081+00:00",
+  "scope": {
+    "variant": "G1C",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "updates_per_seed": 300000,
+    "baseline": "archived G1 paired seeds 0/1/2",
+    "github": "https://github.com/cw462/CLIPDenoising-experiments"
+  },
+  "formal_training_started": false,
+  "active_own_training_jobs": 0,
+  "completed_work": [
+    "paired multi-seed runner/evaluator/summary",
+    "21 training CPU tests",
+    "19 evaluation CPU tests",
+    "11 scheduler CPU tests",
+    "three actual GPU contracts",
+    "NumPy build-isolation candidate and failure evidence"
+  ],
+  "blocking_evidence": {
+    "gpu0_last_success": 760,
+    "gpu0_failed_attempt": 761,
+    "gpu1_seed2_last_success": 29,
+    "gpu1_seed2_failed_attempt": 30,
+    "guard": "Repeated actual tensor readback differs"
+  },
+  "candidate": "numpy_isolation_r2 failed and retired",
+  "root_cause": "not established",
+  "automatic_retry": false,
+  "further_training_requires": "A diagnosed and verified reliable execution environment; preserve all failed runs and use a new attempt",
+  "user_authorization": "Continue valid complete 300k seeds0/1/2, evaluate/report, then upload results to the specified GitHub without repeated stage confirmation",
+  "completion_eta": "not reliable while blocked"
+}

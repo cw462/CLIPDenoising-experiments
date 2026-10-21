@@ -1,0 +1,98 @@
+{
+  "status": "failed_candidate_evidence_only",
+  "formal_training_started": false,
+  "contains_raw_tensors_or_weights": false,
+  "self_hash_excluded": true,
+  "files": [
+    {
+      "path": "benchmark_terminal_summary.json",
+      "bytes": 3348,
+      "sha256": "e7193c9dca69c7b566ccdac6e170d8d3a5729112f8b532b17f96bfb3ccafd5b0"
+    },
+    {
+      "path": "cpu_seed2_failure_summary.json",
+      "bytes": 3148,
+      "sha256": "ba2df6dbe06dbbeb06b06ff2d2ec498da1a6c4cef957bebd2a9c15cf55a94d4e"
+    },
+    {
+      "path": "gpu0_failure.json",
+      "bytes": 581,
+      "sha256": "d5a0fd6a14c65165129409aee20480446982c91c18fdb97176fb790e62a72ecd"
+    },
+    {
+      "path": "gpu0_validation_failure_summary.json",
+      "bytes": 8249,
+      "sha256": "b6d36dad151b3d7c6b003063fcb43455a77c6646bd6210f84052817a5db69f7b"
+    },
+    {
+      "path": "read_only_continuation_rejection.json",
+      "bytes": 1745,
+      "sha256": "a436a5ed9a70de6235bb83720acef16c7f38a8158107b39c28a6022259d1db02"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2868,
+      "sha256": "692c06ad4993de650afda7ba39c4e1b4859067f87a58e5be52c7d807bd2a3ad9"
+    },
+    {
+      "path": "server_metadata/reports/g1c_numpy_candidate_r2/actual_G1C_seed0_contract.json",
+      "bytes": 72592,
+      "sha256": "241bbfec328573ebb71260742adae8876b9f886c5bca3d582e7bd4037eaf6ef0"
+    },
+    {
+      "path": "server_metadata/reports/g1c_numpy_candidate_r2/actual_G1C_seed1_contract.json",
+      "bytes": 72598,
+      "sha256": "cdfdd71fb1b36a0e586f299a8f3aa7453a0c7c36bf7f2c09c546a39c39f79c21"
+    },
+    {
+      "path": "server_metadata/reports/g1c_numpy_candidate_r2/actual_G1C_seed2_contract.json",
+      "bytes": 72596,
+      "sha256": "ea98e74d082ff66227b4cd39dc5798f7a72399a4d366bbeb36c438fa66d422c6"
+    },
+    {
+      "path": "server_metadata/reproducibility/candidate_numpy_isolation_r2.yaml",
+      "bytes": 1815,
+      "sha256": "9c8b92485603fa497558af1775e845469cdc1d709adcb4b8d01713e9fe8a1d75"
+    },
+    {
+      "path": "server_metadata/reproducibility/gpu1_independent_seed_benchmark.json",
+      "bytes": 16962,
+      "sha256": "72dfa498b3f10c65d053888c33c660ed88fca05cc18d9d204747fba5a4f69097"
+    },
+    {
+      "path": "server_metadata/reproducibility/isolated_validation_r2_launch.json",
+      "bytes": 3523,
+      "sha256": "772203d54cce6ca1af7c648baf2c79d0e6f5784c91301582bce0ed0b957a7315"
+    },
+    {
+      "path": "server_metadata/reproducibility/isolated_validation_r2_state.json",
+      "bytes": 1634,
+      "sha256": "2bbb009e87c5db93430d575e7a7702b5751ade43d2c71367f6dd2da07907876a"
+    },
+    {
+      "path": "server_metadata/runs/g1c_numpy_candidate_r2/full/G1C/seed0/numpy_isolation_validation10000/effective_config.json",
+      "bytes": 6779,
+      "sha256": "98b9a1af3f690c81a199bf2692c4f6af7f20c0b464b0b5814487e8c633960d7d"
+    },
+    {
+      "path": "server_metadata/runs/g1c_numpy_candidate_r2/full/G1C/seed0/numpy_isolation_validation10000/input_failure/failure.json",
+      "bytes": 581,
+      "sha256": "d5a0fd6a14c65165129409aee20480446982c91c18fdb97176fb790e62a72ecd"
+    },
+    {
+      "path": "server_metadata/runs/g1c_numpy_candidate_r2/full/G1C/seed0/numpy_isolation_validation10000/manifest.json",
+      "bytes": 22581,
+      "sha256": "56a541807688dae29b1ee9cef79a552dd7fe07c8981a276f4aee414df2d9bb8c"
+    },
+    {
+      "path": "server_metadata/runs/g1c_numpy_candidate_r2/full/G1C/seed0/numpy_isolation_validation10000/status.json",
+      "bytes": 1098,
+      "sha256": "75b1ac17eeb542f199e2c2b98c3fbd4ab0180c66f61c864db103e0d73831078e"
+    },
+    {
+      "path": "terminal_status.json",
+      "bytes": 1336,
+      "sha256": "cf77b4c366b85b5153a267961cb706a6af95d50963374fe871e1090194de25c6"
+    }
+  ]
+}

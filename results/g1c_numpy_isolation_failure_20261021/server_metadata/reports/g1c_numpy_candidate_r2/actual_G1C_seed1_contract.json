@@ -1,0 +1,2131 @@
+{
+  "accepted": true,
+  "diagnostic_only": true,
+  "variant": "G1C",
+  "batch_size": 16,
+  "seed": 1,
+  "diagnostic_updates": 4,
+  "checkpoint_update": 2,
+  "configured_budget": 300000,
+  "diagnostic_directory": "/home/imss/cw/CLIPDenoising_G1C_Seeds_20261021/reports/g1c_numpy_candidate_r2/g1c_seed1_full_contract_v2z8ytuo",
+  "evidence_preserved": false,
+  "phase": "completed",
+  "source_hash": "51c704dfa85f9cbe938e13984cf063e15c92eaebdf358c5b76cdaad994e2ce54",
+  "started_at": "2026-10-21T15:08:24Z",
+  "scope": "Actual short legacy initialization/forward/PFA and four-update restoration checks; not a complete 300000-step trajectory proof",
+  "unresolved_cpu_anomaly": "One CPU thread plus fail-closed repeated generation/snapshot/transfer checks are detection measures; root cause remains unknown",
+  "acceptance": {
+    "atol": 1e-06,
+    "rtol": 1e-05,
+    "computed_cuda_float_states": "existing compare_states tolerance; report bitwise equality separately",
+    "inputs_rng_sampler_counters_immediate_restore": "exact"
+  },
+  "config_hash": "60e4e9f12ef14f1a2947fe5d5816564c09e496efabc9e85abf2d24d9e96b5a16",
+  "effective_config": {
+    "name": "full_G1C_seed1",
+    "model_type": "ImageCleanModel",
+    "scale": 1,
+    "num_gpu": 1,
+    "manual_seed": 1,
+    "datasets": {
+      "train": {
+        "name": "TrainSet",
+        "type": "Dataset_GaussianDenoising",
+        "sigma_type": "constant",
+        "sigma_range": 15,
+        "in_ch": 3,
+        "dataroot_gt": "/home/imss/cw/CLIPDenoising_G1C_Seeds_20261021/data/CBSD432",
+        "dataroot_lq": "none",
+        "geometric_augs": true,
+        "filename_tmpl": "{}",
+        "io_backend": {
+          "type": "disk"
+        },
+        "use_shuffle": true,
+        "num_worker_per_gpu": 0,
+        "batch_size_per_gpu": 16,
+        "mini_batch_sizes": [
+          16
+        ],
+        "iters": [
+          300000
+        ],
+        "gt_size": 128,
+        "gt_sizes": [
+          128
+        ],
+        "dataset_enlarge_ratio": 1,
+        "prefetch_mode": null,
+        "phase": "train",
+        "scale": 1,
+        "cache_decoded_images": true
+      },
+      "val": {
+        "name": "ValSet",
+        "type": "Dataset_GaussianDenoising",
+        "sigma_type": "constant",
+        "sigma_test": 15,
+        "in_ch": 3,
+        "dataroot_gt": "/home/imss/cw/CLIPDenoising_G1C_Seeds_20261021/data/CBSD432",
+        "dataroot_lq": "none",
+        "io_backend": {
+          "type": "disk"
+        },
+        "phase": "val",
+        "scale": 1
+      }
+    },
+    "network_g": {
+      "type": "CLIPDenoising",
+      "inp_channels": 3,
+      "out_channels": 3,
+      "depth": 5,
+      "wf": 64,
+      "num_blocks": [
+        3,
+        4,
+        6,
+        3
+      ],
+      "bias": false,
+      "model_path": "/home/imss/cw/CLIPDenoising_G1C_Seeds_20261021/pretrained/RN50.pt",
+      "aug_level": 0.025,
+      "adapter_mode": "gated",
+      "pfa_rho": 0.0,
+      "pfa_seed": null
+    },
+    "path": {
+      "pretrain_network_g": null,
+      "strict_load_g": true,
+      "resume_state": null,
+      "experiments_root": "/home/imss/cw/CLIPDenoising_G1C_Seeds_20261021/reports/g1c_numpy_candidate_r2/g1c_seed1_full_contract_v2z8ytuo/runs/full/G1C/seed1/contract",
+      "models": "/home/imss/cw/CLIPDenoising_G1C_Seeds_20261021/reports/g1c_numpy_candidate_r2/g1c_seed1_full_contract_v2z8ytuo/runs/full/G1C/seed1/contract/checkpoints",
+      "training_states": "/home/imss/cw/CLIPDenoising_G1C_Seeds_20261021/reports/g1c_numpy_candidate_r2/g1c_seed1_full_contract_v2z8ytuo/runs/full/G1C/seed1/contract/checkpoints",
+      "log": "/home/imss/cw/CLIPDenoising_G1C_Seeds_20261021/reports/g1c_numpy_candidate_r2/g1c_seed1_full_contract_v2z8ytuo/runs/full/G1C/seed1/contract",
+      "visualization": "/home/imss/cw/CLIPDenoising_G1C_Seeds_20261021/reports/g1c_numpy_candidate_r2/g1c_seed1_full_contract_v2z8ytuo/runs/full/G1C/seed1/contract/visuals"
+    },
+    "train": {
+      "total_iter": 300000,
+      "warmup_iter": -1,
+      "use_grad_clip": true,
+      "scheduler": {
+        "type": "CosineAnnealingRestartCyclicLR",
+        "periods": [
+          92000,
+          208000
+        ],
+        "restart_weights": [
+          1,
+          1
+        ],
+        "eta_mins": [
+          0.0003,
+          1e-06
+        ]
+      },
+      "mixing_augs": {
+        "mixup": true,
+        "mixup_beta": 1.2,
+        "use_identity": true
+      },
+      "optim_g": {
+        "type": "AdamW",
+        "lr": 0.0003,
+        "weight_decay": 0.0001,
+        "betas": [
+          0.9,
+          0.999
+        ]
+      },
+      "pixel_opt": {
+        "type": "L1StructureLoss",
+        "loss_weight": 1.0,
+        "reduction": "mean",
+        "structure_weight": 0.05,
+        "eps": 0.001,
+        "deterministic_reflect_padding": true
+      }
+    },
+    "val": {
+      "window_size": 32,
+      "val_freq": 0,
+      "save_img": false,
+      "rgb2bgr": true,
+      "use_image": false,
+      "max_minibatch": 8,
+      "metrics": {
+        "psnr": {
+          "type": "calculate_psnr",
+          "crop_border": 0,
+          "test_y_channel": false
+        }
+      }
+    },
+    "logger": {
+      "print_freq": 1000,
+      "save_checkpoint_freq": 5000,
+      "use_tb_logger": false,
+      "wandb": {
+        "project": null,
+        "resume_id": null
+      }
+    },
+    "dist_params": {
+      "backend": "nccl",
+      "port": 29500
+    },
+    "exp": "G1C",
+    "experiment": "G1C",
+    "stage": "full",
+    "seed": 1,
+    "train_seed": 1,
+    "is_train": true,
+    "dist": false,
+    "rank": 0,
+    "world_size": 1,
+    "runtime": {
+      "device": "cuda",
+      "micro_batch": 16,
+      "accumulation": 1,
+      "amp": false,
+      "noisy_views_per_update": 16,
+      "clean_patches_per_update": 16,
+      "train_image_count": 432,
+      "data_workers": 0,
+      "sampler": "persisted permutation/cursor/RNG; drop_last; no prefetch",
+      "cache_decoded_images": true,
+      "cpu_threads": 1,
+      "independent_runs_per_gpu": 1,
+      "parallelism": "independent models/optimizers/RNG; no DDP or combined batch",
+      "freeze_bn": false,
+      "data_rng_seed": 10001,
+      "sampler_seed": 20001,
+      "minimum_free_gb": 2,
+      "checkpoint_every": 5000,
+      "checkpoint_keep": 2,
+      "status_every": 100
+    },
+    "data_manifest_hash": "85b882a4d2470df9b88ebd3382908fec810f2eba1d27719379c69dc3b97a7935",
+    "dev_split_hash": "0b72b37e969219442f316fd257351730bd41cacafcc7171c3e5b8c85d480bcb6",
+    "pretrained_sha256": "afeb0e10f9e5a86da6080e35cf09123aca3b358a0c3e3b6c78a7b63bc04b6762",
+    "source_hash": "51c704dfa85f9cbe938e13984cf063e15c92eaebdf358c5b76cdaad994e2ce54",
+    "git_commit": "af56111ad0fe5d9355ff89b16db7568b0a918682",
+    "full_training": {
+      "schema": "c_only_full_v1",
+      "variant": "G1C",
+      "baseline_experiment": "G1",
+      "baseline_training_seed": 1,
+      "initialization": "RN50 pretrained encoder + seeded original decoder/adapter",
+      "from_c0": false,
+      "legacy_global_pfa": true,
+      "budget": 300000,
+      "diagnostic_tag": "contract"
+    },
+    "execution_contract": {
+      "schema": "c_only_input_protection_v1",
+      "dataset": "two independent calls under identical RNG; exact bytes",
+      "feed": "two calls on the same raw batch under identical RNG; exact bytes and RNG",
+      "snapshot": "source before/after and independent clone/readback bytes must agree",
+      "optimizer": "actual input/target unchanged; legacy global PFA RNG consumption allowed",
+      "rng": "replay restores the first call's post-state; no retry on discrepancy",
+      "deterministic_algorithms": true,
+      "warn_only": false,
+      "cudnn_benchmark": false,
+      "cudnn_deterministic": true,
+      "cudnn_allow_tf32": true,
+      "cuda_matmul_allow_tf32": false,
+      "cublas_workspace_config": ":4096:8",
+      "historical_execution": {
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": false,
+        "cudnn_allow_tf32": true,
+        "cuda_matmul_allow_tf32": false,
+        "deterministic_algorithms": false
+      },
+      "historical_difference": "deterministic algorithms/cuDNN and CUBLAS workspace now enforced; FP32 parameter dtype and historical TF32 flags retained; historical trajectories are not claimed bitwise identical",
+      "unresolved_input_anomaly": "guards detect discrepancies; root cause is not established"
+    },
+    "config_hash": "60e4e9f12ef14f1a2947fe5d5816564c09e496efabc9e85abf2d24d9e96b5a16"
+  },
+  "rn50_sha256": "afeb0e10f9e5a86da6080e35cf09123aca3b358a0c3e3b6c78a7b63bc04b6762",
+  "device_name": "NVIDIA GeForce RTX 3090",
+  "cpu_threads": 1,
+  "execution_contract": {
+    "schema": "c_only_input_protection_v1",
+    "dataset": "two independent calls under identical RNG; exact bytes",
+    "feed": "two calls on the same raw batch under identical RNG; exact bytes and RNG",
+    "snapshot": "source before/after and independent clone/readback bytes must agree",
+    "optimizer": "actual input/target unchanged; legacy global PFA RNG consumption allowed",
+    "rng": "replay restores the first call's post-state; no retry on discrepancy",
+    "deterministic_algorithms": true,
+    "warn_only": false,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "cudnn_allow_tf32": true,
+    "cuda_matmul_allow_tf32": false,
+    "cublas_workspace_config": ":4096:8",
+    "historical_execution": {
+      "cudnn_benchmark": false,
+      "cudnn_deterministic": false,
+      "cudnn_allow_tf32": true,
+      "cuda_matmul_allow_tf32": false,
+      "deterministic_algorithms": false
+    },
+    "historical_difference": "deterministic algorithms/cuDNN and CUBLAS workspace now enforced; FP32 parameter dtype and historical TF32 flags retained; historical trajectories are not claimed bitwise identical",
+    "unresolved_input_anomaly": "guards detect discrepancies; root cause is not established"
+  },
+  "execution_flags": {
+    "current": {
+      "deterministic_algorithms": true,
+      "warn_only": false,
+      "cudnn_deterministic": true,
+      "cudnn_benchmark": false,
+      "cudnn_allow_tf32": true,
+      "cuda_matmul_allow_tf32": false,
+      "cublas_workspace_config": ":4096:8"
+    },
+    "historical_server_default_verified_separately": {
+      "deterministic_algorithms": false,
+      "cudnn_deterministic": false,
+      "cudnn_benchmark": false,
+      "cudnn_allow_tf32": true,
+      "cuda_matmul_allow_tf32": false
+    },
+    "comparison_scope": "Legacy and new architectures run under the same current explicit flags; historical entire trajectories are not compared"
+  },
+  "loss_contract": {
+    "class": "L1StructureLoss",
+    "structure_weight": 0.05,
+    "eps": 0.001,
+    "deterministic_reflect_padding": true,
+    "loss_weight": 1.0,
+    "trainable_loss_parameters": 0
+  },
+  "legacy_files": {
+    "rgb_calibration": {
+      "legacy_path": "/home/imss/cw/CLIPDenoising_20261020/basicsr/models/archs/rgb_calibration.py",
+      "legacy_sha256": "115b186279c336049c4099a0157ed4ebaa7bc8000a067d140fbaba4c88af2d06",
+      "current_sha256": "115b186279c336049c4099a0157ed4ebaa7bc8000a067d140fbaba4c88af2d06"
+    },
+    "CLIPEncoder_util": {
+      "legacy_path": "/home/imss/cw/CLIPDenoising_20261020/basicsr/models/archs/CLIPEncoder_util.py",
+      "legacy_sha256": "84cdbf2f4f6d88729aea0c67cc94ff7b33d945edd2767d396ceec5685b9938a4",
+      "current_sha256": "84cdbf2f4f6d88729aea0c67cc94ff7b33d945edd2767d396ceec5685b9938a4"
+    },
+    "CLIPDenoising_arch": {
+      "legacy_path": "/home/imss/cw/CLIPDenoising_20261020/basicsr/models/archs/CLIPDenoising_arch.py",
+      "legacy_sha256": "296583b28ae9e24ceb093b70d1e661ef6b3dc11b22d7b5f3bac1def99782cb47",
+      "current_sha256": "42598c46646c96720ebd91af00568d80c73604d7b3d6783003625e44c97f8d77"
+    }
+  },
+  "legacy_initialization": {
+    "full_state_dict": {
+      "tensor_count": 351,
+      "max_abs_difference": 0.0,
+      "bitwise_equal": true,
+      "allclose": true,
+      "accepted": true,
+      "groups": {
+        "root": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 0,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "params": {
+          "tensor_count": 351,
+          "array_count": 0,
+          "scalar_count": 0,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 351,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        }
+      },
+      "failures": []
+    },
+    "global_rng_equal": true,
+    "adapter_mode": "gated",
+    "new_initialization": {
+      "fresh_adamw": true,
+      "fresh_scheduler": true,
+      "encoder_parameters_frozen": true,
+      "encoder_bn_training": true,
+      "fp32": true,
+      "legacy_global_pfa": true,
+      "initial_network_sha256": "2929d287f1a74a8102f3f3e099cce851d3c485b64942e05621745a5528e269ec",
+      "encoder_parameter_sha256": "ad83b297caf8df4519ac1c34ced60e2d19d0ee0b9cc0758d2dca715c2afc5419",
+      "pretrained_sha256": "afeb0e10f9e5a86da6080e35cf09123aca3b358a0c3e3b6c78a7b63bc04b6762",
+      "seed": 1,
+      "baseline_experiment": "G1"
+    }
+  },
+  "legacy_forward": {
+    "input_shape": [
+      16,
+      3,
+      128,
+      128
+    ],
+    "input_sha256": "8b297d61e52dacb9deb06f3ef9a4b3ec551c7b57b6cb608a03ae5ed468ba2475",
+    "output_bitwise_equal": true,
+    "max_abs_difference": 0.0,
+    "legacy_output_sha256": "b62921fafe62642decb8222ae785e18adb50a9529a79e5b447b39e27f1dbabe8",
+    "new_output_sha256": "b62921fafe62642decb8222ae785e18adb50a9529a79e5b447b39e27f1dbabe8",
+    "input_unchanged": true,
+    "legacy_pfa_draws": [
+      {
+        "shape": [
+          16,
+          64,
+          64,
+          64
+        ],
+        "dtype": "torch.float32",
+        "sha256": "86e947ea05a7802cd401a2f0b081d231f8a911dbbfc942d168442c65abef2fc9"
+      },
+      {
+        "shape": [
+          16,
+          256,
+          32,
+          32
+        ],
+        "dtype": "torch.float32",
+        "sha256": "bf691ba599accc9657f13e70c6fe26b27031e724efd563e15e1916f42f370fb7"
+      },
+      {
+        "shape": [
+          16,
+          512,
+          16,
+          16
+        ],
+        "dtype": "torch.float32",
+        "sha256": "dc11d4628b461e131bc7fb0acb42b5db5ee994c7a733037e2197b69805d40b3a"
+      },
+      {
+        "shape": [
+          16,
+          1024,
+          8,
+          8
+        ],
+        "dtype": "torch.float32",
+        "sha256": "2eb5f803eac66f45993f15955ca589a32906d9fdc48d16b9431a71dec4e1cc5b"
+      }
+    ],
+    "new_pfa_draws": [
+      {
+        "shape": [
+          16,
+          64,
+          64,
+          64
+        ],
+        "dtype": "torch.float32",
+        "sha256": "86e947ea05a7802cd401a2f0b081d231f8a911dbbfc942d168442c65abef2fc9"
+      },
+      {
+        "shape": [
+          16,
+          256,
+          32,
+          32
+        ],
+        "dtype": "torch.float32",
+        "sha256": "bf691ba599accc9657f13e70c6fe26b27031e724efd563e15e1916f42f370fb7"
+      },
+      {
+        "shape": [
+          16,
+          512,
+          16,
+          16
+        ],
+        "dtype": "torch.float32",
+        "sha256": "dc11d4628b461e131bc7fb0acb42b5db5ee994c7a733037e2197b69805d40b3a"
+      },
+      {
+        "shape": [
+          16,
+          1024,
+          8,
+          8
+        ],
+        "dtype": "torch.float32",
+        "sha256": "2eb5f803eac66f45993f15955ca589a32906d9fdc48d16b9431a71dec4e1cc5b"
+      }
+    ],
+    "pfa_draws_exact": true,
+    "global_rng_after_equal": true,
+    "legacy_global_cuda_rng_consumed": true,
+    "new_global_cuda_rng_consumed": true,
+    "new_private_pfa_state": null,
+    "bn_and_full_state_after_forward_exact": true
+  },
+  "training_initialization": {
+    "fresh_adamw": true,
+    "fresh_scheduler": true,
+    "encoder_parameters_frozen": true,
+    "encoder_bn_training": true,
+    "fp32": true,
+    "legacy_global_pfa": true,
+    "initial_network_sha256": "2929d287f1a74a8102f3f3e099cce851d3c485b64942e05621745a5528e269ec",
+    "encoder_parameter_sha256": "ad83b297caf8df4519ac1c34ced60e2d19d0ee0b9cc0758d2dca715c2afc5419",
+    "pretrained_sha256": "afeb0e10f9e5a86da6080e35cf09123aca3b358a0c3e3b6c78a7b63bc04b6762",
+    "seed": 1,
+    "baseline_experiment": "G1"
+  },
+  "training_rows": {
+    "continuous": [
+      {
+        "update": 1,
+        "loss": 0.40450093150138855,
+        "lr": 0.0003,
+        "proof": {
+          "update": 1,
+          "dataset_replay_count": 16,
+          "dataset_sha256": "1c3fe7b598e21a3d067e372018a356119ecd853c048cb2a87a97d8a8cf47ca86",
+          "dataset_replay_exact": true,
+          "dataset_rng_exact": true,
+          "feed_replay_exact": true,
+          "raw_unchanged": true,
+          "feed_rng_exact": true,
+          "optimizer_inputs_unchanged": true,
+          "snapshot_copies_exact": true,
+          "input_sha256": "8c763670347aaffc9d8fe161e26d051e931a4bc664783287467fadfdec5ad326",
+          "target_sha256": "8e246cf1ed6c0352fffa2552836276a26465308cbc02d8e6062c5e302882e62e",
+          "post_input_sha256": "8c763670347aaffc9d8fe161e26d051e931a4bc664783287467fadfdec5ad326",
+          "post_target_sha256": "8e246cf1ed6c0352fffa2552836276a26465308cbc02d8e6062c5e302882e62e"
+        },
+        "rng_before": {
+          "python": "4e99f6ea2ec51bbe44d287245b165e087e188531249afee1fa8f6d0bdba851d2",
+          "numpy": "ba70871dbab5a03533f1ac5458e1eff0b6179835768f1066a0b1e9e89a9942a1",
+          "torch": "1d90acc61843753b5cb4fb74d82eeb8afbb661ea4165860316c8f66e8d941c0f",
+          "cuda": [
+            "7f61d922705d8e3c7a9e10e54f4ecd6945ef78f93d0a44255e08d693f0297444"
+          ]
+        },
+        "rng_after": {
+          "python": "c103b564874b6eb0cfbc5ff2fcc4e33b6eeee80b6ef994633943957e7acf7ce9",
+          "numpy": "ba70871dbab5a03533f1ac5458e1eff0b6179835768f1066a0b1e9e89a9942a1",
+          "torch": "3a0017b305d7f0f10be6064ca07584f01f5fe05e1634b45c537aba2f034b2ae0",
+          "cuda": [
+            "3b1911bb5cb1490af12d484b98ec8706f26d8a884e3f7f7430a3bf726fbcfd88"
+          ]
+        },
+        "global_pfa_rng_consumed": true,
+        "loss_components": {
+          "pixel_l1": 0.40361735224723816,
+          "structure": 0.01767183095216751,
+          "weighted_structure": 0.0008835915359668434
+        }
+      },
+      {
+        "update": 2,
+        "loss": 0.3809547424316406,
+        "lr": 0.0003,
+        "proof": {
+          "update": 2,
+          "dataset_replay_count": 16,
+          "dataset_sha256": "4f37ca670d949a69e31f1b9491aa3e063b5abb25f966dad628f189a2e22bbbe6",
+          "dataset_replay_exact": true,
+          "dataset_rng_exact": true,
+          "feed_replay_exact": true,
+          "raw_unchanged": true,
+          "feed_rng_exact": true,
+          "optimizer_inputs_unchanged": true,
+          "snapshot_copies_exact": true,
+          "input_sha256": "a4c9a8f91b57f6135e9f89cf87233b32b2f563d92e4fcf45264c59fd3a1f84bd",
+          "target_sha256": "88ef70c463e6c19be9f66e33aa35e8ab9252ceebd9126096fa422d48fc95b788",
+          "post_input_sha256": "a4c9a8f91b57f6135e9f89cf87233b32b2f563d92e4fcf45264c59fd3a1f84bd",
+          "post_target_sha256": "88ef70c463e6c19be9f66e33aa35e8ab9252ceebd9126096fa422d48fc95b788"
+        },
+        "rng_before": {
+          "python": "c103b564874b6eb0cfbc5ff2fcc4e33b6eeee80b6ef994633943957e7acf7ce9",
+          "numpy": "ba70871dbab5a03533f1ac5458e1eff0b6179835768f1066a0b1e9e89a9942a1",
+          "torch": "3a0017b305d7f0f10be6064ca07584f01f5fe05e1634b45c537aba2f034b2ae0",
+          "cuda": [
+            "3b1911bb5cb1490af12d484b98ec8706f26d8a884e3f7f7430a3bf726fbcfd88"
+          ]
+        },
+        "rng_after": {
+          "python": "506f3d6036317f5a5d1a00b0c9b4a3f546f9eb4dd8bfd02e699bd864bb520e21",
+          "numpy": "ba70871dbab5a03533f1ac5458e1eff0b6179835768f1066a0b1e9e89a9942a1",
+          "torch": "e2277ab6906616123f2e3786e9dcf77bbe37b2b21a5ebd72a530bfcafffb5f6a",
+          "cuda": [
+            "4e0d7fac1704c2fbe653cf55b914574a8363592a66aee982a439477943b71007"
+          ]
+        },
+        "global_pfa_rng_consumed": true,
+        "loss_components": {
+          "pixel_l1": 0.38008230924606323,
+          "structure": 0.017448807135224342,
+          "weighted_structure": 0.0008724403451196849
+        }
+      },
+      {
+        "update": 3,
+        "loss": 0.2986672818660736,
+        "lr": 0.0003,
+        "proof": {
+          "update": 3,
+          "dataset_replay_count": 16,
+          "dataset_sha256": "fc214b1d24d98a1bec18626a87b2186ca6f327309a8b94469013187975932c86",
+          "dataset_replay_exact": true,
+          "dataset_rng_exact": true,
+          "feed_replay_exact": true,
+          "raw_unchanged": true,
+          "feed_rng_exact": true,
+          "optimizer_inputs_unchanged": true,
+          "snapshot_copies_exact": true,
+          "input_sha256": "fbd93e0b64204a2c8f737c730ecc6f52dcc9937650afe8163993af924cae21bf",
+          "target_sha256": "cfd5d58c8cb8963a6155a44b01327a67fe933e1b7adaebddffec02c6d2cbf044",
+          "post_input_sha256": "fbd93e0b64204a2c8f737c730ecc6f52dcc9937650afe8163993af924cae21bf",
+          "post_target_sha256": "cfd5d58c8cb8963a6155a44b01327a67fe933e1b7adaebddffec02c6d2cbf044"
+        },
+        "rng_before": {
+          "python": "506f3d6036317f5a5d1a00b0c9b4a3f546f9eb4dd8bfd02e699bd864bb520e21",
+          "numpy": "ba70871dbab5a03533f1ac5458e1eff0b6179835768f1066a0b1e9e89a9942a1",
+          "torch": "e2277ab6906616123f2e3786e9dcf77bbe37b2b21a5ebd72a530bfcafffb5f6a",
+          "cuda": [
+            "4e0d7fac1704c2fbe653cf55b914574a8363592a66aee982a439477943b71007"
+          ]
+        },
+        "rng_after": {
+          "python": "eb74acc4a95058287a3513dfc1a1cd57c4fbd4232aa2ddefdcabb6e438e54e92",
+          "numpy": "ba70871dbab5a03533f1ac5458e1eff0b6179835768f1066a0b1e9e89a9942a1",
+          "torch": "d5cafa6bbf52c317ba7fad5a4413e816a0c5ddcf3c5c78469b252d835e9e670f",
+          "cuda": [
+            "ba5e705a71d8e03fd086ba2d54f131f31502be662914457bb60bf29a1c0ceef6"
+          ]
+        },
+        "global_pfa_rng_consumed": true,
+        "loss_components": {
+          "pixel_l1": 0.29801666736602783,
+          "structure": 0.013012407347559929,
+          "weighted_structure": 0.0006506203790195286
+        }
+      },
+      {
+        "update": 4,
+        "loss": 0.2507037818431854,
+        "lr": 0.0003,
+        "proof": {
+          "update": 4,
+          "dataset_replay_count": 16,
+          "dataset_sha256": "3c2b1f929ef617f069e001294a2becb0cda9e8c36e56ad4fba799196afda7cb7",
+          "dataset_replay_exact": true,
+          "dataset_rng_exact": true,
+          "feed_replay_exact": true,
+          "raw_unchanged": true,
+          "feed_rng_exact": true,
+          "optimizer_inputs_unchanged": true,
+          "snapshot_copies_exact": true,
+          "input_sha256": "da1a7751b89603a6042fd25e03e0e74efbceff887e92f78ef60b27d6ea9eb3d0",
+          "target_sha256": "eb9fc822e61292d712679a6065300a1c46b8bfab2d3bc99e46d5b18388bf848b",
+          "post_input_sha256": "da1a7751b89603a6042fd25e03e0e74efbceff887e92f78ef60b27d6ea9eb3d0",
+          "post_target_sha256": "eb9fc822e61292d712679a6065300a1c46b8bfab2d3bc99e46d5b18388bf848b"
+        },
+        "rng_before": {
+          "python": "eb74acc4a95058287a3513dfc1a1cd57c4fbd4232aa2ddefdcabb6e438e54e92",
+          "numpy": "ba70871dbab5a03533f1ac5458e1eff0b6179835768f1066a0b1e9e89a9942a1",
+          "torch": "d5cafa6bbf52c317ba7fad5a4413e816a0c5ddcf3c5c78469b252d835e9e670f",
+          "cuda": [
+            "ba5e705a71d8e03fd086ba2d54f131f31502be662914457bb60bf29a1c0ceef6"
+          ]
+        },
+        "rng_after": {
+          "python": "beae8133c2eeb830489eefd029436b3c9d9bc55674bcb7969565c98cdafd8d85",
+          "numpy": "ba70871dbab5a03533f1ac5458e1eff0b6179835768f1066a0b1e9e89a9942a1",
+          "torch": "674eb668ec5c7992ca1e4f6e988011616e3547d66ab69900eff8587d229d6fc2",
+          "cuda": [
+            "d8edf4fa589d4209ed620445993f43a047f4ee4d0ffe4363497854e1da21183b"
+          ]
+        },
+        "global_pfa_rng_consumed": true,
+        "loss_components": {
+          "pixel_l1": 0.24982377886772156,
+          "structure": 0.01760030910372734,
+          "weighted_structure": 0.0008800154901109636
+        }
+      }
+    ],
+    "interrupted": [
+      {
+        "update": 1,
+        "loss": 0.40450093150138855,
+        "lr": 0.0003,
+        "proof": {
+          "update": 1,
+          "dataset_replay_count": 16,
+          "dataset_sha256": "1c3fe7b598e21a3d067e372018a356119ecd853c048cb2a87a97d8a8cf47ca86",
+          "dataset_replay_exact": true,
+          "dataset_rng_exact": true,
+          "feed_replay_exact": true,
+          "raw_unchanged": true,
+          "feed_rng_exact": true,
+          "optimizer_inputs_unchanged": true,
+          "snapshot_copies_exact": true,
+          "input_sha256": "8c763670347aaffc9d8fe161e26d051e931a4bc664783287467fadfdec5ad326",
+          "target_sha256": "8e246cf1ed6c0352fffa2552836276a26465308cbc02d8e6062c5e302882e62e",
+          "post_input_sha256": "8c763670347aaffc9d8fe161e26d051e931a4bc664783287467fadfdec5ad326",
+          "post_target_sha256": "8e246cf1ed6c0352fffa2552836276a26465308cbc02d8e6062c5e302882e62e"
+        },
+        "rng_before": {
+          "python": "4e99f6ea2ec51bbe44d287245b165e087e188531249afee1fa8f6d0bdba851d2",
+          "numpy": "ba70871dbab5a03533f1ac5458e1eff0b6179835768f1066a0b1e9e89a9942a1",
+          "torch": "1d90acc61843753b5cb4fb74d82eeb8afbb661ea4165860316c8f66e8d941c0f",
+          "cuda": [
+            "7f61d922705d8e3c7a9e10e54f4ecd6945ef78f93d0a44255e08d693f0297444"
+          ]
+        },
+        "rng_after": {
+          "python": "c103b564874b6eb0cfbc5ff2fcc4e33b6eeee80b6ef994633943957e7acf7ce9",
+          "numpy": "ba70871dbab5a03533f1ac5458e1eff0b6179835768f1066a0b1e9e89a9942a1",
+          "torch": "3a0017b305d7f0f10be6064ca07584f01f5fe05e1634b45c537aba2f034b2ae0",
+          "cuda": [
+            "3b1911bb5cb1490af12d484b98ec8706f26d8a884e3f7f7430a3bf726fbcfd88"
+          ]
+        },
+        "global_pfa_rng_consumed": true,
+        "loss_components": {
+          "pixel_l1": 0.40361735224723816,
+          "structure": 0.01767183095216751,
+          "weighted_structure": 0.0008835915359668434
+        }
+      },
+      {
+        "update": 2,
+        "loss": 0.3809547424316406,
+        "lr": 0.0003,
+        "proof": {
+          "update": 2,
+          "dataset_replay_count": 16,
+          "dataset_sha256": "4f37ca670d949a69e31f1b9491aa3e063b5abb25f966dad628f189a2e22bbbe6",
+          "dataset_replay_exact": true,
+          "dataset_rng_exact": true,
+          "feed_replay_exact": true,
+          "raw_unchanged": true,
+          "feed_rng_exact": true,
+          "optimizer_inputs_unchanged": true,
+          "snapshot_copies_exact": true,
+          "input_sha256": "a4c9a8f91b57f6135e9f89cf87233b32b2f563d92e4fcf45264c59fd3a1f84bd",
+          "target_sha256": "88ef70c463e6c19be9f66e33aa35e8ab9252ceebd9126096fa422d48fc95b788",
+          "post_input_sha256": "a4c9a8f91b57f6135e9f89cf87233b32b2f563d92e4fcf45264c59fd3a1f84bd",
+          "post_target_sha256": "88ef70c463e6c19be9f66e33aa35e8ab9252ceebd9126096fa422d48fc95b788"
+        },
+        "rng_before": {
+          "python": "c103b564874b6eb0cfbc5ff2fcc4e33b6eeee80b6ef994633943957e7acf7ce9",
+          "numpy": "ba70871dbab5a03533f1ac5458e1eff0b6179835768f1066a0b1e9e89a9942a1",
+          "torch": "3a0017b305d7f0f10be6064ca07584f01f5fe05e1634b45c537aba2f034b2ae0",
+          "cuda": [
+            "3b1911bb5cb1490af12d484b98ec8706f26d8a884e3f7f7430a3bf726fbcfd88"
+          ]
+        },
+        "rng_after": {
+          "python": "506f3d6036317f5a5d1a00b0c9b4a3f546f9eb4dd8bfd02e699bd864bb520e21",
+          "numpy": "ba70871dbab5a03533f1ac5458e1eff0b6179835768f1066a0b1e9e89a9942a1",
+          "torch": "e2277ab6906616123f2e3786e9dcf77bbe37b2b21a5ebd72a530bfcafffb5f6a",
+          "cuda": [
+            "4e0d7fac1704c2fbe653cf55b914574a8363592a66aee982a439477943b71007"
+          ]
+        },
+        "global_pfa_rng_consumed": true,
+        "loss_components": {
+          "pixel_l1": 0.38008230924606323,
+          "structure": 0.017448807135224342,
+          "weighted_structure": 0.0008724403451196849
+        }
+      }
+    ],
+    "resumed": [
+      {
+        "update": 3,
+        "loss": 0.2986672818660736,
+        "lr": 0.0003,
+        "proof": {
+          "update": 3,
+          "dataset_replay_count": 16,
+          "dataset_sha256": "fc214b1d24d98a1bec18626a87b2186ca6f327309a8b94469013187975932c86",
+          "dataset_replay_exact": true,
+          "dataset_rng_exact": true,
+          "feed_replay_exact": true,
+          "raw_unchanged": true,
+          "feed_rng_exact": true,
+          "optimizer_inputs_unchanged": true,
+          "snapshot_copies_exact": true,
+          "input_sha256": "fbd93e0b64204a2c8f737c730ecc6f52dcc9937650afe8163993af924cae21bf",
+          "target_sha256": "cfd5d58c8cb8963a6155a44b01327a67fe933e1b7adaebddffec02c6d2cbf044",
+          "post_input_sha256": "fbd93e0b64204a2c8f737c730ecc6f52dcc9937650afe8163993af924cae21bf",
+          "post_target_sha256": "cfd5d58c8cb8963a6155a44b01327a67fe933e1b7adaebddffec02c6d2cbf044"
+        },
+        "rng_before": {
+          "python": "506f3d6036317f5a5d1a00b0c9b4a3f546f9eb4dd8bfd02e699bd864bb520e21",
+          "numpy": "ba70871dbab5a03533f1ac5458e1eff0b6179835768f1066a0b1e9e89a9942a1",
+          "torch": "e2277ab6906616123f2e3786e9dcf77bbe37b2b21a5ebd72a530bfcafffb5f6a",
+          "cuda": [
+            "4e0d7fac1704c2fbe653cf55b914574a8363592a66aee982a439477943b71007"
+          ]
+        },
+        "rng_after": {
+          "python": "eb74acc4a95058287a3513dfc1a1cd57c4fbd4232aa2ddefdcabb6e438e54e92",
+          "numpy": "ba70871dbab5a03533f1ac5458e1eff0b6179835768f1066a0b1e9e89a9942a1",
+          "torch": "d5cafa6bbf52c317ba7fad5a4413e816a0c5ddcf3c5c78469b252d835e9e670f",
+          "cuda": [
+            "ba5e705a71d8e03fd086ba2d54f131f31502be662914457bb60bf29a1c0ceef6"
+          ]
+        },
+        "global_pfa_rng_consumed": true,
+        "loss_components": {
+          "pixel_l1": 0.29801666736602783,
+          "structure": 0.013012407347559929,
+          "weighted_structure": 0.0006506203790195286
+        }
+      },
+      {
+        "update": 4,
+        "loss": 0.2507037818431854,
+        "lr": 0.0003,
+        "proof": {
+          "update": 4,
+          "dataset_replay_count": 16,
+          "dataset_sha256": "3c2b1f929ef617f069e001294a2becb0cda9e8c36e56ad4fba799196afda7cb7",
+          "dataset_replay_exact": true,
+          "dataset_rng_exact": true,
+          "feed_replay_exact": true,
+          "raw_unchanged": true,
+          "feed_rng_exact": true,
+          "optimizer_inputs_unchanged": true,
+          "snapshot_copies_exact": true,
+          "input_sha256": "da1a7751b89603a6042fd25e03e0e74efbceff887e92f78ef60b27d6ea9eb3d0",
+          "target_sha256": "eb9fc822e61292d712679a6065300a1c46b8bfab2d3bc99e46d5b18388bf848b",
+          "post_input_sha256": "da1a7751b89603a6042fd25e03e0e74efbceff887e92f78ef60b27d6ea9eb3d0",
+          "post_target_sha256": "eb9fc822e61292d712679a6065300a1c46b8bfab2d3bc99e46d5b18388bf848b"
+        },
+        "rng_before": {
+          "python": "eb74acc4a95058287a3513dfc1a1cd57c4fbd4232aa2ddefdcabb6e438e54e92",
+          "numpy": "ba70871dbab5a03533f1ac5458e1eff0b6179835768f1066a0b1e9e89a9942a1",
+          "torch": "d5cafa6bbf52c317ba7fad5a4413e816a0c5ddcf3c5c78469b252d835e9e670f",
+          "cuda": [
+            "ba5e705a71d8e03fd086ba2d54f131f31502be662914457bb60bf29a1c0ceef6"
+          ]
+        },
+        "rng_after": {
+          "python": "beae8133c2eeb830489eefd029436b3c9d9bc55674bcb7969565c98cdafd8d85",
+          "numpy": "ba70871dbab5a03533f1ac5458e1eff0b6179835768f1066a0b1e9e89a9942a1",
+          "torch": "674eb668ec5c7992ca1e4f6e988011616e3547d66ab69900eff8587d229d6fc2",
+          "cuda": [
+            "d8edf4fa589d4209ed620445993f43a047f4ee4d0ffe4363497854e1da21183b"
+          ]
+        },
+        "global_pfa_rng_consumed": true,
+        "loss_components": {
+          "pixel_l1": 0.24982377886772156,
+          "structure": 0.01760030910372734,
+          "weighted_structure": 0.0008800154901109636
+        }
+      }
+    ]
+  },
+  "continuous_checkpoint": {
+    "path": "/home/imss/cw/CLIPDenoising_G1C_Seeds_20261021/reports/g1c_numpy_candidate_r2/g1c_seed1_full_contract_v2z8ytuo/continuous_update4.pth",
+    "sha256": "7de447317fa2cb5add495220ead259af052b5f154819d2814f429fd3e921f227",
+    "comparison": {
+      "tensor_count": 416,
+      "max_abs_difference": 0.0,
+      "bitwise_equal": true,
+      "allclose": true,
+      "accepted": true,
+      "groups": {
+        "root": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 0,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "params": {
+          "tensor_count": 351,
+          "array_count": 0,
+          "scalar_count": 0,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 351,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "optimizer": {
+          "tensor_count": 63,
+          "array_count": 0,
+          "scalar_count": 33,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 63,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "scheduler": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 14,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "scaler": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "ema": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "update": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "rng": {
+          "tensor_count": 2,
+          "array_count": 1,
+          "scalar_count": 631,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 2,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "sampler": {
+          "tensor_count": 0,
+          "array_count": 1,
+          "scalar_count": 439,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "pfa_rng": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "config_hash": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "source_hash": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "experiment": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "stage": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "seed": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "elapsed_seconds": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "complete_update_boundary": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        }
+      },
+      "failures": []
+    }
+  },
+  "interrupted_checkpoint": {
+    "path": "/home/imss/cw/CLIPDenoising_G1C_Seeds_20261021/reports/g1c_numpy_candidate_r2/g1c_seed1_full_contract_v2z8ytuo/interrupted_update2.pth",
+    "sha256": "7045ff48062dae11174d4b1dc17398273b9c92c92da9c0893cb1495aaeb1c87b",
+    "comparison": {
+      "tensor_count": 416,
+      "max_abs_difference": 0.0,
+      "bitwise_equal": true,
+      "allclose": true,
+      "accepted": true,
+      "groups": {
+        "root": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 0,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "params": {
+          "tensor_count": 351,
+          "array_count": 0,
+          "scalar_count": 0,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 351,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "optimizer": {
+          "tensor_count": 63,
+          "array_count": 0,
+          "scalar_count": 33,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 63,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "scheduler": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 14,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "scaler": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "ema": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "update": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "rng": {
+          "tensor_count": 2,
+          "array_count": 1,
+          "scalar_count": 631,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 2,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "sampler": {
+          "tensor_count": 0,
+          "array_count": 1,
+          "scalar_count": 439,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "pfa_rng": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "config_hash": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "source_hash": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "experiment": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "stage": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "seed": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "elapsed_seconds": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "complete_update_boundary": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        }
+      },
+      "failures": []
+    }
+  },
+  "immediate_restore": {
+    "tensor_count": 416,
+    "max_abs_difference": 0.0,
+    "bitwise_equal": true,
+    "allclose": true,
+    "accepted": true,
+    "groups": {
+      "root": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 0,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "params": {
+        "tensor_count": 351,
+        "array_count": 0,
+        "scalar_count": 0,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 351,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "optimizer": {
+        "tensor_count": 63,
+        "array_count": 0,
+        "scalar_count": 33,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 63,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "scheduler": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 14,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "scaler": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "ema": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "update": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "rng": {
+        "tensor_count": 2,
+        "array_count": 1,
+        "scalar_count": 631,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 2,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "sampler": {
+        "tensor_count": 0,
+        "array_count": 1,
+        "scalar_count": 439,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "pfa_rng": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "config_hash": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "source_hash": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "experiment": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "stage": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "seed": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "elapsed_seconds": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "complete_update_boundary": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      }
+    },
+    "failures": []
+  },
+  "resumed_checkpoint": {
+    "path": "/home/imss/cw/CLIPDenoising_G1C_Seeds_20261021/reports/g1c_numpy_candidate_r2/g1c_seed1_full_contract_v2z8ytuo/resumed_update4.pth",
+    "sha256": "7de447317fa2cb5add495220ead259af052b5f154819d2814f429fd3e921f227",
+    "comparison": {
+      "tensor_count": 416,
+      "max_abs_difference": 0.0,
+      "bitwise_equal": true,
+      "allclose": true,
+      "accepted": true,
+      "groups": {
+        "root": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 0,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "params": {
+          "tensor_count": 351,
+          "array_count": 0,
+          "scalar_count": 0,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 351,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "optimizer": {
+          "tensor_count": 63,
+          "array_count": 0,
+          "scalar_count": 33,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 63,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "scheduler": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 14,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "scaler": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "ema": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "update": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "rng": {
+          "tensor_count": 2,
+          "array_count": 1,
+          "scalar_count": 631,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 2,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "sampler": {
+          "tensor_count": 0,
+          "array_count": 1,
+          "scalar_count": 439,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "pfa_rng": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "config_hash": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "source_hash": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "experiment": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "stage": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "seed": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "elapsed_seconds": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        },
+        "complete_update_boundary": {
+          "tensor_count": 0,
+          "array_count": 0,
+          "scalar_count": 1,
+          "max_abs_difference": 0.0,
+          "max_difference_path": null,
+          "bitwise_equal": true,
+          "allclose": true,
+          "accepted": true,
+          "tolerant_float_tensor_count": 0,
+          "exact_tensor_count": 0,
+          "non_bitwise_tensor_count": 0,
+          "first_non_bitwise_tensor_paths": []
+        }
+      },
+      "failures": []
+    }
+  },
+  "continuous_vs_resumed": {
+    "tensor_count": 416,
+    "max_abs_difference": 0.0,
+    "bitwise_equal": true,
+    "allclose": true,
+    "accepted": true,
+    "groups": {
+      "root": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 0,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "params": {
+        "tensor_count": 351,
+        "array_count": 0,
+        "scalar_count": 0,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 296,
+        "exact_tensor_count": 55,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "optimizer": {
+        "tensor_count": 63,
+        "array_count": 0,
+        "scalar_count": 33,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 42,
+        "exact_tensor_count": 21,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "scheduler": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 14,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "scaler": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "ema": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "update": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "rng": {
+        "tensor_count": 2,
+        "array_count": 1,
+        "scalar_count": 631,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 2,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "sampler": {
+        "tensor_count": 0,
+        "array_count": 1,
+        "scalar_count": 439,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "pfa_rng": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "config_hash": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "source_hash": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "experiment": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "stage": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "seed": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "elapsed_seconds": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      },
+      "complete_update_boundary": {
+        "tensor_count": 0,
+        "array_count": 0,
+        "scalar_count": 1,
+        "max_abs_difference": 0.0,
+        "max_difference_path": null,
+        "bitwise_equal": true,
+        "allclose": true,
+        "accepted": true,
+        "tolerant_float_tensor_count": 0,
+        "exact_tensor_count": 0,
+        "non_bitwise_tensor_count": 0,
+        "first_non_bitwise_tensor_paths": []
+      }
+    },
+    "failures": []
+  },
+  "row_checks": [
+    {
+      "update": 1,
+      "inputs_controls_exact": true,
+      "loss_accepted": true,
+      "components_accepted": true,
+      "loss_bitwise_equal": true
+    },
+    {
+      "update": 2,
+      "inputs_controls_exact": true,
+      "loss_accepted": true,
+      "components_accepted": true,
+      "loss_bitwise_equal": true
+    },
+    {
+      "update": 3,
+      "inputs_controls_exact": true,
+      "loss_accepted": true,
+      "components_accepted": true,
+      "loss_bitwise_equal": true
+    },
+    {
+      "update": 4,
+      "inputs_controls_exact": true,
+      "loss_accepted": true,
+      "components_accepted": true,
+      "loss_bitwise_equal": true
+    }
+  ],
+  "peak_allocated_mib": 2472.71142578125,
+  "peak_reserved_mib": 3914.0,
+  "ended_at": "2026-10-21T15:08:54Z",
+  "wall_seconds": 31.014239417389035
+}

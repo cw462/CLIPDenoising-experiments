@@ -1,0 +1,65 @@
+{
+  "schema": "public_g1c_cpu_read_failure_summary_v1",
+  "status": "observed_guard_failure",
+  "variant": "G1C",
+  "training_seed": 2,
+  "diagnostic_update": 30,
+  "last_successful_update": 29,
+  "stage": "feed_train_data: raw_snapshot=checked_clone(data), source-before tensor_bytes double read",
+  "source_hash": "51c704dfa85f9cbe938e13984cf063e15c92eaebdf358c5b76cdaad994e2ce54",
+  "config_hash": "77325e53731092416db1c2cbb829bf1cbea01b0a7e552f311bf3f7c5a3db1613",
+  "scientific_commit": "af56111ad0fe5d9355ff89b16db7568b0a918682",
+  "candidate_config_sha256": "9c8b92485603fa497558af1775e845469cdc1d709adcb4b8d01713e9fe8a1d75",
+  "environment_manifest_sha256": "49694f24631539ba926a75876e948827e8d070339057b1c97872bd8c7155c25b",
+  "benchmark_script_sha256": "a6186e0469e4cf0088d4a94814f2e05b8583f12ff6b0d962ad7ab13382e44dd4",
+  "numpy_version": "1.26.4",
+  "numpy_import_path": "/home/imss/cw/CLIPDenoising_G1C_Seeds_20261021/.venv/lib/python3.10/site-packages/numpy/__init__.py",
+  "torch_version": "2.2.1",
+  "torch_cuda_version": "12.1",
+  "original_actual_device": "cpu",
+  "device_basis": "Failure occurs on default_collate raw data before the guarded first feed moves data to CUDA.",
+  "tensor_shape_nchw": [
+    16,
+    3,
+    128,
+    128
+  ],
+  "tensor_dtype": "float32",
+  "contiguous": true,
+  "actual_aliases_raw_gt": true,
+  "actual_aliases_raw_lq": false,
+  "read_bytes": 3145728,
+  "differing_bytes": 1,
+  "byte_differences": [
+    {
+      "offset": 1710815,
+      "first": 63,
+      "second": 61,
+      "xor": 2,
+      "float_index": 427703,
+      "float_first": 0.9411764740943909,
+      "float_second": 0.05882352963089943,
+      "float_xor": "0x2000000"
+    }
+  ],
+  "saved_actual_matches": "second_bytes",
+  "byte_sha256": {
+    "first_bytes": "c8afe602227014fff8c216e341df96629ff97e3f27bbd8af293366dc34ee9dcb",
+    "second_bytes": "d92deda16e032ca229cbaaf2c26a40ae20460a8290db177721b17bf135679269",
+    "saved_actual": "d92deda16e032ca229cbaaf2c26a40ae20460a8290db177721b17bf135679269",
+    "saved_raw_lq": "ad282f2c06650e9fb4a5c3a75e1f3ee2eb044fc544c393e7152fed0bd4bf343f",
+    "saved_raw_gt": "d92deda16e032ca229cbaaf2c26a40ae20460a8290db177721b17bf135679269"
+  },
+  "evidence_sha256": "cfdb37f1f81b1e8463b9b4f1f469e3b6804bbdf5a3595dbafd8b547c7a5f71fd",
+  "evidence_source_path": "/tmp/g1c_gpu1_concurrency_candidate_20261021_1792595623439114085/parallel/seed2/runs/full/G1C/seed2/concurrency_diagnostic/input_failure/update_000030_1792595672374020376.pth",
+  "private_evidence_in_public_export": false,
+  "retry_performed": false,
+  "root_cause_established": false,
+  "interpretation": "The official NumPy 1.26.4 wheel isolation candidate reproduced a one-byte read inconsistency with the same float32 exponent-bit XOR 0x02000000. The serialized actual/raw_gt matches the second read. This establishes the observed failure but does not identify a hardware, library, or other root cause.",
+  "available_memory_test_tools": {
+    "memtester": false,
+    "gcc": "/usr/bin/gcc",
+    "additional_memory_test_run": false,
+    "packages_installed": false
+  }
+}
