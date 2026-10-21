@@ -1,0 +1,23 @@
+{
+  "status": "completed",
+  "experiment": "G1",
+  "stage": "full",
+  "seed": 0,
+  "config_hash": "8e79c5cb4a0edc7c0c05c9b85a5b7ed693e1bfbe7a2100806e24b189e5feb691",
+  "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+  "process": {
+    "pid": 1558318,
+    "create_time": 1792469783.04,
+    "host": "imss"
+  },
+  "updated_at": "2026-10-20T22:31:08Z",
+  "update": 300000,
+  "budget": 300000,
+  "checkpoint": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G1/seed0/checkpoints/final.pth",
+  "log": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G1/seed0/train.jsonl",
+  "loss": 0.01483976375311613,
+  "lr": 1.0000000170523493e-06,
+  "seconds": 0.07201632857322693,
+  "elapsed_seconds": 65678.79124100693,
+  "peak_memory_mb": 2467.44921875
+}

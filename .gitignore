@@ -1,0 +1,23 @@
+/.venv/
+/.cache/
+/tmp/
+/data/
+/pretrained/
+/runs/
+# Canonical completed results are in final_results_20261021/.
+/reports/
+/archives/
+/tools/remote_control.py
+__pycache__/
+*.pyc
+.pytest_cache/
+.ssh_known_hosts
+*.tar
+*.tar.gz
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+.env
+.env.*
+!.env.example

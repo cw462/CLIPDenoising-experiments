@@ -5,7 +5,9 @@
 
 
 import torch
+import json
 from collections import OrderedDict
+from pathlib import Path
 from torch import nn
 
 def conv3x3(in_chn, out_chn, bias=True):
@@ -117,23 +119,74 @@ class ModifiedResNet(nn.Module):
         return out
 
     def load_pretrain_model(self, model_path):
+        """Load every RN50 backbone tensor; never silently leave random layers.
+
+        OpenAI checkpoints also contain text and attention-pooling tensors.
+        These are reported as ignored because this backbone has neither.
+        """
+        if model_path is None or not Path(model_path).is_file():
+            raise FileNotFoundError(
+                "A real pretrained RN50 checkpoint is required: {!r}".format(model_path)
+            )
         with open(model_path, 'rb') as opened_file:
             try:
-                # loading JIT archive
                 model = torch.jit.load(opened_file, map_location="cpu").eval()
                 saved_state_dict = model.state_dict()
+                source_format = "torchscript"
             except RuntimeError:
-                saved_state_dict = torch.load(opened_file, map_location="cpu")
-
-        
-        saved_keys = saved_state_dict.keys()
+                opened_file.seek(0)
+                saved_state_dict = torch.load(
+                    opened_file, map_location="cpu", weights_only=True
+                )
+                source_format = "state_dict"
+        if not isinstance(saved_state_dict, dict):
+            raise TypeError("RN50 checkpoint must contain a tensor state dictionary")
+        if "state_dict" in saved_state_dict:
+            saved_state_dict = saved_state_dict["state_dict"]
+        if not isinstance(saved_state_dict, dict):
+            raise TypeError("Nested RN50 state_dict is not a dictionary")
         state_dict = self.state_dict()
-
-        for key in state_dict.keys():
-            saved_key = 'visual.' + key
-            if saved_key in saved_keys:
-                state_dict[key].copy_(saved_state_dict[saved_key].data)
-
+        # Accept the complete CLIP archive or an explicitly extracted visual
+        # backbone.  A mixture of prefixes is never silently combined.
+        prefix = "visual." if any(k.startswith("visual.") for k in saved_state_dict) else ""
+        matched, missing, shape_mismatches = {}, [], {}
+        for key, expected in state_dict.items():
+            saved_key = prefix + key
+            if saved_key not in saved_state_dict:
+                missing.append(key)
+            else:
+                value = saved_state_dict[saved_key]
+                if not torch.is_tensor(value) or value.shape != expected.shape:
+                    shape_mismatches[key] = {
+                        "expected": list(expected.shape),
+                        "actual": list(value.shape) if torch.is_tensor(value) else "not_tensor",
+                    }
+                else:
+                    matched[key] = value
+        parameters = dict(self.named_parameters())
+        report = {
+            "checkpoint": str(Path(model_path).resolve()),
+            "source_format": source_format,
+            "source_prefix": prefix,
+            "expected_state_key_count": len(state_dict),
+            "matched_state_key_count": len(matched),
+            "matched_parameter_tensor_count": sum(k in parameters for k in matched),
+            "matched_parameter_count": sum(parameters[k].numel() for k in matched if k in parameters),
+            "matched_state_element_count": sum(v.numel() for v in matched.values()),
+            "matched_keys": list(matched),
+            "missing_keys": missing,
+            "shape_mismatches": shape_mismatches,
+            "ignored_source_keys": sorted(set(saved_state_dict) - {prefix + k for k in matched}),
+        }
+        self.pretrain_load_report = report
+        summary = {k: v for k, v in report.items() if k not in ("matched_keys", "ignored_source_keys")}
+        summary["ignored_source_key_count"] = len(report["ignored_source_keys"])
+        print("RN50_LOAD_AUDIT " + json.dumps(summary, sort_keys=True), flush=True)
+        if missing or shape_mismatches:
+            raise RuntimeError("Incomplete RN50 pretrained weights: " + json.dumps(summary))
+        # The preflight above prevents partial mutation before a failure.
+        self.load_state_dict(matched, strict=True)
+        return report
 
 class UNetConvBlock(nn.Module):
     def __init__(self, in_size, out_size, slope=0.2, bias=True):
@@ -156,6 +209,7 @@ class UNetUpBlock(nn.Module):
         super(UNetUpBlock, self).__init__()
         self.up = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True) # nn.ConvTranspose2d(in_size, out_size, kernel_size=2, stride=2, bias=bias)
         self.conv_block = UNetConvBlock(in_size, out_size, slope, bias)
+        self.rgb_calibration = None
 
     def center_crop(self, layer, target_size):
         _, _, layer_height, layer_width = layer.size()
@@ -166,6 +220,8 @@ class UNetUpBlock(nn.Module):
     def forward(self, x, bridge):
         up = self.up(x)
         crop1 = self.center_crop(bridge, up.shape[2:])
+        if self.rgb_calibration is not None:
+            crop1 = self.rgb_calibration(crop1, up)
         out = torch.cat([up, crop1], 1)
         out = self.conv_block(out)
 

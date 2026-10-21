@@ -1,0 +1,691 @@
+{
+  "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+  "status": "completed",
+  "queue": [
+    {
+      "stage": "smoke",
+      "experiment": "B0",
+      "seed": 0,
+      "status": "completed",
+      "budget": 100,
+      "update": 100,
+      "run_dir": "/home/imss/cw/CLIPDenoising_20261020/runs/smoke/B0/seed0",
+      "config_hash": "b9d6fed110028acdcc00fda520701970de949b6281af75b0266f2da364b44e67",
+      "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+      "gpu_index": 0,
+      "gpu_slot": 0,
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tools/run_experiment.py",
+        "--exp",
+        "B0",
+        "--stage",
+        "smoke",
+        "--seed",
+        "0",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml"
+      ],
+      "log": "/home/imss/cw/CLIPDenoising_20261020/runs/smoke/B0/seed0/train.jsonl",
+      "recovery": "new child launched",
+      "process": {
+        "pid": 1553342,
+        "create_time": 1792469303.56,
+        "host": "imss"
+      },
+      "checkpoint": "/home/imss/cw/CLIPDenoising_20261020/runs/smoke/B0/seed0/checkpoints/final.pth",
+      "seconds": 0.07103978283703327,
+      "elapsed_seconds": 9.738175364211202,
+      "completed_at": "2026-10-20T04:08:44Z",
+      "exit_code": 0,
+      "development_evaluation_completed": true
+    },
+    {
+      "stage": "smoke",
+      "experiment": "G1",
+      "seed": 0,
+      "status": "completed",
+      "budget": 100,
+      "update": 100,
+      "run_dir": "/home/imss/cw/CLIPDenoising_20261020/runs/smoke/G1/seed0",
+      "config_hash": "a46ebbae18899b1aac8f8f628f4053cf34b72f7d485771f4a70745031fc1364b",
+      "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+      "gpu_index": 1,
+      "gpu_slot": 0,
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tools/run_experiment.py",
+        "--exp",
+        "G1",
+        "--stage",
+        "smoke",
+        "--seed",
+        "0",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml"
+      ],
+      "log": "/home/imss/cw/CLIPDenoising_20261020/runs/smoke/G1/seed0/train.jsonl",
+      "recovery": "new child launched",
+      "process": {
+        "pid": 1553344,
+        "create_time": 1792469304.1,
+        "host": "imss"
+      },
+      "checkpoint": "/home/imss/cw/CLIPDenoising_20261020/runs/smoke/G1/seed0/checkpoints/final.pth",
+      "seconds": 0.07300064712762833,
+      "elapsed_seconds": 10.499636877328157,
+      "completed_at": "2026-10-20T04:08:44Z",
+      "exit_code": 0,
+      "development_evaluation_completed": true
+    },
+    {
+      "stage": "pilot",
+      "experiment": "B0",
+      "seed": 0,
+      "status": "completed",
+      "budget": 5000,
+      "update": 5000,
+      "run_dir": "/home/imss/cw/CLIPDenoising_20261020/runs/pilot/B0/seed0",
+      "config_hash": "3f43cf435b73dff800bdfa9a2c2c37022368c482a0f359834f80fa134c0140bb",
+      "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+      "gpu_index": 0,
+      "gpu_slot": 0,
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tools/run_experiment.py",
+        "--exp",
+        "B0",
+        "--stage",
+        "pilot",
+        "--seed",
+        "0",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml"
+      ],
+      "log": "/home/imss/cw/CLIPDenoising_20261020/runs/pilot/B0/seed0/train.jsonl",
+      "recovery": "new child launched",
+      "process": {
+        "pid": 1553894,
+        "create_time": 1792469345.11,
+        "host": "imss"
+      },
+      "checkpoint": "/home/imss/cw/CLIPDenoising_20261020/runs/pilot/B0/seed0/checkpoints/final.pth",
+      "seconds": 0.07512832432985306,
+      "elapsed_seconds": 366.3114323616028,
+      "completed_at": "2026-10-20T04:15:21Z",
+      "exit_code": 0,
+      "development_evaluation_completed": true
+    },
+    {
+      "stage": "pilot",
+      "experiment": "G1",
+      "seed": 0,
+      "status": "completed",
+      "budget": 5000,
+      "update": 5000,
+      "run_dir": "/home/imss/cw/CLIPDenoising_20261020/runs/pilot/G1/seed0",
+      "config_hash": "6465a9563fcf4174a2e9540da0ca49457afd05b56d9073498bfd20e4983fe959",
+      "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+      "gpu_index": 1,
+      "gpu_slot": 0,
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tools/run_experiment.py",
+        "--exp",
+        "G1",
+        "--stage",
+        "pilot",
+        "--seed",
+        "0",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml"
+      ],
+      "log": "/home/imss/cw/CLIPDenoising_20261020/runs/pilot/G1/seed0/train.jsonl",
+      "recovery": "new child launched",
+      "process": {
+        "pid": 1553904,
+        "create_time": 1792469345.64,
+        "host": "imss"
+      },
+      "checkpoint": "/home/imss/cw/CLIPDenoising_20261020/runs/pilot/G1/seed0/checkpoints/final.pth",
+      "seconds": 0.07801255024969578,
+      "elapsed_seconds": 407.280436296016,
+      "completed_at": "2026-10-20T04:16:02Z",
+      "exit_code": 0,
+      "development_evaluation_completed": true
+    },
+    {
+      "stage": "full",
+      "experiment": "B0",
+      "seed": 0,
+      "status": "completed",
+      "budget": 300000,
+      "update": 300000,
+      "run_dir": "/home/imss/cw/CLIPDenoising_20261020/runs/full/B0/seed0",
+      "config_hash": "62054c2c2796f76a87bf339c88d31ffc7635d5eee7ba35754ab8b95860aded62",
+      "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+      "gpu_index": 0,
+      "gpu_slot": 0,
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tools/run_experiment.py",
+        "--exp",
+        "B0",
+        "--stage",
+        "full",
+        "--seed",
+        "0",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml"
+      ],
+      "log": "/home/imss/cw/CLIPDenoising_20261020/runs/full/B0/seed0/train.jsonl",
+      "recovery": "new child launched",
+      "process": {
+        "pid": 1558315,
+        "create_time": 1792469782.5,
+        "host": "imss"
+      },
+      "checkpoint": "/home/imss/cw/CLIPDenoising_20261020/runs/full/B0/seed0/checkpoints/final.pth",
+      "seconds": 0.09184316359460354,
+      "elapsed_seconds": 58429.54695536755,
+      "completed_at": "2026-10-20T20:30:24Z",
+      "exit_code": 0
+    },
+    {
+      "stage": "full",
+      "experiment": "G1",
+      "seed": 0,
+      "status": "completed",
+      "budget": 300000,
+      "update": 300000,
+      "run_dir": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G1/seed0",
+      "config_hash": "8e79c5cb4a0edc7c0c05c9b85a5b7ed693e1bfbe7a2100806e24b189e5feb691",
+      "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+      "gpu_index": 1,
+      "gpu_slot": 0,
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tools/run_experiment.py",
+        "--exp",
+        "G1",
+        "--stage",
+        "full",
+        "--seed",
+        "0",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml"
+      ],
+      "log": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G1/seed0/train.jsonl",
+      "recovery": "new child launched",
+      "process": {
+        "pid": 1558318,
+        "create_time": 1792469783.04,
+        "host": "imss"
+      },
+      "checkpoint": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G1/seed0/checkpoints/final.pth",
+      "seconds": 0.07201632857322693,
+      "elapsed_seconds": 65678.79124100693,
+      "completed_at": "2026-10-20T22:31:13Z",
+      "exit_code": 0
+    },
+    {
+      "stage": "full",
+      "experiment": "B0",
+      "seed": 1,
+      "status": "completed",
+      "budget": 300000,
+      "update": 300000,
+      "run_dir": "/home/imss/cw/CLIPDenoising_20261020/runs/full/B0/seed1",
+      "config_hash": "f38524cfe16386a7cf31963fd528f4dd15d0d7236ddb36d983a71c9ac576bf04",
+      "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+      "gpu_index": 0,
+      "gpu_slot": 1,
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tools/run_experiment.py",
+        "--exp",
+        "B0",
+        "--stage",
+        "full",
+        "--seed",
+        "1",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml"
+      ],
+      "log": "/home/imss/cw/CLIPDenoising_20261020/runs/full/B0/seed1/train.jsonl",
+      "recovery": "new child launched",
+      "process": {
+        "pid": 1558320,
+        "create_time": 1792469783.57,
+        "host": "imss"
+      },
+      "checkpoint": "/home/imss/cw/CLIPDenoising_20261020/runs/full/B0/seed1/checkpoints/final.pth",
+      "seconds": 0.19424106180667877,
+      "elapsed_seconds": 58412.234433528036,
+      "completed_at": "2026-10-20T20:30:09Z",
+      "exit_code": 0
+    },
+    {
+      "stage": "full",
+      "experiment": "G1",
+      "seed": 1,
+      "status": "completed",
+      "budget": 300000,
+      "update": 300000,
+      "run_dir": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G1/seed1",
+      "config_hash": "d3a86fba3eb9a04bb49f02d0eed692295a55c6e3b8cd4688e560c53626a2ea27",
+      "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+      "gpu_index": 1,
+      "gpu_slot": 1,
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tools/run_experiment.py",
+        "--exp",
+        "G1",
+        "--stage",
+        "full",
+        "--seed",
+        "1",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml"
+      ],
+      "log": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G1/seed1/train.jsonl",
+      "recovery": "new child launched",
+      "process": {
+        "pid": 1558322,
+        "create_time": 1792469784.11,
+        "host": "imss"
+      },
+      "checkpoint": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G1/seed1/checkpoints/final.pth",
+      "seconds": 0.1373311746865511,
+      "elapsed_seconds": 65558.6554751005,
+      "completed_at": "2026-10-20T22:29:12Z",
+      "exit_code": 0
+    },
+    {
+      "stage": "full",
+      "experiment": "B0",
+      "seed": 2,
+      "status": "completed",
+      "budget": 300000,
+      "update": 300000,
+      "run_dir": "/home/imss/cw/CLIPDenoising_20261020/runs/full/B0/seed2",
+      "config_hash": "85531b704f046951e121c93e405a51c178d28f86386461cdf26f3b98e9da4567",
+      "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+      "gpu_index": 0,
+      "gpu_slot": 2,
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tools/run_experiment.py",
+        "--exp",
+        "B0",
+        "--stage",
+        "full",
+        "--seed",
+        "2",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml"
+      ],
+      "log": "/home/imss/cw/CLIPDenoising_20261020/runs/full/B0/seed2/train.jsonl",
+      "recovery": "new child launched",
+      "process": {
+        "pid": 1558352,
+        "create_time": 1792469784.67,
+        "host": "imss"
+      },
+      "checkpoint": "/home/imss/cw/CLIPDenoising_20261020/runs/full/B0/seed2/checkpoints/final.pth",
+      "seconds": 0.19311418756842613,
+      "elapsed_seconds": 58342.031852521,
+      "completed_at": "2026-10-20T20:28:59Z",
+      "exit_code": 0
+    },
+    {
+      "stage": "full",
+      "experiment": "G1",
+      "seed": 2,
+      "status": "completed",
+      "budget": 300000,
+      "update": 300000,
+      "run_dir": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G1/seed2",
+      "config_hash": "3d0263edbb2dade495f6eca1156f9b802e13c4dbb8009a4beec2763aca07d07f",
+      "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+      "gpu_index": 1,
+      "gpu_slot": 2,
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tools/run_experiment.py",
+        "--exp",
+        "G1",
+        "--stage",
+        "full",
+        "--seed",
+        "2",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml"
+      ],
+      "log": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G1/seed2/train.jsonl",
+      "recovery": "new child launched",
+      "process": {
+        "pid": 1558383,
+        "create_time": 1792469785.22,
+        "host": "imss"
+      },
+      "checkpoint": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G1/seed2/checkpoints/final.pth",
+      "seconds": 0.12270332872867584,
+      "elapsed_seconds": 65628.2314762082,
+      "completed_at": "2026-10-20T22:30:23Z",
+      "exit_code": 0
+    },
+    {
+      "stage": "full",
+      "experiment": "G2",
+      "seed": 0,
+      "status": "completed",
+      "budget": 300000,
+      "update": 300000,
+      "run_dir": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G2/seed0",
+      "config_hash": "3434a3e673057b157731d230828dc0e8daeee6bff791ea9172921556d403e8cd",
+      "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+      "gpu_index": 0,
+      "gpu_slot": 3,
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tools/run_experiment.py",
+        "--exp",
+        "G2",
+        "--stage",
+        "full",
+        "--seed",
+        "0",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml"
+      ],
+      "log": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G2/seed0/train.jsonl",
+      "recovery": "new child launched",
+      "process": {
+        "pid": 1558385,
+        "create_time": 1792469785.77,
+        "host": "imss"
+      },
+      "checkpoint": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G2/seed0/checkpoints/final.pth",
+      "seconds": 0.08460769057273865,
+      "elapsed_seconds": 59673.53774960153,
+      "completed_at": "2026-10-20T20:51:12Z",
+      "exit_code": 0
+    },
+    {
+      "stage": "full",
+      "experiment": "G3",
+      "seed": 0,
+      "status": "completed",
+      "budget": 300000,
+      "update": 300000,
+      "run_dir": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G3/seed0",
+      "config_hash": "1421d694b5dcb346456784d6f19f40ce9dccd714c304b6d9cb1e2ad2c8352d61",
+      "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+      "gpu_index": 1,
+      "gpu_slot": 3,
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tools/run_experiment.py",
+        "--exp",
+        "G3",
+        "--stage",
+        "full",
+        "--seed",
+        "0",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml"
+      ],
+      "log": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G3/seed0/train.jsonl",
+      "recovery": "new child launched",
+      "process": {
+        "pid": 1558450,
+        "create_time": 1792469786.39,
+        "host": "imss"
+      },
+      "checkpoint": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G3/seed0/checkpoints/final.pth",
+      "seconds": 0.17899718508124352,
+      "elapsed_seconds": 64610.51979382336,
+      "completed_at": "2026-10-20T22:13:30Z",
+      "exit_code": 0
+    }
+  ],
+  "evaluation": "completed",
+  "jobs_per_gpu": 4,
+  "process": {
+    "pid": 1552520,
+    "create_time": 1792469240.01,
+    "host": "imss"
+  },
+  "updated_at": "2026-10-20T23:30:01Z",
+  "execution_policy": "user-authorized independent two-GPU waves",
+  "gpu_indices": [
+    0,
+    1
+  ],
+  "model_gpus_per_run": 1,
+  "effective_batch_per_run": 16,
+  "formal_concurrency_limit": 8,
+  "development_concurrency_limit": 2,
+  "active_training_count": 0,
+  "phase": "completed",
+  "auxiliary_processes": {
+    "pipeline_capacity": {
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tests/test_pipeline_capacity.py",
+        "--report",
+        "/home/imss/cw/CLIPDenoising_20261020/reports/pipeline_capacity.json"
+      ],
+      "process": {
+        "pid": 1552529,
+        "create_time": 1792469242.76,
+        "host": "imss"
+      },
+      "status": "completed",
+      "gpu_index": 0,
+      "log": "/home/imss/cw/CLIPDenoising_20261020/reports/pipeline_capacity.log",
+      "exit_code": 0
+    },
+    "cache_contract": {
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tests/test_cache_contract.py",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml",
+        "--threads",
+        "4",
+        "--report",
+        "/home/imss/cw/CLIPDenoising_20261020/reports/cache_contract.json"
+      ],
+      "process": {
+        "pid": 1552533,
+        "create_time": 1792469247.8,
+        "host": "imss"
+      },
+      "status": "completed",
+      "gpu_index": 0,
+      "log": "/home/imss/cw/CLIPDenoising_20261020/reports/cache_contract.log",
+      "exit_code": 0
+    },
+    "calibration": {
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tests/test_calibration_contract.py",
+        "--weights",
+        "/home/imss/cw/CLIPDenoising_20261020/pretrained/RN50.pt",
+        "--device",
+        "cuda",
+        "--threads",
+        "4",
+        "--report",
+        "/home/imss/cw/CLIPDenoising_20261020/reports/calibration_contract.json"
+      ],
+      "process": {
+        "pid": 1552887,
+        "create_time": 1792469277.9,
+        "host": "imss"
+      },
+      "status": "completed",
+      "gpu_index": 0,
+      "log": "/home/imss/cw/CLIPDenoising_20261020/reports/calibration_contract.log",
+      "exit_code": 0
+    },
+    "resume_contract": {
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tests/test_resume_contract.py",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml",
+        "--device",
+        "cuda",
+        "--report",
+        "/home/imss/cw/CLIPDenoising_20261020/reports/resume_contract.json"
+      ],
+      "process": {
+        "pid": 1553070,
+        "create_time": 1792469287.95,
+        "host": "imss"
+      },
+      "status": "completed",
+      "gpu_index": 0,
+      "log": "/home/imss/cw/CLIPDenoising_20261020/reports/resume_contract.log",
+      "exit_code": 0
+    },
+    "smoke_B0_development": {
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tools/evaluate_experiment.py",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml",
+        "--development",
+        "--run-dir",
+        "/home/imss/cw/CLIPDenoising_20261020/runs/smoke/B0/seed0",
+        "--visuals"
+      ],
+      "process": {
+        "pid": 1553604,
+        "create_time": 1792469324.44,
+        "host": "imss"
+      },
+      "status": "completed",
+      "gpu_index": 0,
+      "log": "/home/imss/cw/CLIPDenoising_20261020/reports/smoke_B0_development.log",
+      "exit_code": 0
+    },
+    "smoke_G1_development": {
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tools/evaluate_experiment.py",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml",
+        "--development",
+        "--run-dir",
+        "/home/imss/cw/CLIPDenoising_20261020/runs/smoke/G1/seed0",
+        "--visuals"
+      ],
+      "process": {
+        "pid": 1553752,
+        "create_time": 1792469334.49,
+        "host": "imss"
+      },
+      "status": "completed",
+      "gpu_index": 1,
+      "log": "/home/imss/cw/CLIPDenoising_20261020/reports/smoke_G1_development.log",
+      "exit_code": 0
+    },
+    "pilot_B0_development": {
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tools/evaluate_experiment.py",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml",
+        "--development",
+        "--run-dir",
+        "/home/imss/cw/CLIPDenoising_20261020/runs/pilot/B0/seed0",
+        "--visuals"
+      ],
+      "process": {
+        "pid": 1558020,
+        "create_time": 1792469761.86,
+        "host": "imss"
+      },
+      "status": "completed",
+      "gpu_index": 0,
+      "log": "/home/imss/cw/CLIPDenoising_20261020/reports/pilot_B0_development.log",
+      "exit_code": 0
+    },
+    "pilot_G1_development": {
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tools/evaluate_experiment.py",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml",
+        "--development",
+        "--run-dir",
+        "/home/imss/cw/CLIPDenoising_20261020/runs/pilot/G1/seed0",
+        "--visuals"
+      ],
+      "process": {
+        "pid": 1558170,
+        "create_time": 1792469771.91,
+        "host": "imss"
+      },
+      "status": "completed",
+      "gpu_index": 1,
+      "log": "/home/imss/cw/CLIPDenoising_20261020/reports/pilot_G1_development.log",
+      "exit_code": 0
+    },
+    "final_evaluation": {
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tools/evaluate_experiment.py",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml",
+        "--visuals"
+      ],
+      "process": {
+        "pid": 2069491,
+        "create_time": 1792535472.99,
+        "host": "imss"
+      },
+      "status": "completed",
+      "gpu_index": 0,
+      "log": "/home/imss/cw/CLIPDenoising_20261020/reports/final_evaluation.log",
+      "exit_code": 0
+    },
+    "summarize": {
+      "command": [
+        "/home/imss/cw/CLIPDenoising_20261020/.venv/bin/python",
+        "tools/summarize_experiments.py",
+        "--paths",
+        "/home/imss/cw/CLIPDenoising_20261020/configs/local_paths.yaml"
+      ],
+      "process": {
+        "pid": 2098067,
+        "create_time": 1792538995.84,
+        "host": "imss"
+      },
+      "status": "completed",
+      "gpu_index": 0,
+      "log": "/home/imss/cw/CLIPDenoising_20261020/reports/summarize.log",
+      "exit_code": 0
+    }
+  },
+  "acceptance": "completed",
+  "wave": 3,
+  "wave_capacity": 8,
+  "wave_task_count": 8,
+  "wave_experiments": [
+    "B0_seed0",
+    "G1_seed0",
+    "B0_seed1",
+    "G1_seed1",
+    "B0_seed2",
+    "G1_seed2",
+    "G2_seed0",
+    "G3_seed0"
+  ],
+  "peak_concurrent_training_runs": 8
+}

@@ -7,6 +7,7 @@ from basicsr.models.archs.CLIPEncoder_util import (ModifiedResNet,
                                                       UNetUpBlock,
                                                       UNetUpBlock_nocat,
                                                       conv3x3)
+from basicsr.models.archs.rgb_calibration import RGBCalibration
 
 class ModifiedResNet_RemoveFinalLayer(ModifiedResNet):
    
@@ -31,9 +32,14 @@ class ModifiedResNet_RemoveFinalLayer(ModifiedResNet):
 
 class CLIPDenoising(nn.Module):
     def __init__(self, num_blocks, inp_channels=3, out_channels=3, depth=5, wf=64, slope=0.2,
-                       bias=True, model_path=None, aug_level=0.05):
+                       bias=True, model_path=None, aug_level=0.05, adapter_mode="none"):
 
         super(CLIPDenoising, self).__init__()
+        if adapter_mode not in ("none",) + RGBCalibration.MODES:
+            raise ValueError("Unknown adapter_mode: {!r}".format(adapter_mode))
+        if adapter_mode != "none" and (depth != 5 or inp_channels != 3):
+            raise ValueError("The calibration experiment requires depth=5 and RGB input")
+        self.adapter_mode = adapter_mode
         
         self.sigmas = [aug_level * i for i in range(1, 5)]
         
@@ -65,6 +71,42 @@ class CLIPDenoising(nn.Module):
                 prev_channels = prev_channels//2
 
         self.last = conv3x3(prev_channels, out_channels, bias=bias)
+
+        # All official layers have already consumed exactly their original RNG
+        # sequence. Isolate the additional initialization so paired experiments
+        # also retain identical subsequent augmentation/noise RNG states.
+        if adapter_mode != "none":
+            final_block = self.up_path[4]
+            concatenated_channels = final_block.conv_block.block[0].in_channels
+            decoder_channels = concatenated_channels - inp_channels
+            with torch.random.fork_rng(devices=[]):
+                final_block.rgb_calibration = RGBCalibration(
+                    decoder_channels=decoder_channels, mode=adapter_mode
+                )
+
+    def load_baseline_state_dict(self, state_dict):
+        """Transfer a baseline with only the newly added adapter keys absent."""
+        expected = self.state_dict()
+        prefix = "up_path.4.rgb_calibration."
+        missing = set(expected) - set(state_dict)
+        unexpected = set(state_dict) - set(expected)
+        allowed = {key for key in expected if key.startswith(prefix)}
+        bad_shapes = {
+            key: (tuple(expected[key].shape), tuple(value.shape))
+            for key, value in state_dict.items()
+            if key in expected and expected[key].shape != value.shape
+        }
+        if missing != allowed or unexpected or bad_shapes:
+            raise RuntimeError(
+                "Baseline transfer mismatch: missing={!r}, unexpected={!r}, shapes={!r}; "
+                "only complete calibration key absence is allowed".format(
+                    sorted(missing), sorted(unexpected), bad_shapes
+                )
+            )
+        merged = expected.copy()
+        merged.update(state_dict)
+        self.load_state_dict(merged, strict=True)
+        return {"missing_adapter_keys": sorted(missing), "unexpected_keys": []}
 
 
     def forward(self, x):

@@ -20,10 +20,9 @@ dataset_filenames = [
     if v.endswith('_dataset.py')
 ]
 # import all the dataset modules
-_dataset_modules = [
-    importlib.import_module(f'basicsr.data.{file_name}')
-    for file_name in dataset_filenames
-]
+# Import datasets when selected: optional CT/HDF5 dependencies must not prevent
+# the RGB denoising experiment from importing its dataset.
+_dataset_modules = []
 
 
 def create_dataset(dataset_opt):
@@ -35,9 +34,16 @@ def create_dataset(dataset_opt):
             type (str): Dataset type.
     """
     dataset_type = dataset_opt['type']
+    if dataset_type in ('Dataset_GaussianDenoising', 'Dataset_PairedImage'):
+        modules = [importlib.import_module('basicsr.data.paired_image_dataset')]
+    else:
+        modules = [
+            importlib.import_module(f'basicsr.data.{name}')
+            for name in dataset_filenames
+        ]
 
     # dynamic instantiation
-    for module in _dataset_modules:
+    for module in modules:
         dataset_cls = getattr(module, dataset_type, None)
         if dataset_cls is not None:
             break

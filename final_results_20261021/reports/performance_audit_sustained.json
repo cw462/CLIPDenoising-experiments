@@ -1,0 +1,1156 @@
+{
+  "label": "cached_4_sustained",
+  "scope": "Read-only monitoring; no benchmark launched or process changed",
+  "started_at": "2026-10-20T04:05:04.627656+00:00",
+  "completed_at": "2026-10-20T04:05:59.723421+00:00",
+  "interval_seconds": 5,
+  "requested_samples": 12,
+  "valid_active_samples": 12,
+  "status": "completed",
+  "summary": {
+    "gpus": [
+      {
+        "index": 0.0,
+        "name": "NVIDIA GeForce RTX 3090",
+        "pstates": [
+          "P2"
+        ],
+        "util_percent": {
+          "mean": 97.0,
+          "min": 81.0,
+          "max": 99.0,
+          "first": 99.0,
+          "last": 99.0
+        },
+        "temperature_c": {
+          "mean": 77.0,
+          "min": 77.0,
+          "max": 77.0,
+          "first": 77.0,
+          "last": 77.0
+        },
+        "sm_clock_mhz": {
+          "mean": 1812.5,
+          "min": 1755.0,
+          "max": 1875.0,
+          "first": 1845.0,
+          "last": 1875.0
+        },
+        "graphics_clock_mhz": {
+          "mean": 1812.5,
+          "min": 1755.0,
+          "max": 1875.0,
+          "first": 1845.0,
+          "last": 1875.0
+        },
+        "memory_clock_mhz": {
+          "mean": 9501.0,
+          "min": 9501.0,
+          "max": 9501.0,
+          "first": 9501.0,
+          "last": 9501.0
+        },
+        "used_mib": {
+          "mean": 15656.166666666666,
+          "min": 14671.0,
+          "max": 16339.0,
+          "first": 14671.0,
+          "last": 16339.0
+        },
+        "free_mib": {
+          "mean": 8919.833333333334,
+          "min": 8237.0,
+          "max": 9905.0,
+          "first": 9905.0,
+          "last": 8237.0
+        },
+        "power_w": {
+          "mean": 325.54083333333335,
+          "min": 312.63,
+          "max": 331.16,
+          "first": 328.37,
+          "last": 323.85
+        },
+        "total_mib": 24576.0
+      },
+      {
+        "index": 1.0,
+        "name": "NVIDIA GeForce RTX 3090",
+        "pstates": [
+          "P2"
+        ],
+        "util_percent": {
+          "mean": 99.0,
+          "min": 99.0,
+          "max": 99.0,
+          "first": 99.0,
+          "last": 99.0
+        },
+        "temperature_c": {
+          "mean": 84.33333333333333,
+          "min": 83.0,
+          "max": 85.0,
+          "first": 84.0,
+          "last": 85.0
+        },
+        "sm_clock_mhz": {
+          "mean": 1722.5,
+          "min": 1605.0,
+          "max": 1770.0,
+          "first": 1725.0,
+          "last": 1725.0
+        },
+        "graphics_clock_mhz": {
+          "mean": 1722.5,
+          "min": 1605.0,
+          "max": 1770.0,
+          "first": 1725.0,
+          "last": 1725.0
+        },
+        "memory_clock_mhz": {
+          "mean": 9501.0,
+          "min": 9501.0,
+          "max": 9501.0,
+          "first": 9501.0,
+          "last": 9501.0
+        },
+        "used_mib": {
+          "mean": 17199.75,
+          "min": 15699.0,
+          "max": 17858.0,
+          "first": 17858.0,
+          "last": 17405.0
+        },
+        "free_mib": {
+          "mean": 7376.25,
+          "min": 6718.0,
+          "max": 8877.0,
+          "first": 6718.0,
+          "last": 7171.0
+        },
+        "power_w": {
+          "mean": 331.5516666666667,
+          "min": 308.96,
+          "max": 337.52,
+          "first": 337.52,
+          "last": 335.7
+        },
+        "total_mib": 24576.0
+      }
+    ],
+    "host": {
+      "available_ram_gib": {
+        "mean": 70.36399745941162,
+        "min": 68.66867065429688,
+        "max": 74.89971542358398,
+        "first": 69.93102264404297,
+        "last": 68.66867065429688
+      },
+      "ram_used_percent": {
+        "mean": 25.15,
+        "min": 20.3,
+        "max": 27.0,
+        "first": 25.6,
+        "last": 27.0
+      },
+      "swap_used_gib": {
+        "mean": 10.90130615234375,
+        "min": 10.90130615234375,
+        "max": 10.90130615234375,
+        "first": 10.90130615234375,
+        "last": 10.90130615234375
+      },
+      "cpu_percent": {
+        "mean": 73.23636363636363,
+        "min": 60.8,
+        "max": 78.4,
+        "first": 63.4,
+        "last": 77.9
+      },
+      "load_average_1min": {
+        "mean": 13.514166666666666,
+        "min": 12.56,
+        "max": 15.38,
+        "first": 12.56,
+        "last": 15.38
+      },
+      "logical_cpus": 24
+    }
+  },
+  "samples": [
+    {
+      "at": "2026-10-20T04:05:04.735873+00:00",
+      "elapsed_seconds": 0.10821200720965862,
+      "gpus": [
+        {
+          "index": 0.0,
+          "uuid": "GPU-ceb43279-afbe-68ff-fc3e-aa53be31af15",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 56.0,
+          "temperature_c": 77.0,
+          "sm_clock_mhz": 1845.0,
+          "graphics_clock_mhz": 1845.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 14671.0,
+          "total_mib": 24576.0,
+          "power_w": 328.37,
+          "pstate": "P2",
+          "free_mib": 9905.0
+        },
+        {
+          "index": 1.0,
+          "uuid": "GPU-c6525ce9-f07f-ed3b-b2e8-fa8a8ac732f0",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 56.0,
+          "temperature_c": 84.0,
+          "sm_clock_mhz": 1725.0,
+          "graphics_clock_mhz": 1725.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 17858.0,
+          "total_mib": 24576.0,
+          "power_w": 337.52,
+          "pstate": "P2",
+          "free_mib": 6718.0
+        }
+      ],
+      "host": {
+        "available_ram_gib": 69.93102264404297,
+        "total_ram_gib": 94.00690460205078,
+        "ram_used_percent": 25.6,
+        "swap_used_gib": 10.90130615234375,
+        "cpu_percent": 65.7,
+        "logical_cpus": 24,
+        "load_average": [
+          12.56,
+          10.25,
+          8.05
+        ]
+      },
+      "before": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      },
+      "after": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      }
+    },
+    {
+      "at": "2026-10-20T04:05:09.730669+00:00",
+      "elapsed_seconds": 5.103014154359698,
+      "gpus": [
+        {
+          "index": 0.0,
+          "uuid": "GPU-ceb43279-afbe-68ff-fc3e-aa53be31af15",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 96.0,
+          "memory_util_percent": 53.0,
+          "temperature_c": 77.0,
+          "sm_clock_mhz": 1770.0,
+          "graphics_clock_mhz": 1770.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 14671.0,
+          "total_mib": 24576.0,
+          "power_w": 327.13,
+          "pstate": "P2",
+          "free_mib": 9905.0
+        },
+        {
+          "index": 1.0,
+          "uuid": "GPU-c6525ce9-f07f-ed3b-b2e8-fa8a8ac732f0",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 55.0,
+          "temperature_c": 83.0,
+          "sm_clock_mhz": 1755.0,
+          "graphics_clock_mhz": 1755.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 17858.0,
+          "total_mib": 24576.0,
+          "power_w": 332.19,
+          "pstate": "P2",
+          "free_mib": 6718.0
+        }
+      ],
+      "host": {
+        "available_ram_gib": 69.94053649902344,
+        "total_ram_gib": 94.00690460205078,
+        "ram_used_percent": 25.6,
+        "swap_used_gib": 10.90130615234375,
+        "cpu_percent": 63.4,
+        "logical_cpus": 24,
+        "load_average": [
+          12.67,
+          10.32,
+          8.08
+        ]
+      },
+      "before": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      },
+      "after": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      }
+    },
+    {
+      "at": "2026-10-20T04:05:14.731507+00:00",
+      "elapsed_seconds": 10.10385094024241,
+      "gpus": [
+        {
+          "index": 0.0,
+          "uuid": "GPU-ceb43279-afbe-68ff-fc3e-aa53be31af15",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 55.0,
+          "temperature_c": 77.0,
+          "sm_clock_mhz": 1755.0,
+          "graphics_clock_mhz": 1755.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 14671.0,
+          "total_mib": 24576.0,
+          "power_w": 328.75,
+          "pstate": "P2",
+          "free_mib": 9905.0
+        },
+        {
+          "index": 1.0,
+          "uuid": "GPU-c6525ce9-f07f-ed3b-b2e8-fa8a8ac732f0",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 55.0,
+          "temperature_c": 84.0,
+          "sm_clock_mhz": 1740.0,
+          "graphics_clock_mhz": 1740.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 17858.0,
+          "total_mib": 24576.0,
+          "power_w": 334.42,
+          "pstate": "P2",
+          "free_mib": 6718.0
+        }
+      ],
+      "host": {
+        "available_ram_gib": 69.92569732666016,
+        "total_ram_gib": 94.00690460205078,
+        "ram_used_percent": 25.6,
+        "swap_used_gib": 10.90130615234375,
+        "cpu_percent": 64.1,
+        "logical_cpus": 24,
+        "load_average": [
+          13.02,
+          10.43,
+          8.13
+        ]
+      },
+      "before": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      },
+      "after": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      }
+    },
+    {
+      "at": "2026-10-20T04:05:19.737056+00:00",
+      "elapsed_seconds": 15.109397476539016,
+      "gpus": [
+        {
+          "index": 0.0,
+          "uuid": "GPU-ceb43279-afbe-68ff-fc3e-aa53be31af15",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 55.0,
+          "temperature_c": 77.0,
+          "sm_clock_mhz": 1755.0,
+          "graphics_clock_mhz": 1755.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 14671.0,
+          "total_mib": 24576.0,
+          "power_w": 331.16,
+          "pstate": "P2",
+          "free_mib": 9905.0
+        },
+        {
+          "index": 1.0,
+          "uuid": "GPU-c6525ce9-f07f-ed3b-b2e8-fa8a8ac732f0",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 54.0,
+          "temperature_c": 84.0,
+          "sm_clock_mhz": 1725.0,
+          "graphics_clock_mhz": 1725.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 15699.0,
+          "total_mib": 24576.0,
+          "power_w": 336.22,
+          "pstate": "P2",
+          "free_mib": 8877.0
+        }
+      ],
+      "host": {
+        "available_ram_gib": 74.89971542358398,
+        "total_ram_gib": 94.00690460205078,
+        "ram_used_percent": 20.3,
+        "swap_used_gib": 10.90130615234375,
+        "cpu_percent": 60.8,
+        "logical_cpus": 24,
+        "load_average": [
+          12.78,
+          10.42,
+          8.14
+        ]
+      },
+      "before": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      },
+      "after": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      }
+    },
+    {
+      "at": "2026-10-20T04:05:24.732325+00:00",
+      "elapsed_seconds": 20.1046723164618,
+      "gpus": [
+        {
+          "index": 0.0,
+          "uuid": "GPU-ceb43279-afbe-68ff-fc3e-aa53be31af15",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 96.0,
+          "memory_util_percent": 50.0,
+          "temperature_c": 77.0,
+          "sm_clock_mhz": 1860.0,
+          "graphics_clock_mhz": 1860.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 15663.0,
+          "total_mib": 24576.0,
+          "power_w": 326.08,
+          "pstate": "P2",
+          "free_mib": 8913.0
+        },
+        {
+          "index": 1.0,
+          "uuid": "GPU-c6525ce9-f07f-ed3b-b2e8-fa8a8ac732f0",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 53.0,
+          "temperature_c": 84.0,
+          "sm_clock_mhz": 1710.0,
+          "graphics_clock_mhz": 1710.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 16571.0,
+          "total_mib": 24576.0,
+          "power_w": 332.34,
+          "pstate": "P2",
+          "free_mib": 8005.0
+        }
+      ],
+      "host": {
+        "available_ram_gib": 72.47738647460938,
+        "total_ram_gib": 94.00690460205078,
+        "ram_used_percent": 22.9,
+        "swap_used_gib": 10.90130615234375,
+        "cpu_percent": 76.4,
+        "logical_cpus": 24,
+        "load_average": [
+          13.12,
+          10.53,
+          8.19
+        ]
+      },
+      "before": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      },
+      "after": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      }
+    },
+    {
+      "at": "2026-10-20T04:05:29.743215+00:00",
+      "elapsed_seconds": 25.11556085012853,
+      "gpus": [
+        {
+          "index": 0.0,
+          "uuid": "GPU-ceb43279-afbe-68ff-fc3e-aa53be31af15",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 56.0,
+          "temperature_c": 77.0,
+          "sm_clock_mhz": 1770.0,
+          "graphics_clock_mhz": 1770.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 15981.0,
+          "total_mib": 24576.0,
+          "power_w": 328.1,
+          "pstate": "P2",
+          "free_mib": 8595.0
+        },
+        {
+          "index": 1.0,
+          "uuid": "GPU-c6525ce9-f07f-ed3b-b2e8-fa8a8ac732f0",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 55.0,
+          "temperature_c": 85.0,
+          "sm_clock_mhz": 1710.0,
+          "graphics_clock_mhz": 1710.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 17009.0,
+          "total_mib": 24576.0,
+          "power_w": 333.24,
+          "pstate": "P2",
+          "free_mib": 7567.0
+        }
+      ],
+      "host": {
+        "available_ram_gib": 70.76976013183594,
+        "total_ram_gib": 94.00690460205078,
+        "ram_used_percent": 24.7,
+        "swap_used_gib": 10.90130615234375,
+        "cpu_percent": 76.3,
+        "logical_cpus": 24,
+        "load_average": [
+          13.19,
+          10.59,
+          8.22
+        ]
+      },
+      "before": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      },
+      "after": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      }
+    },
+    {
+      "at": "2026-10-20T04:05:34.748870+00:00",
+      "elapsed_seconds": 30.121215680614114,
+      "gpus": [
+        {
+          "index": 0.0,
+          "uuid": "GPU-ceb43279-afbe-68ff-fc3e-aa53be31af15",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 81.0,
+          "memory_util_percent": 47.0,
+          "temperature_c": 77.0,
+          "sm_clock_mhz": 1860.0,
+          "graphics_clock_mhz": 1860.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 15981.0,
+          "total_mib": 24576.0,
+          "power_w": 312.63,
+          "pstate": "P2",
+          "free_mib": 8595.0
+        },
+        {
+          "index": 1.0,
+          "uuid": "GPU-c6525ce9-f07f-ed3b-b2e8-fa8a8ac732f0",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 55.0,
+          "temperature_c": 84.0,
+          "sm_clock_mhz": 1755.0,
+          "graphics_clock_mhz": 1755.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 17009.0,
+          "total_mib": 24576.0,
+          "power_w": 327.66,
+          "pstate": "P2",
+          "free_mib": 7567.0
+        }
+      ],
+      "host": {
+        "available_ram_gib": 70.68741226196289,
+        "total_ram_gib": 94.00690460205078,
+        "ram_used_percent": 24.8,
+        "swap_used_gib": 10.90130615234375,
+        "cpu_percent": 78.4,
+        "logical_cpus": 24,
+        "load_average": [
+          13.33,
+          10.66,
+          8.26
+        ]
+      },
+      "before": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      },
+      "after": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      }
+    },
+    {
+      "at": "2026-10-20T04:05:39.735734+00:00",
+      "elapsed_seconds": 35.108093440532684,
+      "gpus": [
+        {
+          "index": 0.0,
+          "uuid": "GPU-ceb43279-afbe-68ff-fc3e-aa53be31af15",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 54.0,
+          "temperature_c": 77.0,
+          "sm_clock_mhz": 1830.0,
+          "graphics_clock_mhz": 1830.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 16209.0,
+          "total_mib": 24576.0,
+          "power_w": 322.86,
+          "pstate": "P2",
+          "free_mib": 8367.0
+        },
+        {
+          "index": 1.0,
+          "uuid": "GPU-c6525ce9-f07f-ed3b-b2e8-fa8a8ac732f0",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 55.0,
+          "temperature_c": 85.0,
+          "sm_clock_mhz": 1770.0,
+          "graphics_clock_mhz": 1770.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 17059.0,
+          "total_mib": 24576.0,
+          "power_w": 332.94,
+          "pstate": "P2",
+          "free_mib": 7517.0
+        }
+      ],
+      "host": {
+        "available_ram_gib": 69.96843719482422,
+        "total_ram_gib": 94.00690460205078,
+        "ram_used_percent": 25.6,
+        "swap_used_gib": 10.90130615234375,
+        "cpu_percent": 77.5,
+        "logical_cpus": 24,
+        "load_average": [
+          13.39,
+          10.72,
+          8.29
+        ]
+      },
+      "before": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      },
+      "after": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      }
+    },
+    {
+      "at": "2026-10-20T04:05:44.721454+00:00",
+      "elapsed_seconds": 40.09379771724343,
+      "gpus": [
+        {
+          "index": 0.0,
+          "uuid": "GPU-ceb43279-afbe-68ff-fc3e-aa53be31af15",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 56.0,
+          "temperature_c": 77.0,
+          "sm_clock_mhz": 1845.0,
+          "graphics_clock_mhz": 1845.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 16339.0,
+          "total_mib": 24576.0,
+          "power_w": 320.36,
+          "pstate": "P2",
+          "free_mib": 8237.0
+        },
+        {
+          "index": 1.0,
+          "uuid": "GPU-c6525ce9-f07f-ed3b-b2e8-fa8a8ac732f0",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 56.0,
+          "temperature_c": 85.0,
+          "sm_clock_mhz": 1740.0,
+          "graphics_clock_mhz": 1740.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 17261.0,
+          "total_mib": 24576.0,
+          "power_w": 334.16,
+          "pstate": "P2",
+          "free_mib": 7315.0
+        }
+      ],
+      "host": {
+        "available_ram_gib": 69.13650894165039,
+        "total_ram_gib": 94.00690460205078,
+        "ram_used_percent": 26.5,
+        "swap_used_gib": 10.90130615234375,
+        "cpu_percent": 77.3,
+        "logical_cpus": 24,
+        "load_average": [
+          13.68,
+          10.82,
+          8.33
+        ]
+      },
+      "before": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      },
+      "after": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      }
+    },
+    {
+      "at": "2026-10-20T04:05:49.728882+00:00",
+      "elapsed_seconds": 45.10123688727617,
+      "gpus": [
+        {
+          "index": 0.0,
+          "uuid": "GPU-ceb43279-afbe-68ff-fc3e-aa53be31af15",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 57.0,
+          "temperature_c": 77.0,
+          "sm_clock_mhz": 1785.0,
+          "graphics_clock_mhz": 1785.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 16339.0,
+          "total_mib": 24576.0,
+          "power_w": 327.14,
+          "pstate": "P2",
+          "free_mib": 8237.0
+        },
+        {
+          "index": 1.0,
+          "uuid": "GPU-c6525ce9-f07f-ed3b-b2e8-fa8a8ac732f0",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 54.0,
+          "temperature_c": 85.0,
+          "sm_clock_mhz": 1710.0,
+          "graphics_clock_mhz": 1710.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 17405.0,
+          "total_mib": 24576.0,
+          "power_w": 333.27,
+          "pstate": "P2",
+          "free_mib": 7171.0
+        }
+      ],
+      "host": {
+        "available_ram_gib": 69.09300994873047,
+        "total_ram_gib": 94.00690460205078,
+        "ram_used_percent": 26.5,
+        "swap_used_gib": 10.90130615234375,
+        "cpu_percent": 76.9,
+        "logical_cpus": 24,
+        "load_average": [
+          14.42,
+          11.02,
+          8.41
+        ]
+      },
+      "before": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      },
+      "after": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      }
+    },
+    {
+      "at": "2026-10-20T04:05:54.736757+00:00",
+      "elapsed_seconds": 50.10909980721772,
+      "gpus": [
+        {
+          "index": 0.0,
+          "uuid": "GPU-ceb43279-afbe-68ff-fc3e-aa53be31af15",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 55.0,
+          "temperature_c": 77.0,
+          "sm_clock_mhz": 1800.0,
+          "graphics_clock_mhz": 1800.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 16339.0,
+          "total_mib": 24576.0,
+          "power_w": 330.06,
+          "pstate": "P2",
+          "free_mib": 8237.0
+        },
+        {
+          "index": 1.0,
+          "uuid": "GPU-c6525ce9-f07f-ed3b-b2e8-fa8a8ac732f0",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 53.0,
+          "temperature_c": 84.0,
+          "sm_clock_mhz": 1605.0,
+          "graphics_clock_mhz": 1605.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 17405.0,
+          "total_mib": 24576.0,
+          "power_w": 308.96,
+          "pstate": "P2",
+          "free_mib": 7171.0
+        }
+      ],
+      "host": {
+        "available_ram_gib": 68.86981201171875,
+        "total_ram_gib": 94.00690460205078,
+        "ram_used_percent": 26.7,
+        "swap_used_gib": 10.90130615234375,
+        "cpu_percent": 76.6,
+        "logical_cpus": 24,
+        "load_average": [
+          14.63,
+          11.12,
+          8.46
+        ]
+      },
+      "before": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      },
+      "after": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      }
+    },
+    {
+      "at": "2026-10-20T04:05:59.722631+00:00",
+      "elapsed_seconds": 55.094972494989634,
+      "gpus": [
+        {
+          "index": 0.0,
+          "uuid": "GPU-ceb43279-afbe-68ff-fc3e-aa53be31af15",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 55.0,
+          "temperature_c": 77.0,
+          "sm_clock_mhz": 1875.0,
+          "graphics_clock_mhz": 1875.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 16339.0,
+          "total_mib": 24576.0,
+          "power_w": 323.85,
+          "pstate": "P2",
+          "free_mib": 8237.0
+        },
+        {
+          "index": 1.0,
+          "uuid": "GPU-c6525ce9-f07f-ed3b-b2e8-fa8a8ac732f0",
+          "name": "NVIDIA GeForce RTX 3090",
+          "util_percent": 99.0,
+          "memory_util_percent": 54.0,
+          "temperature_c": 85.0,
+          "sm_clock_mhz": 1725.0,
+          "graphics_clock_mhz": 1725.0,
+          "memory_clock_mhz": 9501.0,
+          "used_mib": 17405.0,
+          "total_mib": 24576.0,
+          "power_w": 335.7,
+          "pstate": "P2",
+          "free_mib": 7171.0
+        }
+      ],
+      "host": {
+        "available_ram_gib": 68.66867065429688,
+        "total_ram_gib": 94.00690460205078,
+        "ram_used_percent": 27.0,
+        "swap_used_gib": 10.90130615234375,
+        "cpu_percent": 77.9,
+        "logical_cpus": 24,
+        "load_average": [
+          15.38,
+          11.34,
+          8.54
+        ]
+      },
+      "before": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      },
+      "after": {
+        "workers": [
+          1549325,
+          1549326,
+          1549327,
+          1549328,
+          1549329,
+          1549330,
+          1549331,
+          1549332
+        ],
+        "start": true,
+        "ready": 8,
+        "finished": []
+      }
+    }
+  ],
+  "excluded_observations": [],
+  "interpretation": "Only samples bracketed by eight running workers, start barrier and no completed files included. CPU priming sample excluded. GPU statistics include other users. GPU core temperature only, not VRAM junction. Clock range alone cannot prove or rule out thermal throttling."
+}

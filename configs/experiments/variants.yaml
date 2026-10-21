@@ -1,0 +1,53 @@
+# Planning record only. The runner does not load this file.
+# Authoritative executable mappings and budgets live in tools/experiment_common.py;
+# common optimization/network defaults come from the original training YAML.
+purpose: immutable_experiment_plan_record
+runtime_configuration_source: tools/experiment_common.py
+official_base_configuration: Denoising/Options/CLIPDenoising_SyntheticDenoising_GaussianSigma15.yml
+variants:
+  B0:
+    adapter_mode: none
+    description: Original CLIPDenoising decoder and PFA
+    formal_seeds: [0, 1, 2]
+  G1:
+    adapter_mode: gated
+    description: Final RGB branch gated residual calibration with decoder guidance
+    formal_seeds: [0, 1, 2]
+  G2:
+    adapter_mode: ungated
+    description: Final RGB branch residual calibration without gate
+    formal_seeds: [0]
+  G3:
+    adapter_mode: no_decoder_guidance
+    description: Final RGB branch gated residual calibration without decoder guidance
+    formal_seeds: [0]
+optimizer_update_budgets:
+  smoke: 100
+  pilot: 5000
+  full: 300000
+formal_queue:
+  - {experiment: B0, seed: 0}
+  - {experiment: G1, seed: 0}
+  - {experiment: B0, seed: 1}
+  - {experiment: G1, seed: 1}
+  - {experiment: B0, seed: 2}
+  - {experiment: G1, seed: 2}
+  - {experiment: G2, seed: 0}
+  - {experiment: G3, seed: 0}
+protocol:
+  formal_training_images: 432
+  development_training_images: 400
+  development_validation_images: 32
+  development_split_seed: 2026
+  base_gaussian_sigma: 15
+  patch_size: 128
+  noisy_views_per_optimizer_update: 16
+  pfa_gamma: 0.025
+  mixup: true
+  mixup_beta: 1.2
+  mixup_use_identity: true
+  frozen_encoder_parameters: true
+  encoder_batchnorm_training_statistics: true
+  loss: L1
+  formal_checkpoint_selection: fixed_final_update_300000
+  optional_dual_view_stage_5: excluded

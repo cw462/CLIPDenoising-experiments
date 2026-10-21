@@ -1,0 +1,31 @@
+{
+  "python": "3.10.18 (main, Jun  5 2025, 13:14:17) [GCC 11.2.0]",
+  "torch": "2.2.1",
+  "cuda": "12.1",
+  "gpus": [
+    "NVIDIA GeForce RTX 3090",
+    "NVIDIA GeForce RTX 3090"
+  ],
+  "platform": "Linux-5.4.0-216-generic-x86_64-with-glibc2.31",
+  "memory": {
+    "total": 100939145216,
+    "available": 85840486400,
+    "percent": 15.0,
+    "used": 14018609152,
+    "free": 35442216960,
+    "active": 46595440640,
+    "inactive": 10302173184,
+    "buffers": 4502851584,
+    "cached": 46975467520,
+    "shared": 63488000,
+    "slab": 7504539648
+  },
+  "disk": {
+    "total": 2014574526464,
+    "used": 1902521581568,
+    "free": 9642672128,
+    "percent": 99.5
+  },
+  "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+  "nvidia_smi": "Tue Oct 20 12:07:19 2026       \n+---------------------------------------------------------------------------------------+\n| NVIDIA-SMI 535.230.02             Driver Version: 535.230.02   CUDA Version: 12.2     |\n|-----------------------------------------+----------------------+----------------------+\n| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |\n|                                         |                      |               MIG M. |\n|=========================================+======================+======================|\n|   0  NVIDIA GeForce RTX 3090        Off | 00000000:1A:00.0 Off |                  N/A |\n| 58%   62C    P2             139W / 350W |   2049MiB / 24576MiB |      0%      Default |\n|                                         |                      |                  N/A |\n+-----------------------------------------+----------------------+----------------------+\n|   1  NVIDIA GeForce RTX 3090        Off | 00000000:68:00.0 Off |                  N/A |\n| 95%   72C    P2             182W / 350W |   2501MiB / 24576MiB |      0%      Default |\n|                                         |                      |                  N/A |\n+-----------------------------------------+----------------------+----------------------+\n                                                                                         \n+---------------------------------------------------------------------------------------+\n| Processes:                                                                            |\n|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |\n|        ID   ID                                                             Usage      |\n|=======================================================================================|\n|    0   N/A  N/A      8997      G   /usr/lib/xorg/Xorg                            4MiB |\n|    0   N/A  N/A     18570      G   /usr/lib/xorg/Xorg                            4MiB |\n|    0   N/A  N/A   1550744      C   ...nda3/envs/pytorch_gpuenv/bin/python     1012MiB |\n|    0   N/A  N/A   1550746      C   ...nda3/envs/pytorch_gpuenv/bin/python     1012MiB |\n|    1   N/A  N/A      8997      G   /usr/lib/xorg/Xorg                           35MiB |\n|    1   N/A  N/A     18570      G   /usr/lib/xorg/Xorg                           73MiB |\n|    1   N/A  N/A     18709      G   /usr/bin/gnome-shell                         15MiB |\n|    1   N/A  N/A   1550745      C   ...nda3/envs/pytorch_gpuenv/bin/python     1048MiB |\n|    1   N/A  N/A   1550747      C   ...nda3/envs/pytorch_gpuenv/bin/python     1296MiB |\n+---------------------------------------------------------------------------------------+\n"
+}

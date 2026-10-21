@@ -1,0 +1,28 @@
+{
+  "status": "completed",
+  "formal_results_available": true,
+  "actual_metric_rows": 25200,
+  "reasons": [],
+  "protocol": {
+    "version": "clipdenoising-local-v1",
+    "official_source": "Denoising/utils.py and Denoising/test_synthetic_denoising.py",
+    "official_noise": "np.random.seed(0) separately before every image/condition",
+    "spatial_gaussian": "per-channel scipy.ndimage.convolve, 3x3 mean, mode=reflect",
+    "poisson": "official.add_poisson_noise(scale=level), clip=True, rounds=False",
+    "extension_noise": "stable SHA256(dataset/image_id/noise_type/level) uint32 seed",
+    "extension_status": "Project extension, not a claim of exact paper reproduction",
+    "speckle": "x + x * N(0, variance), no clipping",
+    "salt_pepper": "one spatial uniform draw, all RGB channels jointly 0 or 1",
+    "input": "RGB /255; Gaussian/spatial/speckle not clipped; no CLIP normalization",
+    "inference": "full-resolution batch1, right/bottom reflect-pad to multiple of 32",
+    "metrics": "crop original size, clamp output [0,1], official RGB float *255 PSNR/SSIM, border0",
+    "aggregation": "images equal; strengths equal within family; families equal; datasets equal",
+    "ood": "Exclude Gaussian sigma15; official three-family and five-family extension scores separate",
+    "visual_selection": "first two lexicographically sorted images per dataset, six fixed conditions",
+    "error_color_scale": "mean absolute RGB error [0,0.20], shared fixed grayscale",
+    "signed_correction_scale": "[-0.10,+0.10], shared fixed display; raw arrays preserved",
+    "runtime": "256x256 seeded tensor, batch1, 3 warmups, 10 forwards; synchronized CUDA"
+  },
+  "fixed_example_panels": 48,
+  "negative_paired_cases": 4819
+}

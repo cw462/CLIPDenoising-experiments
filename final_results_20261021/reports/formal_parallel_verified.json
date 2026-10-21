@@ -1,0 +1,111 @@
+{
+  "at": "2026-10-20T04:17:30Z",
+  "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+  "passed": true,
+  "actual_formal_processes": 8,
+  "gpu_counts": {
+    "0": 4,
+    "1": 4
+  },
+  "rows": [
+    {
+      "experiment": "B0",
+      "seed": 0,
+      "gpu": 0,
+      "slot": 0,
+      "pid": 1558315,
+      "update": 340,
+      "budget": 300000,
+      "loss": 0.028854062780737877,
+      "seconds": 0.24595731683075428,
+      "elapsed_seconds": 62.688587645068765
+    },
+    {
+      "experiment": "G1",
+      "seed": 0,
+      "gpu": 1,
+      "slot": 0,
+      "pid": 1558318,
+      "update": 310,
+      "budget": 300000,
+      "loss": 0.034411657601594925,
+      "seconds": 0.19582675956189632,
+      "elapsed_seconds": 60.666730005294085
+    },
+    {
+      "experiment": "B0",
+      "seed": 1,
+      "gpu": 0,
+      "slot": 1,
+      "pid": 1558320,
+      "update": 330,
+      "budget": 300000,
+      "loss": 0.030276697129011154,
+      "seconds": 0.1618292983621359,
+      "elapsed_seconds": 60.810299791395664
+    },
+    {
+      "experiment": "G1",
+      "seed": 1,
+      "gpu": 1,
+      "slot": 1,
+      "pid": 1558322,
+      "update": 280,
+      "budget": 300000,
+      "loss": 0.021845873445272446,
+      "seconds": 0.21376785822212696,
+      "elapsed_seconds": 59.97716459259391
+    },
+    {
+      "experiment": "B0",
+      "seed": 2,
+      "gpu": 0,
+      "slot": 2,
+      "pid": 1558352,
+      "update": 310,
+      "budget": 300000,
+      "loss": 0.025576671585440636,
+      "seconds": 0.17381705529987812,
+      "elapsed_seconds": 59.648746436461806
+    },
+    {
+      "experiment": "G1",
+      "seed": 2,
+      "gpu": 1,
+      "slot": 2,
+      "pid": 1558383,
+      "update": 260,
+      "budget": 300000,
+      "loss": 0.023089874535799026,
+      "seconds": 0.22816922515630722,
+      "elapsed_seconds": 57.970274398103356
+    },
+    {
+      "experiment": "G2",
+      "seed": 0,
+      "gpu": 0,
+      "slot": 3,
+      "pid": 1558385,
+      "update": 280,
+      "budget": 300000,
+      "loss": 0.034031711518764496,
+      "seconds": 0.2551450300961733,
+      "elapsed_seconds": 56.890412816777825
+    },
+    {
+      "experiment": "G3",
+      "seed": 0,
+      "gpu": 1,
+      "slot": 3,
+      "pid": 1558450,
+      "update": 250,
+      "budget": 300000,
+      "loss": 0.04420673847198486,
+      "seconds": 0.25248175486922264,
+      "elapsed_seconds": 55.699803134426475
+    }
+  ],
+  "disk_free_gib": 8.91845703125,
+  "nvidia_smi": "index, utilization.gpu [%], memory.used [MiB], memory.free [MiB], temperature.gpu\n0, 98 %, 16883 MiB, 7376 MiB, 75\n1, 88 %, 17947 MiB, 6309 MiB, 84\n",
+  "note": "All eight formal runs are running, not completed."
+}

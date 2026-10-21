@@ -1,0 +1,8 @@
+{
+  "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+  "upstream_commit": "2647bf815df0299a03d16df34b896fa266ceefda",
+  "created_at": "2026-10-20T04:07:19Z",
+  "archive_sha256": "c8e61688ef4d762e29f05a8a28e37f45be8d1d51ba2c8dc6a73685ca4a61d489",
+  "revision": "decoded RGB cache and 4 independent formal runs per GPU",
+  "previous_revision": "archive_pre_cache/reports/frozen_source.tar"
+}

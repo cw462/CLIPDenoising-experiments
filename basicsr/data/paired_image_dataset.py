@@ -177,6 +177,10 @@ class Dataset_GaussianDenoising(data.Dataset):
             self.sigma_test = opt['sigma_test']
         self.in_ch = opt['in_ch']
 
+        # Optional full-image cache; patch/augmentation/noise stay online.
+        self.cache_decoded_images = bool(opt.get('cache_decoded_images', False))
+        self._decoded_cache = {}
+
         # file client (io backend)
         self.file_client = None
         self.io_backend_opt = opt['io_backend']
@@ -216,22 +220,31 @@ class Dataset_GaussianDenoising(data.Dataset):
         # Load gt and lq images. Dimension order: HWC; channel order: BGR;
         # image range: [0, 1], float32.
         gt_path = self.paths[index]#['gt_path']
-        img_bytes = self.file_client.get(gt_path, 'gt')
-
-        if self.in_ch == 3:
-            try:
-                img_gt = imfrombytes(img_bytes, float32=True)
-            except:
-                raise Exception("gt path {} not working".format(gt_path))
-
-            img_gt = cv2.cvtColor(img_gt, cv2.COLOR_BGR2RGB)
+        if self.cache_decoded_images and gt_path in self._decoded_cache:
+            img_gt = self._decoded_cache[gt_path].copy()
         else:
-            try:
-                img_gt = imfrombytes(img_bytes, flag='grayscale', float32=True)
-            except:
-                raise Exception("gt path {} not working".format(gt_path))
+            img_bytes = self.file_client.get(gt_path, 'gt')
 
-            img_gt = np.expand_dims(img_gt, axis=2)
+            if self.in_ch == 3:
+                try:
+                    img_gt = imfrombytes(img_bytes, float32=True)
+                except:
+                    raise Exception("gt path {} not working".format(gt_path))
+
+                img_gt = cv2.cvtColor(img_gt, cv2.COLOR_BGR2RGB)
+            else:
+                try:
+                    img_gt = imfrombytes(img_bytes, flag='grayscale', float32=True)
+                except:
+                    raise Exception("gt path {} not working".format(gt_path))
+
+                img_gt = np.expand_dims(img_gt, axis=2)
+            if self.cache_decoded_images:
+                # Store canonical RGB (or HWC grayscale) float32, not a patch.
+                # The readonly array never aliases returned mutable tensors.
+                img_gt.setflags(write=False)
+                self._decoded_cache[gt_path] = img_gt
+                img_gt = img_gt.copy()
         img_lq = img_gt.copy()
 
 

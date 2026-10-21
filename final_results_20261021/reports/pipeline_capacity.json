@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "tests_run": 8,
+  "failures": 0,
+  "errors": 0,
+  "jobs_per_gpu_verified": [
+    1,
+    2,
+    4
+  ],
+  "scope": "CPU-only mocked process scheduling; no real training or GPU work",
+  "real_training_processes_started": 0,
+  "failure_details": []
+}

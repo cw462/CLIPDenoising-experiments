@@ -1,0 +1,63 @@
+{
+  "at": "2026-10-20T03:59:10.310130+00:00",
+  "reason": "Measured decoded-image cache and concurrency performance optimization; all formal runs restart from paired initialization with one common new source version",
+  "old_source_hash": "e780b48f94e123c9266017cb12d7a8f402b3bcb4196cc90f905dcbf0d7cb92f0",
+  "old_source_archive": "/home/imss/cw/CLIPDenoising_20261020/archive_pre_cache/reports/frozen_source.tar",
+  "relocation": {
+    "/home/imss/cw/CLIPDenoising_20261020/runs": "/home/imss/cw/CLIPDenoising_20261020/archive_pre_cache/runs",
+    "/home/imss/cw/CLIPDenoising_20261020/reports": "/home/imss/cw/CLIPDenoising_20261020/archive_pre_cache/reports"
+  },
+  "preserve_original_hashed_metadata": true,
+  "old_absolute_paths_are_historical_and_mapped_by_relocation": true,
+  "formal_incomplete_attempts_not_counted": true,
+  "runs": [
+    {
+      "stage": "smoke",
+      "experiment": "B0",
+      "seed": 0,
+      "status": "completed",
+      "last_logged_update": 100,
+      "checkpoint": "/home/imss/cw/CLIPDenoising_20261020/runs/smoke/B0/seed0/checkpoints/final.pth"
+    },
+    {
+      "stage": "smoke",
+      "experiment": "G1",
+      "seed": 0,
+      "status": "completed",
+      "last_logged_update": 100,
+      "checkpoint": "/home/imss/cw/CLIPDenoising_20261020/runs/smoke/G1/seed0/checkpoints/final.pth"
+    },
+    {
+      "stage": "pilot",
+      "experiment": "B0",
+      "seed": 0,
+      "status": "completed",
+      "last_logged_update": 5000,
+      "checkpoint": "/home/imss/cw/CLIPDenoising_20261020/runs/pilot/B0/seed0/checkpoints/final.pth"
+    },
+    {
+      "stage": "pilot",
+      "experiment": "G1",
+      "seed": 0,
+      "status": "completed",
+      "last_logged_update": 5000,
+      "checkpoint": "/home/imss/cw/CLIPDenoising_20261020/runs/pilot/G1/seed0/checkpoints/final.pth"
+    },
+    {
+      "stage": "full",
+      "experiment": "B0",
+      "seed": 0,
+      "status": "blocked",
+      "last_logged_update": 1373,
+      "checkpoint": null
+    },
+    {
+      "stage": "full",
+      "experiment": "G1",
+      "seed": 0,
+      "status": "blocked",
+      "last_logged_update": 1258,
+      "checkpoint": null
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "CBSD432_source_provenance": "https://github.com/liutianlin0121/BSD-432-68/blob/3373c68047d0123ee79450ea929d988bf1370f0e/README.md links to the original CSCNet repository used here.",
+  "datasets": {
+    "CBSD432": {
+      "commit": "699d08501649979ef487c7e4b5b4a37d0a8ffdf7",
+      "expected_count": 432,
+      "prefix": "datasets/CBSD432/",
+      "repository": "drorsimon/CSCNet",
+      "role": "development split and full formal training"
+    },
+    "CBSD68": {
+      "commit": "e787f46df2f374ff3591186706229cb9a0591fea",
+      "expected_count": 68,
+      "prefix": "testsets/CBSD68/",
+      "repository": "cszn/FFDNet",
+      "role": "final test only"
+    },
+    "Kodak24": {
+      "commit": "e787f46df2f374ff3591186706229cb9a0591fea",
+      "expected_count": 24,
+      "prefix": "testsets/Kodak24/",
+      "repository": "cszn/FFDNet",
+      "role": "final test only"
+    },
+    "McMaster": {
+      "commit": "e787f46df2f374ff3591186706229cb9a0591fea",
+      "expected_count": 18,
+      "prefix": "testsets/McMaster/",
+      "repository": "cszn/FFDNet",
+      "role": "final test only"
+    }
+  },
+  "pretrained": {
+    "RN50": {
+      "path": "pretrained/RN50.pt",
+      "sha256": "afeb0e10f9e5a86da6080e35cf09123aca3b358a0c3e3b6c78a7b63bc04b6762",
+      "url": "https://openaipublic.azureedge.net/clip/models/afeb0e10f9e5a86da6080e35cf09123aca3b358a0c3e3b6c78a7b63bc04b6762/RN50.pt"
+    }
+  }
+}

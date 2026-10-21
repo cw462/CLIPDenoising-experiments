@@ -1,0 +1,64 @@
+{
+  "at": "2026-10-20T04:17:04Z",
+  "action": "Old revision checkpoint storage relocated to verified local archive",
+  "local_archive": {
+    "archive_sha256": "1443b22f107f63826c133dfb37bec4f249ca8328cb8b1e34f1933c43b4822e21",
+    "archive_bytes": 1415301120,
+    "verified_local_path": "D:\\projects\\CLIPDenoising_20261020\\archives\\archive_pre_cache.tar",
+    "verification": "full local and remote SHA256 equality"
+  },
+  "retired_remote_checkpoint_paths": [
+    {
+      "path": "archive_pre_cache/runs/pilot/B0/seed0/checkpoints/final.pth",
+      "sha256": "b00bbdbe7e89620d0148b3fcc1c83d3cc4bf747a38c4977f02b820e5734b0bf5",
+      "bytes": 226338114
+    },
+    {
+      "path": "archive_pre_cache/runs/pilot/B0/seed0/checkpoints/update_005000.pth",
+      "sha256": "b00bbdbe7e89620d0148b3fcc1c83d3cc4bf747a38c4977f02b820e5734b0bf5",
+      "bytes": 226338114
+    },
+    {
+      "path": "archive_pre_cache/runs/pilot/G1/seed0/checkpoints/final.pth",
+      "sha256": "ff6ba89cb2becba184bf95ddab0315fe525ddf8df1883ec79674f29274be723f",
+      "bytes": 226561138
+    },
+    {
+      "path": "archive_pre_cache/runs/pilot/G1/seed0/checkpoints/update_005000.pth",
+      "sha256": "ff6ba89cb2becba184bf95ddab0315fe525ddf8df1883ec79674f29274be723f",
+      "bytes": 226561138
+    },
+    {
+      "path": "archive_pre_cache/runs/smoke/B0/seed0/checkpoints/final.pth",
+      "sha256": "7350a49d14beb3fcb89f838a7719d8080580a3eeb4d4082186d54cbd78b163dd",
+      "bytes": 226338050
+    },
+    {
+      "path": "archive_pre_cache/runs/smoke/B0/seed0/checkpoints/update_000050.pth",
+      "sha256": "ad8da7c830db82fc2e8f7f85e3b44a35ac727123bebaa4ccb00a765757bf3898",
+      "bytes": 226338114
+    },
+    {
+      "path": "archive_pre_cache/runs/smoke/B0/seed0/checkpoints/update_000100.pth",
+      "sha256": "7350a49d14beb3fcb89f838a7719d8080580a3eeb4d4082186d54cbd78b163dd",
+      "bytes": 226338050
+    },
+    {
+      "path": "archive_pre_cache/runs/smoke/G1/seed0/checkpoints/final.pth",
+      "sha256": "132c0e0f70ef3ce76036ebc0b68cf2416fb04c46861074fde2fd24461b480cef",
+      "bytes": 226561010
+    },
+    {
+      "path": "archive_pre_cache/runs/smoke/G1/seed0/checkpoints/update_000050.pth",
+      "sha256": "7a561d2c30faa34b5382e8a756494a3bfab9768978e89197d586e95f087d1a25",
+      "bytes": 226561074
+    },
+    {
+      "path": "archive_pre_cache/runs/smoke/G1/seed0/checkpoints/update_000100.pth",
+      "sha256": "132c0e0f70ef3ce76036ebc0b68cf2416fb04c46861074fde2fd24461b480cef",
+      "bytes": 226561010
+    }
+  ],
+  "remote_source_logs_and_metadata_preserved": true,
+  "restore_instructions": "Extract the named archive on demand; archive_pre_cache/relocation.json maps original run paths. Current revision runs are untouched."
+}

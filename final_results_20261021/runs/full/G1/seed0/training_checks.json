@@ -1,0 +1,11 @@
+{
+  "loss_finite": true,
+  "frozen_encoder_unchanged": true,
+  "encoder_bn_training": true,
+  "bn_running_mean_changed": true,
+  "update": 300000,
+  "parameter_counts": {
+    "total": 34533748,
+    "trainable": 11006484
+  }
+}

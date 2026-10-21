@@ -1,3 +1,102 @@
+# CLIPDenoising：RGB 旁路校准实验与完整结果
+
+本仓库基于 [CLIPDenoising（CVPR 2024）](https://github.com/alwaysuu/CLIPDenoising)，保存末级 RGB 旁路校准的代码、验收工具、训练与评测入口，以及 2026 年 10 月完成的实验记录。上游基准 commit 为 `2647bf815df0299a03d16df34b896fa266ceefda`；下方保留上游 README 与论文引用。
+
+## 已完成的实验
+
+主线于北京时间 **2026-10-21 07:30:01** 正常完成。B0/G1 分别训练 seed 0、1、2，G2/G3 分别训练 seed 0，共 **8 组 × 300,000 次 optimizer update**。CBSD432 的 432 张图用于正式训练；CBSD68、Kodak24、McMaster、Urban100 共 210 张测试图，每图评测 15 个条件，得到 **25,200 条逐图结果和 48 张固定样本对比图**。最终测试在八组正式训练全部完成后开始。
+
+| 实验 | 结构 | 正式训练种子 |
+|---|---|---|
+| B0 | 原冻结 CLIP RN50、原解码器和 PFA 基线 | 0、1、2 |
+| G1 | 末级 RGB 旁路门控残差校准，包含解码特征指导 | 0、1、2 |
+| G2 | 去掉门控的残差校准 | 0 |
+| G3 | 去掉解码特征指导，保留门控校准 | 0 |
+
+| OOD 范围 | B0 PSNR / dB | G1 PSNR / dB | G1 − B0 / dB |
+|---|---:|---:|---:|
+| 官方三类噪声 | 28.679 | 28.792 | **+0.113** |
+| 扩展五类噪声 | 28.388 | 28.468 | **+0.079** |
+
+表中为三个训练种子的均值。官方三类为 Gaussian、Spatial Gaussian、Poisson；扩展条件另含 Speckle 与 Salt-and-Pepper。OOD 聚合排除训练分布 Gaussian σ15，并对图像、族内强度、噪声族和数据集逐层等权汇总。
+
+G1 的总体改善较小，不能表述为全面或统计显著提升：Spatial Gaussian 和 Salt-and-Pepper 的平均 PSNR 分别下降约 0.0115、0.1998 dB。**seed 0 的 G3 得分高于完整 G1**，官方三类与扩展五类分别高 0.0200、0.0743 dB；现有结果不能证明解码特征指导有收益，单种子消融也不能证明 G3 稳定更优。Urban100 使用原作者 SelfExSR 的 SRF2 HR 版本，与 CLIPDenoising 作者具体测试副本的逐像素等同性尚未确认。
+
+- [完整实验报告](final_results_20261021/reports/experiment_report.md)
+- [详细结果、配对差值与消融边界](final_results_20261021/reports/results_interpretation_zh.md)
+- [48 张对比图索引](final_results_20261021/reports/figures/index.md)
+- [逐图结果 CSV](final_results_20261021/reports/per_image_results.csv)、[OOD 汇总](final_results_20261021/reports/ood_aggregate_results.csv)、[全部负差值案例](final_results_20261021/reports/failure_cases.csv)
+
+仓库提供源码、报告、指标表、对比图和运行元数据。完整训练 checkpoint 与原始诊断数组未随仓库上传。以下命令用于在自备数据下载和 GPU 环境中**重新训练**；仅克隆本仓库无法直接加载本轮已训练权重进行最终评测。
+
+## 环境与配置
+
+本轮正式执行环境为 Linux、Python 3.10.18、PyTorch 2.2.1 / CUDA 12.1、torchvision 0.17.1、NumPy 1.26.4、SciPy 1.15.3，以及两张 RTX 3090。实际采用已有 CUDA Python 环境创建 `--system-site-packages` 隔离 venv，再在 venv 内补齐依赖，没有重新安装基础 CUDA 环境。
+
+[远程依赖快照](environment/requirements.remote.snapshot.txt)用于审计，含原环境的本地构建地址和可编辑安装路径，**不是可移植的 `pip install -r` 文件**。根目录 `requirements.local.lock.txt` 是 Windows CPU 控制端快照，也不能代替正式 GPU 环境。本仓库未声称已验证从空白操作系统一键安装。
+
+已有相应 CUDA Python 及快照中基础依赖时，在仓库根目录执行以下实际使用的环境复用方式。`CUDA_PYTHON` 应替换为该环境的 Python 路径；后续命令均使用项目 venv：
+
+```bash
+CUDA_PYTHON=/path/to/existing/cuda-python/bin/python
+"$CUDA_PYTHON" -m venv --system-site-packages .venv
+.venv/bin/python -m pip install lmdb==1.5.1 scikit-image==0.24.0
+.venv/bin/python -c "import torch, torchvision, numpy, scipy, cv2, PIL, yaml, psutil, lmdb, skimage; print(torch.__version__, torch.version.cuda, torch.cuda.is_available(), torch.cuda.device_count())"
+```
+
+配置文件 [configs/local_paths.yaml](configs/local_paths.yaml) 已采用仓库相对路径，可直接编辑；也可从 [示例配置](configs/local_paths.example.yaml) 复制：
+
+```bash
+cp configs/local_paths.example.yaml configs/local_paths.yaml
+```
+
+检查 `project_root`、数据/权重路径、`output_root`、`reports_dir` 和 `gpu_indices`。新一轮复现应使用独立输出目录，勿将输出指向归档交付目录 `final_results_20261021/`。当前主队列要求两个不同的可见 CUDA 设备，默认 `[0, 1]`；控制进程需同时看到两张卡，子进程由队列各自分配 GPU。
+
+本轮设置 `jobs_per_gpu: 4`、`cpu_threads: 4`、`cache_decoded_images: true`，每卡并行四个正式实验；smoke/pilot 每卡一个。每组保持独立模型、优化器、随机状态、batch 16 和 FP32，未使用 DDP。若资源较少，可在新队列开始前降低 `jobs_per_gpu`；已经创建的队列不接受中途改变 GPU 分配或并发配置。
+
+## 数据、验收与完整主线
+
+数据准备工具按固定上游 commit 下载、核验文件与 RN50 SHA256，生成 400/32 开发划分。该工具**不接受 `--paths` 参数**，目标固定为当前仓库根目录的 `data/`、`pretrained/`、`splits/`；配置应与这些目录对应。Urban100 单独准备：
+
+```bash
+.venv/bin/python tools/prepare_data.py
+.venv/bin/python tools/prepare_data.py --urban100-only
+```
+
+可先执行实际数据与 CPU 恢复验收。下面的诊断更新不计入正式训练：
+
+```bash
+.venv/bin/python -m pytest tests/test_data_contract.py
+.venv/bin/python tests/test_calibration_contract.py --weights pretrained/RN50.pt --device cpu --report reports/calibration_contract_cpu.json
+.venv/bin/python tests/test_resume_contract.py --paths configs/local_paths.yaml --device cpu --report reports/resume_contract_cpu.json
+.venv/bin/python tests/test_cache_contract.py --paths configs/local_paths.yaml --report reports/cache_contract.json
+```
+
+随后启动完整主线：
+
+```bash
+.venv/bin/python tools/run_pipeline.py --mode main --paths configs/local_paths.yaml
+```
+
+主队列依次完成资源预检、调度/缓存/结构/恢复验收、B0/G1 的 100 步 smoke 和 5,000 步 pilot、八组 300,000 步正式训练、最终评测及汇总；无需逐阶段确认。进度写入配置的 `reports_dir/progress.md` 与 `output_root/pipeline_state.json`。中断后，在源码和配置未变时重跑同一主队列命令，可接续匹配的运行或断点。
+
+只在主队列没有监测该组、该组进程已结束时，才手工恢复单组：
+
+```bash
+CUDA_VISIBLE_DEVICES=0 .venv/bin/python tools/run_experiment.py --exp B0 --stage full --seed 0 --paths configs/local_paths.yaml --resume
+```
+
+最终评测与汇总已由主线自动调用。需要手工重算时，先确保八组完整 checkpoint、effective config、数据与源码对应一致，再运行：
+
+```bash
+.venv/bin/python tools/evaluate_experiment.py --paths configs/local_paths.yaml --visuals
+.venv/bin/python tools/summarize_experiments.py --paths configs/local_paths.yaml
+```
+
+这些命令读取配置的训练输出，生成本轮的新报告；`final_results_20261021/` 是已完成实验的归档。源码、配置、checkpoint、数据与噪声标识在运行和评测时检查；报告中的 CUDA 恢复验收包含 FP32 容差，不代表整段 CUDA 训练轨迹逐位确定。
+
+---
+
 # Transfer CLIP for Generalizable Image Denoising (CVPR2024)
 
 > **Abstract:** *Image denoising is a fundamental task in computer vision. While prevailing deep learning-based supervised and self-supervised methods have excelled in eliminating in-distribution noise, their susceptibility to out-of-distribution (OOD) noise remains a significant challenge. The recent emergence of contrastive language-image pre-training (CLIP) model has showcased exceptional capabilities in open-world image recognition and segmentation. Yet, the potential for leveraging CLIP to enhance the robustness of low-level tasks remains largely unexplored. This paper uncovers that certain dense features extracted from the frozen ResNet image encoder of CLIP exhibit distortion-invariant and content-related properties, which are highly desirable for generalizable denoising. Leveraging these properties, we devise an asymmetrical encoder-decoder denoising network, which incorporates dense features including the noisy image and its multi-scale features from the frozen ResNet encoder of CLIP into a learnable image decoder to achieve generalizable denoising. The progressive feature augmentation strategy is further proposed to mitigate feature overfitting and improve the robustness of the learnable decoder. Extensive experiments and comparisons conducted across diverse OOD noises, including synthetic noise, real-world sRGB noise, and low-dose CT image noise, demonstrate the superior generalization ability of our method.* 
