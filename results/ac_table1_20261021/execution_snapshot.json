@@ -1,11 +1,11 @@
 {
-  "snapshot_utc": "2026-10-21T09:51:45.852013+00:00",
-  "pipeline_status": "running",
+  "snapshot_utc": "2026-10-21T13:36:43.927143+00:00",
+  "pipeline_status": "failed",
   "pipeline_phase": "screen",
-  "server_updated_at_utc": "2026-10-21T09:51:35Z",
+  "server_updated_at_utc": "2026-10-21T10:26:49Z",
   "server_started_at_utc": "2026-10-21T09:44:42Z",
   "server_ended_at_utc": null,
-  "pipeline_reason": "",
+  "pipeline_reason": "RuntimeError: Tasks failed/interrupted; preserve logs and resume after diagnosis: screen_triplet_seed100",
   "publication_ready": false,
   "final_confirmation_accepted": false,
   "export_mode": "snapshot",
@@ -68,12 +68,12 @@
       "ended_at": "2026-10-21T09:50:57Z"
     },
     "screen_triplet_seed100": {
-      "status": "running",
+      "status": "failed",
       "gpu": 0,
-      "update": 20,
-      "returncode": null,
+      "update": 3854,
+      "returncode": 1,
       "started_at": "2026-10-21T09:51:02Z",
-      "ended_at": null
+      "ended_at": "2026-10-21T10:26:49Z"
     }
   },
   "validation": {
