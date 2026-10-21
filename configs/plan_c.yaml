@@ -1,0 +1,36 @@
+project_root: .
+pretrained_rn50: pretrained/RN50.pt
+train_dir: data/CBSD432
+test_datasets:
+  CBSD68: data/CBSD68
+  Kodak24: data/Kodak24
+output_root: runs/plan_c
+reports_dir: reports/plan_c
+data_manifest: data/manifest.json
+dev_train: splits/dev_train.txt
+dev_val: splits/dev_val.txt
+c0: pretrained/synthetic_baseline.pth
+device: cuda
+micro_batch: 4
+accumulation: 1
+amp: false
+cpu_threads: 4
+cache_decoded_images: false
+minimum_free_gb: 2
+gpu_index: 0
+jobs_per_gpu: 1
+rho: 0
+learning_rate: 0.00001
+minimum_learning_rate: 0.000001
+weight_decay: 0.0001
+pixel_opt:
+  type: L1StructureLoss
+  loss_weight: 1.0
+  reduction: mean
+  structure_weight: 0.05
+  eps: 0.001
+budgets:
+  smoke: 200
+  screen: 5000
+  confirm: 20000
+  confirm_short: 10000

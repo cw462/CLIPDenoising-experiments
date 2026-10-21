@@ -1,0 +1,131 @@
+{
+  "completed": true,
+  "stage": "screen",
+  "completed_at": "2026-10-21T06:34:21Z",
+  "rows": 1680,
+  "expected_rows": 1680,
+  "distinct_checkpoints": 4,
+  "visual_panels": 12,
+  "decisions": {
+    "B1": {
+      "ood_gain_ge_0_1_db": false,
+      "all_training_seeds_ood_positive": false,
+      "every_training_seed_id_ge_minus_0_05_db": true,
+      "criterion_met": false,
+      "final_confirmation": false,
+      "paired_image_ci_excludes_zero": false,
+      "interpretation": "Predefined engineering threshold, not a multi-seed significance test"
+    },
+    "B3": {
+      "ood_gain_ge_0_1_db": false,
+      "all_training_seeds_ood_positive": true,
+      "every_training_seed_id_ge_minus_0_05_db": true,
+      "criterion_met": false,
+      "final_confirmation": false,
+      "paired_image_ci_excludes_zero": true,
+      "interpretation": "Predefined engineering threshold, not a multi-seed significance test"
+    }
+  },
+  "protocol": {
+    "version": "ac-fixed-seven-v1",
+    "noise_seeds": [
+      0,
+      1,
+      2
+    ],
+    "conditions": [
+      [
+        "gaussian",
+        15
+      ],
+      [
+        "gaussian",
+        25
+      ],
+      [
+        "gaussian",
+        50
+      ],
+      [
+        "spatial_gaussian",
+        45
+      ],
+      [
+        "spatial_gaussian",
+        55
+      ],
+      [
+        "poisson",
+        2.5
+      ],
+      [
+        "poisson",
+        3.5
+      ]
+    ],
+    "noise": "NumPy RNG reset per image/condition/seed; no input clipping except official Poisson helper",
+    "spatial_gaussian": "3x3 mean convolution per RGB channel, reflect; nominal prefilter sigma/255",
+    "metrics": "RGB float [0,1], border=0, output clamp, skimage Gaussian-window SSIM sigma1.5 population covariance",
+    "aggregation": "noise seeds first within image/condition; six OOD conditions equal; images equal within dataset; datasets equal",
+    "selection_disclosure": "CBSD68 first20 are this-round development; other48 and Kodak24 held out only within this round. Prior study evaluated all these images; not study-naive test sets.",
+    "visual_selection": "first two lexical images per split; fixed six conditions; noise seed0; centered96pixel crop"
+  },
+  "training_seeds": [
+    100
+  ],
+  "training_seed_uncertainty": "sample SD of paired training-seed differences, separate from image bootstrap",
+  "sources": [
+    {
+      "directory": "/home/imss/cw/CLIPDenoising_AC_20261021/reports/ac/evaluations/screen/C0/seedC0",
+      "identity": {
+        "path": "/home/imss/cw/CLIPDenoising_20261020/runs/full/B0/seed0/checkpoints/final.pth",
+        "sha256": "123b9091a9c13b17da0e40f25f706efc8e5044ce5d8295bf5701eb1dd8f99675",
+        "update": 300000,
+        "method": "C0",
+        "training_seed": "C0",
+        "config_hash": null
+      },
+      "contract_hash": "dafff79a30c97fa433ed9d1c155f3b17ab16bbd53bae2915baea9c7fa0ea38bd",
+      "data_hash": "71b1c4c86cbd0a0517e045f7c2d87640fef0639e93e81d6345fe15d4e328fec8"
+    },
+    {
+      "directory": "/home/imss/cw/CLIPDenoising_AC_20261021/reports/ac/evaluations/screen/B0/seed100",
+      "identity": {
+        "path": "/home/imss/cw/CLIPDenoising_AC_20261021/runs/ac/screen/B0/seed100/checkpoints/update_005000.pth",
+        "sha256": "196718cd4c593b6853a40a62118dc943a14de40975013a80f5d631c546f96475",
+        "update": 5000,
+        "method": "B0",
+        "training_seed": 100,
+        "config_hash": "00b5010e700e94ee52d87a08057a081d9d6885d29482b91ee4a4c574a127b273"
+      },
+      "contract_hash": "dafff79a30c97fa433ed9d1c155f3b17ab16bbd53bae2915baea9c7fa0ea38bd",
+      "data_hash": "71b1c4c86cbd0a0517e045f7c2d87640fef0639e93e81d6345fe15d4e328fec8"
+    },
+    {
+      "directory": "/home/imss/cw/CLIPDenoising_AC_20261021/reports/ac/evaluations/screen/B1/seed100",
+      "identity": {
+        "path": "/home/imss/cw/CLIPDenoising_AC_20261021/runs/ac/screen/B1/seed100/checkpoints/update_005000.pth",
+        "sha256": "86ac50e88f826085da25c192b817a92c33968fbf3eb0a2ebc5ab1bd688fbb73c",
+        "update": 5000,
+        "method": "B1",
+        "training_seed": 100,
+        "config_hash": "3137e3abe7824c5bf2399877fc7888b5d5907afabe125e4365b82d90083bdba3"
+      },
+      "contract_hash": "dafff79a30c97fa433ed9d1c155f3b17ab16bbd53bae2915baea9c7fa0ea38bd",
+      "data_hash": "71b1c4c86cbd0a0517e045f7c2d87640fef0639e93e81d6345fe15d4e328fec8"
+    },
+    {
+      "directory": "/home/imss/cw/CLIPDenoising_AC_20261021/reports/ac/evaluations/screen/B3/seed100",
+      "identity": {
+        "path": "/home/imss/cw/CLIPDenoising_AC_20261021/runs/ac/screen/B3/seed100/checkpoints/update_005000.pth",
+        "sha256": "6c5ca05c0563158e881f0fd1a3730c280672184718a48677c2e8ce7ff913a9ee",
+        "update": 5000,
+        "method": "B3",
+        "training_seed": 100,
+        "config_hash": "2dc3648d58987ced530f2d811368bf94c6ddd953f7c08f2d828cc0ab124c4753"
+      },
+      "contract_hash": "dafff79a30c97fa433ed9d1c155f3b17ab16bbd53bae2915baea9c7fa0ea38bd",
+      "data_hash": "71b1c4c86cbd0a0517e045f7c2d87640fef0639e93e81d6345fe15d4e328fec8"
+    }
+  ]
+}
