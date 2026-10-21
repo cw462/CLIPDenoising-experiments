@@ -1,0 +1,75 @@
+{
+  "schema": "g1c_numpy_isolation_candidate_v1",
+  "status": "candidate_environment_ready_not_root_cause_fixed",
+  "created_at_utc": "2026-10-21T14:58:18Z",
+  "venv": "/home/imss/cw/CLIPDenoising_G1C_numpy_isolation_20261021",
+  "python": "/home/imss/cw/CLIPDenoising_G1C_numpy_isolation_20261021/bin/python",
+  "shared_environment_modified": false,
+  "formal_training_started": false,
+  "scientific_package_version": "numpy==1.26.4",
+  "baseline": {
+    "python": "3.10.18 (main, Jun  5 2025, 13:14:17) [GCC 11.2.0]",
+    "base_prefix": "/home/imss/.conda/envs/copdph4ch_py310",
+    "torch_version": "2.2.1",
+    "torch_cuda": "12.1",
+    "torch_file": "/home/imss/.conda/envs/copdph4ch_py310/lib/python3.10/site-packages/torch/__init__.py",
+    "numpy_version": "1.26.4",
+    "numpy_file": "/home/imss/.conda/envs/copdph4ch_py310/lib/python3.10/site-packages/numpy/__init__.py"
+  },
+  "actual": {
+    "python": "3.10.18 (main, Jun  5 2025, 13:14:17) [GCC 11.2.0]",
+    "executable": "/home/imss/cw/CLIPDenoising_G1C_numpy_isolation_20261021/bin/python",
+    "base_prefix": "/home/imss/.conda/envs/copdph4ch_py310",
+    "numpy_version": "1.26.4",
+    "numpy_metadata_version": "1.26.4",
+    "numpy_file": "/home/imss/cw/CLIPDenoising_G1C_numpy_isolation_20261021/lib/python3.10/site-packages/numpy/__init__.py",
+    "numpy_native_file": "/home/imss/cw/CLIPDenoising_G1C_numpy_isolation_20261021/lib/python3.10/site-packages/numpy/core/_multiarray_umath.cpython-310-x86_64-linux-gnu.so",
+    "numpy_native_sha256": "fe5efe31c55326b072c8fb239a225819211826cb45cd3c74ed0af0030e70f3a1",
+    "numpy_configuration": "Build Dependencies:\n  blas:\n    detection method: pkgconfig\n    found: true\n    include directory: /usr/local/include\n    lib directory: /usr/local/lib\n    name: openblas64\n    openblas configuration: USE_64BITINT=1 DYNAMIC_ARCH=1 DYNAMIC_OLDER= NO_CBLAS=\n      NO_LAPACK= NO_LAPACKE= NO_AFFINITY=1 USE_OPENMP= HASWELL MAX_THREADS=2\n    pc file directory: /usr/local/lib/pkgconfig\n    version: 0.3.23.dev\n  lapack:\n    detection method: internal\n    found: true\n    include directory: unknown\n    lib directory: unknown\n    name: dep139863411681952\n    openblas configuration: unknown\n    pc file directory: unknown\n    version: 1.26.4\nCompilers:\n  c:\n    args: -fno-strict-aliasing\n    commands: cc\n    linker: ld.bfd\n    linker args: -Wl,--strip-debug, -fno-strict-aliasing\n    name: gcc\n    version: 10.2.1\n  c++:\n    commands: c++\n    linker: ld.bfd\n    linker args: -Wl,--strip-debug\n    name: gcc\n    version: 10.2.1\n  cython:\n    commands: cython\n    linker: cython\n    name: cython\n    version: 3.0.8\nMachine Information:\n  build:\n    cpu: x86_64\n    endian: little\n    family: x86_64\n    system: linux\n  host:\n    cpu: x86_64\n    endian: little\n    family: x86_64\n    system: linux\nPython Information:\n  path: /opt/python/cp310-cp310/bin/python\n  version: '3.10'\nSIMD Extensions:\n  baseline:\n  - SSE\n  - SSE2\n  - SSE3\n  found:\n  - SSSE3\n  - SSE41\n  - POPCNT\n  - SSE42\n  - AVX\n  - F16C\n  - FMA3\n  - AVX2\n  - AVX512F\n  - AVX512CD\n  - AVX512_SKX\n  - AVX512_CLX\n  not found:\n  - AVX512_KNL\n  - AVX512_KNM\n  - AVX512_CNL\n  - AVX512_ICL\n\n",
+    "torch_version": "2.2.1",
+    "torch_cuda": "12.1",
+    "torch_file": "/home/imss/.conda/envs/copdph4ch_py310/lib/python3.10/site-packages/torch/__init__.py",
+    "cuda_initialized": false,
+    "copy_test": {
+      "iterations": 50,
+      "array_bytes": 1048576,
+      "reference_sha256": "21b9bf484e8bb6ca346d2cd113f24594cadb15c31c3e6ea4bd99897b1e728282",
+      "status": "passed_basic_cpu_copy_only"
+    },
+    "numpy_sys_path": [
+      "/home/imss/cw/CLIPDenoising_G1C_numpy_isolation_20261021/lib/python3.10/site-packages",
+      "/home/imss/.local/lib/python3.10/site-packages",
+      "/home/imss/.conda/envs/copdph4ch_py310/lib/python3.10/site-packages"
+    ]
+  },
+  "wheel": {
+    "filename": "numpy-1.26.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "url": "https://files.pythonhosted.org/packages/4b/d7/ecf66c1cd12dc28b4040b15ab4d17b773b87fa9d29ca16125de01adb36cd/numpy-1.26.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "pypi_sha256": "ffa75af20b44f8dba823498024771d5ac50620e6915abac414251bd971b4529f",
+    "download_sha256": "ffa75af20b44f8dba823498024771d5ac50620e6915abac414251bd971b4529f",
+    "bytes": 18240889,
+    "local_path": "/home/imss/cw/CLIPDenoising_G1C_numpy_isolation_20261021/isolation_evidence/numpy-1.26.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+  },
+  "disk_free_before_bytes": 14130929664,
+  "limitations": [
+    "Same NumPy version; official wheel build and BLAS implementation may differ from shared Conda build.",
+    "Basic copy test is not a full training-path stability result.",
+    "No root-cause repair or formal training success claimed."
+  ],
+  "previous_manifest_sha256": "9e96b5356b37c0da0fc5b79b153e76b0103774070dd6ac640717bc0d1dd3cd4a",
+  "dependency_repair": "Install lmdb 1.5.1 and scikit-image 0.24.0 locally and inherit other original project-local dependencies through a lower-priority pth; NumPy remains isolated and first in sys.path; prior attempt failed before model execution",
+  "recorded_at": "2026-10-21T15:06:59.706016+00:00",
+  "added_dependencies": {
+    "lmdb": {
+      "version": "1.5.1",
+      "file": "/home/imss/cw/CLIPDenoising_G1C_numpy_isolation_20261021/lib/python3.10/site-packages/lmdb/__init__.py"
+    },
+    "scikit-image": {
+      "version": "0.24.0",
+      "file": "/home/imss/cw/CLIPDenoising_G1C_numpy_isolation_20261021/lib/python3.10/site-packages/skimage/__init__.py"
+    }
+  },
+  "original_dependency_site": "/home/imss/cw/CLIPDenoising_20261020/.venv/lib/python3.10/site-packages",
+  "dependency_pth_sha256": "8fe5ac161c66fa1b6097287d072e0b03330e3baddcb7425f20886b83cab03e7a",
+  "complete_training_import_smoke_passed": true
+}
