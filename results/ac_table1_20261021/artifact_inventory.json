@@ -1,0 +1,43 @@
+{
+  "source_hash": "733f3f9b0ace567f89121b15f10db812515179b63bf7953f35f11720251babf7",
+  "executed_code_commit": "3f6e1537a5c05bbbe93d7df413f7d3e60703045c",
+  "publication_ready": false,
+  "snapshot_utc": "2026-10-21T09:49:18.460558+00:00",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2588,
+      "sha256": "0ab7598ef23e1521db17288e79522c97b081ee82b84f0485ab1181a30a1d44b5",
+      "origin": "derived_export_metadata"
+    },
+    {
+      "path": "execution_snapshot.json",
+      "bytes": 3402,
+      "sha256": "5e4929a09ebe93e133ed4647bd9ed36a1d9f2a742cf24e5e58c9e3d39b28d655",
+      "origin": "derived_export_metadata"
+    },
+    {
+      "path": "validation/actual_model_contract.json",
+      "bytes": 59178,
+      "sha256": "55241ddb5c5b8536d942a1ac8be538299a61959d20fbb354cbb8139b92b64979",
+      "origin": "exact_server_report_bytes",
+      "server_relative_path": "reports/ac/actual_model_contract.json"
+    },
+    {
+      "path": "validation/actual_triplet_contract.json",
+      "bytes": 51488,
+      "sha256": "02ca897f8a200f6ede909bfe916b6b2c3eac875f1558c975de904d675d8efdef",
+      "origin": "exact_server_report_bytes",
+      "server_relative_path": "reports/ac/actual_triplet_contract.json"
+    },
+    {
+      "path": "validation/historical_input_parity.json",
+      "bytes": 1177,
+      "sha256": "ccbbab35a51772f335a937f78c4071cae2bcef8308e27b7cc87efb291ed2957f",
+      "origin": "exact_server_report_bytes",
+      "server_relative_path": "reports/ac/historical_input_parity.json"
+    }
+  ],
+  "inventory_self_hash_excluded": true,
+  "description": "Exact SHA256 of every managed public report, CSV, PNG and generated metadata file; inventory excludes itself. Raw datasets, weights, credentials, job logs and private export tools are excluded."
+}

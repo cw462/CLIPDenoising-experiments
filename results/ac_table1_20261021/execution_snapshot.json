@@ -1,0 +1,112 @@
+{
+  "snapshot_utc": "2026-10-21T09:49:18.460558+00:00",
+  "pipeline_status": "running",
+  "pipeline_phase": "smoke",
+  "server_updated_at_utc": "2026-10-21T09:49:17Z",
+  "server_started_at_utc": "2026-10-21T09:44:42Z",
+  "server_ended_at_utc": null,
+  "pipeline_reason": "",
+  "publication_ready": false,
+  "final_confirmation_accepted": false,
+  "export_mode": "snapshot",
+  "completed_result_stages": [],
+  "executed_code_commit": "3f6e1537a5c05bbbe93d7df413f7d3e60703045c",
+  "source_hash": "733f3f9b0ace567f89121b15f10db812515179b63bf7953f35f11720251babf7",
+  "c0_sha256": "123b9091a9c13b17da0e40f25f706efc8e5044ce5d8295bf5701eb1dd8f99675",
+  "configuration_hashes": {
+    "source_hash": "733f3f9b0ace567f89121b15f10db812515179b63bf7953f35f11720251babf7",
+    "config_a_sha256": "3871c008cd3cd6b80b8b0e1f1222c40b083f2a62c52c8c93bd6060f42fe8677a",
+    "config_c_sha256": "e43648c9e9024bced76e8672cca70328fc7afa87e5ad4e3d9722c5455e77b934"
+  },
+  "jobs": {
+    "contract_tests": {
+      "status": "completed",
+      "gpu": 0,
+      "update": null,
+      "returncode": 0,
+      "started_at": "2026-10-21T09:44:45Z",
+      "ended_at": "2026-10-21T09:45:18Z"
+    },
+    "actual_model_contract": {
+      "status": "completed",
+      "gpu": 0,
+      "update": null,
+      "returncode": 0,
+      "started_at": "2026-10-21T09:45:21Z",
+      "ended_at": "2026-10-21T09:45:45Z"
+    },
+    "historical_input_parity": {
+      "status": "completed",
+      "gpu": null,
+      "update": null,
+      "returncode": 0,
+      "started_at": "2026-10-21T09:45:45Z",
+      "ended_at": "2026-10-21T09:47:08Z"
+    },
+    "triplet_contract_tests": {
+      "status": "completed",
+      "gpu": 0,
+      "update": null,
+      "returncode": 0,
+      "started_at": "2026-10-21T09:47:11Z",
+      "ended_at": "2026-10-21T09:47:24Z"
+    },
+    "actual_triplet_contract": {
+      "status": "completed",
+      "gpu": 1,
+      "update": null,
+      "returncode": 0,
+      "started_at": "2026-10-21T09:47:27Z",
+      "ended_at": "2026-10-21T09:48:40Z"
+    },
+    "smoke_triplet_seed100": {
+      "status": "running",
+      "gpu": 0,
+      "update": 20,
+      "returncode": null,
+      "started_at": "2026-10-21T09:48:44Z",
+      "ended_at": null
+    }
+  },
+  "validation": {
+    "model_contract": {
+      "status": "passed",
+      "detail": {
+        "accepted": true
+      }
+    },
+    "triplet_contract": {
+      "status": "passed",
+      "detail": {
+        "accepted": true
+      }
+    },
+    "input_parity": {
+      "status": "passed",
+      "detail": {
+        "matched_inputs": 3150,
+        "raw_images": 210,
+        "model_outcome_access": false
+      }
+    }
+  },
+  "missing_final_requirements": [
+    "confirm_independent",
+    "confirm_results",
+    "confirm_training",
+    "screen_independent",
+    "screen_results",
+    "screen_training",
+    "smoke_training",
+    "table1_results"
+  ],
+  "incomplete_or_failed_jobs": [
+    "smoke_triplet_seed100"
+  ],
+  "full_300k_ac_training_started": false,
+  "failed_predecessors": [
+    "experiment/ac-server-20261021 confirmation pairing failed; preserved separately; no checkpoints reused",
+    "619016545b214f4cec3242f58412739d9c465d33 actual GPU 4-vs-2+2 resume contract failed; no formal training started; tolerance not relaxed"
+  ],
+  "scope": "Fixed-C0 5k screening + 20k two-seed confirmation; additional reused historical full benchmark is separate from primary endpoint"
+}
