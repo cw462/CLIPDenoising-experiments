@@ -23,11 +23,86 @@ import pytest
 import torch
 
 from basicsr.models.image_restoration_model import ImageCleanModel, Mixing_Augment
+from basicsr.models.losses.losses import L1StructureLoss, deterministic_reflect_pad_one
 from tests.test_ac_training_contract import continuation_paths
 from tests.test_resume_contract import CUDA_ATOL, CUDA_RTOL, compare_states
 from tools.experiment_common import atomic_json, load_paths, read_json, torch_load
 from tools.run_experiment import checkpoint_payload
 from tools import run_ac_triplet as triplet
+
+
+@pytest.fixture(autouse=True)
+def restore_backend_settings():
+    settings = (torch.are_deterministic_algorithms_enabled(),
+                torch.is_deterministic_algorithms_warn_only_enabled(),
+                torch.backends.cudnn.benchmark, torch.backends.cudnn.deterministic,
+                torch.backends.cudnn.allow_tf32, torch.backends.cuda.matmul.allow_tf32)
+    yield
+    torch.use_deterministic_algorithms(settings[0], warn_only=settings[1])
+    torch.backends.cudnn.benchmark, torch.backends.cudnn.deterministic = settings[2:4]
+    torch.backends.cudnn.allow_tf32, torch.backends.cuda.matmul.allow_tf32 = settings[4:6]
+
+
+@pytest.mark.parametrize("shape", [(2, 3, 2, 2), (2, 3, 7, 11)])
+def test_deterministic_reflection_preserves_values_and_gradient(shape):
+    generator = torch.Generator().manual_seed(728)
+    image = torch.randn(shape, generator=generator, dtype=torch.float64).transpose(-1, -2)
+    reference_input = image.detach().requires_grad_(True)
+    actual_input = image.detach().requires_grad_(True)
+    expected = torch.nn.functional.pad(reference_input, (1, 1, 1, 1), mode="reflect")
+    actual = deterministic_reflect_pad_one(actual_input)
+    assert torch.equal(expected, actual)
+    cotangent = torch.randn(expected.shape, generator=generator, dtype=torch.float64)
+    expected.backward(cotangent)
+    actual.backward(cotangent)
+    assert torch.allclose(reference_input.grad, actual_input.grad, atol=1e-12, rtol=1e-12)
+
+
+def test_deterministic_structure_loss_preserves_definition_and_gradient():
+    generator = torch.Generator().manual_seed(729)
+    image = torch.randn((2, 3, 7, 11), generator=generator, dtype=torch.float64)
+    target = torch.randn(image.shape, generator=generator, dtype=torch.float64)
+    reference_input = image.clone().requires_grad_(True)
+    actual_input = image.clone().requires_grad_(True)
+    reference = L1StructureLoss()
+    actual = L1StructureLoss(deterministic_reflect_padding=True)
+    expected_loss, actual_loss = reference(reference_input, target), actual(actual_input, target)
+    assert torch.equal(expected_loss, actual_loss)
+    assert reference.last_components == actual.last_components
+    expected_loss.backward()
+    actual_loss.backward()
+    assert torch.allclose(reference_input.grad, actual_input.grad, atol=1e-12, rtol=1e-12)
+    assert reference.state_dict().keys() == actual.state_dict().keys()
+    assert all(torch.equal(value, actual.state_dict()[key]) for key, value in reference.state_dict().items())
+
+
+def test_deterministic_execution_fails_closed_on_incompatible_cublas_setting(monkeypatch):
+    monkeypatch.setenv("CUBLAS_WORKSPACE_CONFIG", ":16:8")
+    with pytest.raises(RuntimeError, match="CUBLAS_WORKSPACE_CONFIG must equal"):
+        triplet.configure_deterministic_execution(cuda=False)
+
+
+def test_actual_contract_failure_preserves_partial_report_and_evidence(tmp_path, monkeypatch):
+    report_path, report = tmp_path / "diagnostic.json", {}
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: True)
+
+    def interrupted(*args, **kwargs):
+        directory = Path(args[2]["output_root"])
+        directory.mkdir()
+        (directory / "failure_evidence.txt").write_text("preserve failure", encoding="utf-8")
+        raise RuntimeError("injected diagnostic failure")
+
+    monkeypatch.setattr(triplet, "run", interrupted)
+    paths = {"micro_batch": 16, "budgets": {"smoke": 200}}
+    with pytest.raises(RuntimeError, match="injected diagnostic failure"):
+        actual_triplet_contract(paths, paths, report_path, report=report)
+    persisted = read_json(report_path)
+    assert persisted == report
+    assert persisted["accepted"] is False and persisted["evidence_preserved"] is True
+    assert persisted["phase"] == "continuous_four_updates"
+    assert persisted["execution_contract"] == triplet.EXECUTION_CONTRACT
+    assert (Path(persisted["diagnostic_directory"]) / "runs" / "failure_evidence.txt").is_file()
+    assert "injected diagnostic failure" in persisted["error"]
 
 
 def _structure_paths(paths):
@@ -112,6 +187,11 @@ def test_triplet_materializes_once_with_independent_models_and_declared_interven
     assert len({opt["paired_protocol_hash"] for opt in configs.values()}) == 1
     assert [configs[group]["network_g"]["pfa_rho"] for group in triplet.GROUPS] == [0.0, 0.5, 0.0]
     assert [configs[group]["train"]["pixel_opt"]["type"] for group in triplet.GROUPS] == ["L1Loss", "L1Loss", "L1StructureLoss"]
+    assert configs["B3"]["train"]["pixel_opt"]["deterministic_reflect_padding"] is True
+    assert torch.are_deterministic_algorithms_enabled()
+    assert not torch.is_deterministic_algorithms_warn_only_enabled()
+    assert torch.backends.cudnn.deterministic and not torch.backends.cudnn.benchmark
+    assert not torch.backends.cudnn.allow_tf32 and not torch.backends.cuda.matmul.allow_tf32
     assert rows["B0"][0]["lr"] == 1e-5 and rows["B0"][-1]["lr"] == 1e-6
     assert all(a["lr"] > b["lr"] for a, b in zip(rows["B0"], rows["B0"][1:]))
     assert rows["B1"][-1]["loss"] != rows["B0"][-1]["loss"]
@@ -215,21 +295,26 @@ def test_triplet_model_side_effects_fail_closed_and_preserve_evidence(continuati
     assert read_json(coordinator / "status.json")["status"] == "failed"
 
 
-def actual_triplet_contract(paths, structure_paths, report_path):
+def actual_triplet_contract(paths, structure_paths, report_path, report=None):
     """Actual four-step triplet and interrupted replay, isolated from experiments."""
-    if not torch.cuda.is_available():
-        raise RuntimeError("Actual triplet diagnostic requires CUDA")
-    if paths["micro_batch"] != 16 or structure_paths["micro_batch"] != 16:
-        raise ValueError("Actual triplet diagnostic must preserve the authorized batch size 16")
-    report = {"accepted": False, "diagnostic_only": True, "device": "cuda", "batch_size": 16,
+    if report is None:
+        report = {}
+    report.update({"accepted": False, "diagnostic_only": True, "device": "cuda", "batch_size": 16,
               "updates": 4, "checkpoint_at": 2, "groups": {}, "immediate_restore": {},
               "phase_resources": [], "initialization_checks": {},
+              "execution_contract": copy.deepcopy(triplet.EXECUTION_CONTRACT),
               "float_acceptance": {"atol": CUDA_ATOL, "rtol": CUDA_RTOL,
-                  "scope": "computed params/optimizer/ema floats only; inputs/control states exact"}}
+                  "scope": "computed params/optimizer/ema floats only; inputs/control states exact"}})
     report_path = Path(report_path).resolve()
     report_path.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix="ac_triplet_contract_", dir=report_path.parent) as temporary:
-        root = Path(temporary)
+    root = Path(tempfile.mkdtemp(prefix="ac_triplet_contract_", dir=report_path.parent))
+    report.update(diagnostic_directory=str(root), evidence_preserved=True, phase="initializing")
+    atomic_json(report_path, report)
+    try:
+        if not torch.cuda.is_available():
+            raise RuntimeError("Actual triplet diagnostic requires CUDA")
+        if paths["micro_batch"] != 16 or structure_paths["micro_batch"] != 16:
+            raise ValueError("Actual triplet diagnostic must preserve the authorized batch size 16")
         diagnostic_paths = []
         for source in (paths, structure_paths):
             value = copy.deepcopy(source)
@@ -237,6 +322,8 @@ def actual_triplet_contract(paths, structure_paths, report_path):
                          checkpoint_keep=1, status_every=1, budgets={**source["budgets"], "smoke": 4})
             diagnostic_paths.append(value)
         first_paths, third_paths = diagnostic_paths
+        report["phase"] = "continuous_four_updates"
+        atomic_json(report_path, report)
         directories = triplet.run("smoke", 100, first_paths, third_paths)
 
         def record_resources(phase):
@@ -247,6 +334,7 @@ def actual_triplet_contract(paths, structure_paths, report_path):
                 "invocation_wall_seconds": max(value["invocation_wall_seconds"] for value in summaries)})
             for key in ("peak_allocated_mib", "peak_reserved_mib"):
                 report[key] = max(value[key] for value in report["phase_resources"])
+            atomic_json(report_path, report)
 
         record_resources("continuous_four_updates")
         for group, directory in directories.items():
@@ -264,6 +352,8 @@ def actual_triplet_contract(paths, structure_paths, report_path):
         assert run_root.parent == root.resolve()
         shutil.rmtree(run_root)
         torch.cuda.empty_cache()
+        report["phase"] = "first_two_updates"
+        atomic_json(report_path, report)
         triplet.run("smoke", 100, first_paths, third_paths, stop_after=2)
         record_resources("first_two_updates")
         restore = triplet.restore_checkpoint
@@ -273,9 +363,12 @@ def actual_triplet_contract(paths, structure_paths, report_path):
             restored = checkpoint_payload(model, sampler, model.opt, checkpoint["update"], checkpoint["elapsed_seconds"])
             comparison = compare_states(checkpoint, restored, device="cpu")
             report["immediate_restore"][checkpoint["experiment"]] = comparison
+            atomic_json(report_path, report)
             assert comparison["accepted"] and comparison["bitwise_equal"], comparison["failures"]
 
         triplet.restore_checkpoint = checked_restore
+        report["phase"] = "resumed_updates_three_four"
+        atomic_json(report_path, report)
         try:
             triplet.run("smoke", 100, first_paths, third_paths, resume=True)
         finally:
@@ -283,12 +376,13 @@ def actual_triplet_contract(paths, structure_paths, report_path):
         record_resources("resumed_updates_three_four")
         actual_rows = {group: _rows(directory) for group, directory in directories.items()}
         _assert_rows_paired(actual_rows)
+        report["phase"] = "compare_resumed_states"
         for group, directory in directories.items():
             expected = _without_elapsed(torch_load(expected_files[group]))
             actual = _without_elapsed(_checkpoint(directory))
             comparison = compare_states(expected, actual, device="cuda")
             report["groups"][group] = comparison
-            assert comparison["accepted"], comparison["failures"]
+            atomic_json(report_path, report)
             for wanted, observed in zip(expected_rows[group], actual_rows[group]):
                 for key, value in wanted.items():
                     if key in {"seconds", "triplet_wall_seconds"}:
@@ -298,8 +392,20 @@ def actual_triplet_contract(paths, structure_paths, report_path):
                     else:
                         assert value == observed[key], (group, wanted["update"], key)
             del expected, actual
+        assert all(value["accepted"] for value in report["groups"].values()), {
+            group: value["failures"] for group, value in report["groups"].items() if not value["accepted"]}
         report.update(accepted=True, paired_input_target_exact=True,
-                      resumed_inputs_and_controls_exact=True, all_three_restores_exact=True)
+                      resumed_inputs_and_controls_exact=True, all_three_restores_exact=True,
+                      phase="completed")
+    except BaseException as error:
+        report.update(error=f"{type(error).__name__}: {error}", traceback=traceback.format_exc())
+        raise
+    else:
+        assert root.resolve().parent == report_path.parent
+        shutil.rmtree(root)
+        report["evidence_preserved"] = False
+    finally:
+        atomic_json(report_path, report)
     return report
 
 
@@ -312,7 +418,7 @@ def main():
     started = time.perf_counter()
     report = {"accepted": False, "diagnostic_only": True}
     try:
-        report = actual_triplet_contract(load_paths(args.paths), load_paths(args.structure_paths), args.report)
+        actual_triplet_contract(load_paths(args.paths), load_paths(args.structure_paths), args.report, report=report)
     except Exception as error:
         report.update(error=f"{type(error).__name__}: {error}", traceback=traceback.format_exc())
         print(report["traceback"], file=sys.stderr)

@@ -6,6 +6,7 @@ export PYTHONUNBUFFERED=1
 export OMP_NUM_THREADS=4
 export MKL_NUM_THREADS=4
 export OPENBLAS_NUM_THREADS=1
+export CUBLAS_WORKSPACE_CONFIG=:4096:8
 unset CUDA_VISIBLE_DEVICES
 .venv/bin/python -u tools/run_ac_table1_pipeline.py --plan-a configs/plan_a_server.yaml --plan-c configs/plan_c_server.yaml >> reports/ac/pipeline_console.log 2>&1
 code=$?

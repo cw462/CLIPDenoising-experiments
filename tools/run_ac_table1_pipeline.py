@@ -26,7 +26,7 @@ class Table1Queue(Queue):
             raise ValueError("Historical benchmark CSV changed")
         self.shared_resource_log = self.reports / "resource_decisions.jsonl"
         self.state["protocol"].update({
-            "execution": "ac_triplet_v1; exact input/target reference checks before and after every model step",
+            "execution": "ac_triplet_v2; exact input/target reference checks before and after every model step",
             "failed_predecessor": "experiment/ac-server-20261021; confirmation pairing failed; no weights reused",
             "gpu_admission": POLICY,
             "additional_benchmark": {"datasets": ["CBSD68", "Kodak24", "McMaster", "Urban100"],

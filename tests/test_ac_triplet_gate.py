@@ -20,7 +20,7 @@ def fixture(tmp_path):
         checkpoint.parent.mkdir(parents=True)
         checkpoint.write_bytes(group.encode())
         config = {"exp": group, "seed": 100, "stage": "smoke", "source_hash": "frozen",
-                  "execution_contract": {"schema": "ac_triplet_v1"}, "paired_protocol_hash": "paired"}
+                  "execution_contract": {"schema": "ac_triplet_v2"}, "paired_protocol_hash": "paired"}
         config["config_hash"] = digest(config)
         atomic_json(run / "effective_config.json", config)
         commit["config_hashes"][group] = config["config_hash"]

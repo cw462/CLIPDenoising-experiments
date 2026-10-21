@@ -18,6 +18,12 @@ import shutil
 import sys
 import time
 
+# Must be set before importing torch or constructing any CUDA context.  Embedded
+# callers which initialize CUDA first must supply the same setting themselves.
+_CUDA_INITIALIZED_BEFORE_IMPORT = "torch" in sys.modules and sys.modules["torch"].cuda.is_initialized()
+_CUBLAS_CONFIG_BEFORE_IMPORT = os.environ.get("CUBLAS_WORKSPACE_CONFIG")
+os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
@@ -42,12 +48,33 @@ from tools.run_structure_experiment import configuration as structure_configurat
 
 GROUPS = ("B0", "B1", "B3")
 EXECUTION_CONTRACT = {
-    "schema": "ac_triplet_v1", "groups": list(GROUPS),
+    "schema": "ac_triplet_v2", "groups": list(GROUPS),
     "batch": "one sampler/data/Mixup realization per seed/update",
     "model_inputs": "independent contiguous clones; exact pre/post/reference checks",
     "optimizer_and_pfa": "independent per group; model steps cannot consume shared RNG",
     "recovery": "three validated checkpoints, then one atomic coordinator commit",
+    "determinism": {
+        "algorithms": True, "warn_only": False,
+        "cudnn_benchmark": False, "cudnn_deterministic": True,
+        "cudnn_allow_tf32": False, "cuda_matmul_allow_tf32": False,
+        "cublas_workspace_config": ":4096:8",
+        "structure_reflect_padding": "one-pixel slices/concatenation; exact reflection values",
+    },
 }
+
+
+def configure_deterministic_execution(cuda):
+    """Require deterministic kernels; unsupported operations must fail closed."""
+    wanted = EXECUTION_CONTRACT["determinism"]["cublas_workspace_config"]
+    if os.environ.get("CUBLAS_WORKSPACE_CONFIG") != wanted:
+        raise RuntimeError(f"CUBLAS_WORKSPACE_CONFIG must equal {wanted} before process startup")
+    if cuda and _CUDA_INITIALIZED_BEFORE_IMPORT and _CUBLAS_CONFIG_BEFORE_IMPORT != wanted:
+        raise RuntimeError("CUDA initialized before the required CUBLAS_WORKSPACE_CONFIG was set")
+    torch.use_deterministic_algorithms(True, warn_only=False)
+    torch.backends.cudnn.benchmark = False
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.allow_tf32 = False
+    torch.backends.cuda.matmul.allow_tf32 = False
 
 
 def configurations(stage, seed, paths, structure_paths):
@@ -56,7 +83,10 @@ def configurations(stage, seed, paths, structure_paths):
     result = {}
     for group in GROUPS:
         builder = structure_configuration if group == "B3" else pfa_configuration
-        opt, directory = builder(group, stage, seed, structure_paths if group == "B3" else paths)
+        selected_paths = copy.deepcopy(structure_paths if group == "B3" else paths)
+        if group == "B3":
+            selected_paths["pixel_opt"]["deterministic_reflect_padding"] = True
+        opt, directory = builder(group, stage, seed, selected_paths)
         opt["execution_contract"] = copy.deepcopy(EXECUTION_CONTRACT)
         opt["paired_protocol"]["execution_contract"] = copy.deepcopy(EXECUTION_CONTRACT)
         opt["paired_protocol_hash"] = digest(opt["paired_protocol"])
@@ -245,6 +275,7 @@ def run(stage, seed, paths, structure_paths, resume=False, stop_after=None):
     if paths["device"] not in ("cpu", "cuda"):
         raise ValueError("device must be cpu or cuda")
     cuda = paths["device"] == "cuda"
+    configure_deterministic_execution(cuda)
     if cuda and not torch.cuda.is_available():
         raise RuntimeError("CUDA unavailable")
     torch.set_num_threads(int(paths.get("cpu_threads", 4)))

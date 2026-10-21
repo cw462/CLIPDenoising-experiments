@@ -118,7 +118,7 @@ def validated_gate(paths):
     configs, checkpoints, contract = gate
     # Explicitly exclude the earlier failed independent-process runs.
     for config in configs.values():
-        if config.get("execution_contract", {}).get("schema") != "ac_triplet_v1":
+        if config.get("execution_contract", {}).get("schema") != "ac_triplet_v2":
             raise ValueError("Additional benchmark requires validated triplet training, not earlier failed runs")
     return gate
 

@@ -35,7 +35,7 @@ def validate_triplet_stage(paths, stage, seeds, current_source=None):
             if (digest(raw) != stored or commit["config_hashes"].get(group) != stored
                     or config.get("paired_protocol_hash") != commit["paired_protocol_hash"]
                     or config.get("source_hash") != commit["source_hash"]
-                    or config.get("execution_contract", {}).get("schema") != "ac_triplet_v1"
+                    or config.get("execution_contract", {}).get("schema") != "ac_triplet_v2"
                     or (config.get("exp"), config.get("stage"), config.get("seed")) != (group, stage, seed)):
                 raise ValueError(f"Triplet config mismatch: {run}")
             if (latest != commit["groups"][group] or latest.get("update") != budget
