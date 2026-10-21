@@ -11,13 +11,13 @@ reports_dir: reports
 data_manifest: data/manifest.json
 dev_train: splits/dev_train.txt
 dev_val: splits/dev_val.txt
-device: cuda
-micro_batch: 16
-accumulation: 1
+device: cpu
+micro_batch: 1
+accumulation: 16
 amp: false
 cpu_threads: 4
-cache_decoded_images: true
+cache_decoded_images: false
 minimum_free_gb: 2
 gpu_index: 0
 gpu_indices: [0, 1]
-jobs_per_gpu: 4
+jobs_per_gpu: 1

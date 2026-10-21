@@ -1,4 +1,14 @@
-# CLIPDenoising：RGB 旁路校准实验与完整结果
+# CLIPDenoising：RGB 校准与 A/C 续训实验
+
+**Table 1 对应条件：** [查看前轮六个条件的实际 PSNR/SSIM 与截图参考值](results/ac_20261021/table1/README.md)。B0/G1 为前轮三个训练种子的完整训练结果。当前分支新增[严格配对重跑与完整历史基准协议](docs/AC_Table1_Recovery_20261021.md)，A/C 覆盖相同的四数据集、15 个噪声条件，并单列六项最高噪声强度结果。新一轮的完成状态与有效结果见 [A/C Table 1 执行记录](results/ac_table1_20261021/README.md)。
+
+**修复后验收：** 实际 RN50/C0、batch16、三模型的连续训练与断点恢复对照已通过，B0/A/C 完整状态均逐位一致；历史 210 张原图、3,150 个噪声输入匹配。自动队列据此放行烟雾、筛选、确认和两套评测。该验收证明运行可恢复，不代表最终去噪指标已经完成；最新状态以执行记录为准。
+
+**前次 A/C 服务器实验（2026-10-21，失败证据保留）：** 46 项 GPU 验收通过，三组 200 步试跑、5k 筛选和 1,680 条筛选评测完成。六组 20k 续训已跑满，但最终逐步输入/目标哈希配对验收未通过，原队列因此停止；该批次没有有效的最终评测结论。详见[原运行状态与结果](results/ac_20261021/README.md)、[执行协议](docs/AC_Server_Run_20261021.md)及[30 万步完整训练的必要性分析](docs/AC_Full_Training_Assessment_20261021.md)。完整 A/C 300k 训练尚未启动。
+
+实现说明：[A：空间相关 PFA](docs/方案A_实现过程与验证说明.md)、[C：平滑梯度结构损失](docs/方案C_实现过程与验证说明.md)。本分支服务器入口为 `tools/run_ac_table1_pipeline.py`（或 `bash launch_ac_pipeline.sh`），配置为 `configs/plan_a_server.yaml`、`configs/plan_c_server.yaml`。本轮从同一个前轮 B0 检查点续训，不能与从原始初始化训练 300k 混称。
+
+**本机 Windows 已配置完成：** 使用方法见 [本地运行说明](LOCAL_SETUP.zh-CN.md)。双击 `run_demo.cmd` 运行已有基线模型的单图去噪；`run_checks.cmd` 验证环境、真实数据、模型和断点恢复。本机默认 CPU 配置，正式 CUDA 运行配置另见 `configs/local_paths.cuda.yaml`。
 
 本仓库基于 [CLIPDenoising（CVPR 2024）](https://github.com/alwaysuu/CLIPDenoising)，保存末级 RGB 旁路校准的代码、验收工具、训练与评测入口，以及 2026 年 10 月完成的实验记录。上游基准 commit 为 `2647bf815df0299a03d16df34b896fa266ceefda`；下方保留上游 README 与论文引用。
 

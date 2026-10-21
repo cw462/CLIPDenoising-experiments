@@ -1,0 +1,45 @@
+{
+  "status": "completed",
+  "stage": "smoke",
+  "seed": 100,
+  "groups": [
+    "B0",
+    "B1",
+    "B3"
+  ],
+  "process": {
+    "pid": 2470579,
+    "create_time": 1792576123.82,
+    "host": "imss"
+  },
+  "started_at": "2026-10-21T09:48:49Z",
+  "updated_at": "2026-10-21T09:50:52Z",
+  "ended_at": "2026-10-21T09:50:52Z",
+  "budget": 200,
+  "update": 200,
+  "durable_update": 200,
+  "source_hash": "733f3f9b0ace567f89121b15f10db812515179b63bf7953f35f11720251babf7",
+  "execution_contract": {
+    "schema": "ac_triplet_v2",
+    "groups": [
+      "B0",
+      "B1",
+      "B3"
+    ],
+    "batch": "one sampler/data/Mixup realization per seed/update",
+    "model_inputs": "independent contiguous clones; exact pre/post/reference checks",
+    "optimizer_and_pfa": "independent per group; model steps cannot consume shared RNG",
+    "recovery": "three validated checkpoints, then one atomic coordinator commit",
+    "determinism": {
+      "algorithms": true,
+      "warn_only": false,
+      "cudnn_benchmark": false,
+      "cudnn_deterministic": true,
+      "cudnn_allow_tf32": false,
+      "cuda_matmul_allow_tf32": false,
+      "cublas_workspace_config": ":4096:8",
+      "structure_reflect_padding": "one-pixel slices/concatenation; exact reflection values"
+    }
+  },
+  "invocation_wall_seconds": 122.59777107648551
+}

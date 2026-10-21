@@ -150,6 +150,7 @@ def checkpoint_payload(model, sampler, opt, update, elapsed):
         "scheduler": [s.state_dict() for s in model.schedulers], "scaler": None,
         "ema": model.net_g_ema.state_dict() if hasattr(model, "net_g_ema") else None,
         "update": update, "rng": rng_state(), "sampler": sampler.state_dict(),
+        "pfa_rng": model.net_g.pfa.state_dict(),
         "config_hash": opt["config_hash"], "source_hash": opt["source_hash"],
         "experiment": opt["exp"], "stage": opt["stage"], "seed": opt["seed"],
         "elapsed_seconds": elapsed, "complete_update_boundary": True}
@@ -171,6 +172,9 @@ def validate_checkpoint(path, opt, expected=None):
 
 
 def save_checkpoint(model, sampler, opt, update, elapsed, run):
+    keep = opt["runtime"].get("checkpoint_keep", 2)
+    if isinstance(keep, bool) or not isinstance(keep, int) or keep < 1:
+        raise ValueError("checkpoint_keep must be a positive integer")
     out = run / "checkpoints"
     out.mkdir(exist_ok=True)
     free = shutil.disk_usage(out).free
@@ -187,7 +191,7 @@ def save_checkpoint(model, sampler, opt, update, elapsed, run):
     atomic_json(out / "latest.json", {"path": str(target), "update": update,
                                     "sha256": sha256_file(target)})
     # Only this run's generated checkpoint files can be retired.
-    old = sorted(out.glob("update_*.pth"))[:-2]
+    old = sorted(out.glob("update_*.pth"))[:-keep]
     for p in old:
         p.unlink()
     return target
@@ -195,6 +199,7 @@ def save_checkpoint(model, sampler, opt, update, elapsed, run):
 
 def restore_checkpoint(model, sampler, ckpt):
     model.net_g.load_state_dict(ckpt["params"], strict=True)
+    model.net_g.pfa.load_state_dict(ckpt.get("pfa_rng"))
     model.optimizer_g.load_state_dict(ckpt["optimizer"])
     if len(model.schedulers) != len(ckpt["scheduler"]):
         raise RuntimeError("Scheduler count mismatch")

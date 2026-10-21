@@ -1,0 +1,15 @@
+{
+  "source_csv": "final_results_20261021/reports/per_image_results.csv",
+  "source_sha256": "d3fead06b10e8b86363fe8f17484fccbce2a3a723b96cfeb49db75524c900635",
+  "selected_rows": 6,
+  "B0_G1_training_seeds": [
+    0,
+    1,
+    2
+  ],
+  "G2_G3_training_seeds": [
+    0
+  ],
+  "noise_protocol": "One fixed realization per image/condition. Official Gaussian/spatial/Poisson: seed0. Salt-pepper: per-image/condition deterministic seed. Hashes paired across methods.",
+  "reference": "Six values transcribed from user-provided screenshot; not measurements from this project."
+}

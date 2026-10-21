@@ -4,8 +4,11 @@
 /data/
 /pretrained/
 /runs/
+/runs_cuda/
+/reports_cuda/
 # Canonical completed results are in final_results_20261021/.
 /reports/
+/final_results_ac_20261021/
 /archives/
 /tools/remote_control.py
 __pycache__/

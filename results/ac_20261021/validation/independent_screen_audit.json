@@ -1,0 +1,79 @@
+{
+  "status": "passed",
+  "mode": "final",
+  "stage": "screen",
+  "training": {
+    "source_hash": "44d07942a24289262f16963523e98d2a9174ff34d53adab0755585213ff3f0f5",
+    "c0_sha256": "123b9091a9c13b17da0e40f25f706efc8e5044ce5d8295bf5701eb1dd8f99675",
+    "runs": [
+      {
+        "method": "B0",
+        "seed": 100,
+        "status": "completed",
+        "logged_updates": 5000,
+        "budget": 5000,
+        "config_hash": "00b5010e700e94ee52d87a08057a081d9d6885d29482b91ee4a4c574a127b273",
+        "paired_protocol_hash": "5f6686fd3de67e21606aae5bbc70e3ea09825fb2a21638bfce9eb17b115945cf",
+        "ended_at": "2026-10-21T06:30:25Z",
+        "checkpoint_sha256": "196718cd4c593b6853a40a62118dc943a14de40975013a80f5d631c546f96475"
+      },
+      {
+        "method": "B1",
+        "seed": 100,
+        "status": "completed",
+        "logged_updates": 5000,
+        "budget": 5000,
+        "config_hash": "3137e3abe7824c5bf2399877fc7888b5d5907afabe125e4365b82d90083bdba3",
+        "paired_protocol_hash": "5f6686fd3de67e21606aae5bbc70e3ea09825fb2a21638bfce9eb17b115945cf",
+        "ended_at": "2026-10-21T06:30:31Z",
+        "checkpoint_sha256": "86ac50e88f826085da25c192b817a92c33968fbf3eb0a2ebc5ab1bd688fbb73c"
+      },
+      {
+        "method": "B3",
+        "seed": 100,
+        "status": "completed",
+        "logged_updates": 5000,
+        "budget": 5000,
+        "config_hash": "2dc3648d58987ced530f2d811368bf94c6ddd953f7c08f2d828cc0ab124c4753",
+        "paired_protocol_hash": "5f6686fd3de67e21606aae5bbc70e3ea09825fb2a21638bfce9eb17b115945cf",
+        "ended_at": "2026-10-21T06:31:18Z",
+        "checkpoint_sha256": "6c5ca05c0563158e881f0fd1a3730c280672184718a48677c2e8ce7ff913a9ee"
+      }
+    ],
+    "common_contract_hash": "dafff79a30c97fa433ed9d1c155f3b17ab16bbd53bae2915baea9c7fa0ea38bd",
+    "observed_evaluation_gates": 4
+  },
+  "evaluation": {
+    "rows": 1680,
+    "unique_cells": 1680,
+    "noise_averaged_cells": 560,
+    "condition_rows": 28,
+    "paired_rows": 700,
+    "paired_summary_rows": 120,
+    "negative_rows": 140,
+    "panels": 12,
+    "decisions": {
+      "B1": {
+        "ood_gain_ge_0_1_db": false,
+        "all_training_seeds_ood_positive": false,
+        "every_training_seed_id_ge_minus_0_05_db": true,
+        "criterion_met": false,
+        "final_confirmation": false,
+        "paired_image_ci_excludes_zero": false,
+        "interpretation": "Predefined engineering threshold, not a multi-seed significance test"
+      },
+      "B3": {
+        "ood_gain_ge_0_1_db": false,
+        "all_training_seeds_ood_positive": true,
+        "every_training_seed_id_ge_minus_0_05_db": true,
+        "criterion_met": false,
+        "final_confirmation": false,
+        "paired_image_ci_excludes_zero": true,
+        "interpretation": "Predefined engineering threshold, not a multi-seed significance test"
+      }
+    },
+    "last_training_end_utc": "2026-10-21T06:31:18Z",
+    "first_evaluation_access_utc": "2026-10-21T06:32:35Z",
+    "paired_metrics_and_bootstrap_recomputed": true
+  }
+}

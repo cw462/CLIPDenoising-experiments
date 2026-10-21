@@ -1,0 +1,29 @@
+{
+  "schema": "ac_triplet_commit_v1",
+  "update": 200,
+  "config_hashes": {
+    "B0": "650980272e5105765b5aca080c773a510f31e2815a325dd68a7bb036b4933c40",
+    "B1": "dce67e647786ba19a9aeba599d9216a4d129bd3c2ceee88149cb552de9532257",
+    "B3": "932e1b86fdd215e953823a4f23f4ff5558c1c130c8b5b0f99fafbcfb6fb4c0ea"
+  },
+  "paired_protocol_hash": "ae562fde2bd26abf95fd4d78cdcb2af29d73febf04d3a928034d8b9571a3eaa8",
+  "source_hash": "733f3f9b0ace567f89121b15f10db812515179b63bf7953f35f11720251babf7",
+  "groups": {
+    "B0": {
+      "path": "/home/imss/cw/CLIPDenoising_AC_Table1_20261021_r2/runs/ac/smoke/B0/seed100/checkpoints/update_000200.pth",
+      "update": 200,
+      "sha256": "5554c66e9b6a329711f47286c0a14b300cf2914a97eb4837128f5eb8d02d7a62"
+    },
+    "B1": {
+      "path": "/home/imss/cw/CLIPDenoising_AC_Table1_20261021_r2/runs/ac/smoke/B1/seed100/checkpoints/update_000200.pth",
+      "update": 200,
+      "sha256": "47207bceafaebae15483ea32d80d5fdbb21b35384ad76f8e8a9738039fed7222"
+    },
+    "B3": {
+      "path": "/home/imss/cw/CLIPDenoising_AC_Table1_20261021_r2/runs/ac/smoke/B3/seed100/checkpoints/update_000200.pth",
+      "update": 200,
+      "sha256": "fec2c9e28618a79ac4f1927d7beaf3e94a309961febec1f9e038705545f0ba8b"
+    }
+  },
+  "committed_at": "2026-10-21T09:50:49Z"
+}

@@ -1,0 +1,120 @@
+{
+  "snapshot_utc": "2026-10-21T08:08:44.127394+00:00",
+  "server_updated_at_utc": "2026-10-21T07:46:49Z",
+  "pipeline_status": "failed",
+  "pipeline_phase": "confirm",
+  "pipeline_reason": "RuntimeError: Paired input/target sequences differ: <PROJECT_ROOT>/runs/ac/confirm/B1/seed101",
+  "final_confirmation_accepted": false,
+  "completed_result_stages": [
+    "screen"
+  ],
+  "executed_code_commit": "c96db7b24ee84250812423c2b3ba9636a7926bb7",
+  "source_hash": "44d07942a24289262f16963523e98d2a9174ff34d53adab0755585213ff3f0f5",
+  "configuration_hashes": {
+    "source_hash": "44d07942a24289262f16963523e98d2a9174ff34d53adab0755585213ff3f0f5",
+    "config_a_sha256": "d646e7999b1880e43448a781f42d404df2ec03dce11a53b2c4dcad5addcec7a2",
+    "config_c_sha256": "1d033499c419c4218e113f0a0d3c7b4be5a82f8d3daa06747a198555878a6b51"
+  },
+  "jobs": {
+    "contract_tests": {
+      "status": "completed",
+      "gpu": 0,
+      "update": null
+    },
+    "actual_model_contract": {
+      "status": "completed",
+      "gpu": 0,
+      "update": null
+    },
+    "smoke_B0_seed100": {
+      "status": "completed",
+      "gpu": 0,
+      "update": 200
+    },
+    "smoke_B1_seed100": {
+      "status": "completed",
+      "gpu": 0,
+      "update": 200
+    },
+    "smoke_B3_seed100": {
+      "status": "completed",
+      "gpu": 0,
+      "update": 200
+    },
+    "screen_B0_seed100": {
+      "status": "completed",
+      "gpu": 0,
+      "update": 5000
+    },
+    "screen_B1_seed100": {
+      "status": "completed",
+      "gpu": 0,
+      "update": 5000
+    },
+    "screen_B3_seed100": {
+      "status": "completed",
+      "gpu": 0,
+      "update": 5000
+    },
+    "eval_screen_C0_seed0": {
+      "status": "completed",
+      "gpu": 1,
+      "update": null
+    },
+    "eval_screen_B0_seed100": {
+      "status": "completed",
+      "gpu": 0,
+      "update": null
+    },
+    "eval_screen_B1_seed100": {
+      "status": "completed",
+      "gpu": 0,
+      "update": null
+    },
+    "eval_screen_B3_seed100": {
+      "status": "completed",
+      "gpu": 1,
+      "update": null
+    },
+    "summarize_screen": {
+      "status": "completed",
+      "gpu": null,
+      "update": null
+    },
+    "confirm_B0_seed101": {
+      "status": "completed",
+      "gpu": 1,
+      "update": 20000
+    },
+    "confirm_B1_seed101": {
+      "status": "completed",
+      "gpu": 0,
+      "update": 20000
+    },
+    "confirm_B3_seed101": {
+      "status": "completed",
+      "gpu": 1,
+      "update": 20000
+    },
+    "confirm_B0_seed102": {
+      "status": "completed",
+      "gpu": 0,
+      "update": 20000
+    },
+    "confirm_B1_seed102": {
+      "status": "completed",
+      "gpu": 1,
+      "update": 20000
+    },
+    "confirm_B3_seed102": {
+      "status": "completed",
+      "gpu": 0,
+      "update": 20000
+    }
+  },
+  "full_300k_ac_training_started": false,
+  "scope": "Fixed-C0 continuation: 5k seed100 screening; 20k seeds101/102 confirmation.",
+  "c0_sha256": "123b9091a9c13b17da0e40f25f706efc8e5044ce5d8295bf5701eb1dd8f99675",
+  "external_scheduler_sha256": "d9027a17da330a2f3e24059331839e3959cad6c4404bdfbe18edab3b2186ee42",
+  "boundary": "CBSD68/Kodak24 were evaluated in the earlier study; holdout is within this round only."
+}
