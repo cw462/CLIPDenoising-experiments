@@ -1,0 +1,224 @@
+{
+  "checked_at_utc": "2026-10-21T16:39:05.801453+00:00",
+  "status": "blocked_by_repeated_host_data_inconsistency",
+  "formal_training_started": false,
+  "active_training_processes": [],
+  "experiment": {
+    "variant": "G1C",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "steps_per_seed": 300000,
+    "loss": "L1 + 0.05 * smoothed_gradient_structure"
+  },
+  "science_commit": "c756c1f32e8c6ed53b4571dcfe7e4ab86cd2ac23",
+  "pipeline_identity": {
+    "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+    "config_sha256": "4657ffd7204a70914ab814542330ab7fd00ebec16b950e163ea513b75c82f439"
+  },
+  "pipeline_status": "failed",
+  "pipeline_phase": "smoke200",
+  "gpu_at_status_check": [
+    "0, NVIDIA GeForce RTX 3090, 19 MiB, 24576 MiB, 0 %",
+    "1, NVIDIA GeForce RTX 3090, 151 MiB, 24576 MiB, 0 %"
+  ],
+  "memory_info_at_status_check": "MemTotal:       98573384 kB\nMemAvailable:   92269016 kB\nSwapTotal:      11534328 kB\nSwapFree:          80368 kB",
+  "diagnostics": {
+    "smoke200": [
+      {
+        "seed": 0,
+        "status": "failed",
+        "update": 139,
+        "durable_update": 0,
+        "reason": "InputProtectionError: Snapshot clone/source bytes differ",
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": null
+      },
+      {
+        "seed": 1,
+        "status": "failed",
+        "update": 57,
+        "durable_update": 0,
+        "reason": "InputProtectionError: Mixup modified raw batch",
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": null
+      },
+      {
+        "seed": 2,
+        "status": "failed",
+        "update": 100,
+        "durable_update": 0,
+        "reason": "InputProtectionError: Snapshot clone/source bytes differ",
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": null
+      }
+    ],
+    "affinity_smoke200": [
+      {
+        "seed": 0,
+        "status": "paused_at_checkpoint",
+        "update": 200,
+        "durable_update": 200,
+        "reason": null,
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": "9e0832ac5d1da2468bbf6b530b9e0b05829bf214ed53420a4a8a408dda73f8f6"
+      },
+      {
+        "seed": 1,
+        "status": "failed",
+        "update": 163,
+        "durable_update": 0,
+        "reason": "InputProtectionError: Independent readback source/clone confirmation differs",
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": null
+      },
+      {
+        "seed": 2,
+        "status": "failed",
+        "update": 162,
+        "durable_update": 0,
+        "reason": "InputProtectionError: Mixup modified raw batch",
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": null
+      }
+    ],
+    "affinityB_smoke200": [
+      {
+        "seed": 1,
+        "status": "failed",
+        "update": 41,
+        "durable_update": 0,
+        "reason": "InputProtectionError: Independent readback source/clone confirmation differs",
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": null
+      },
+      {
+        "seed": 2,
+        "status": "failed",
+        "update": 53,
+        "durable_update": 0,
+        "reason": "InputProtectionError: Independent readback source/clone confirmation differs",
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": null
+      }
+    ],
+    "cpucompat_smoke200": [
+      {
+        "seed": 0,
+        "status": "failed",
+        "update": 104,
+        "durable_update": 0,
+        "reason": "InputProtectionError: Snapshot clone/source bytes differ",
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": null
+      },
+      {
+        "seed": 1,
+        "status": "paused_at_checkpoint",
+        "update": 200,
+        "durable_update": 200,
+        "reason": null,
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": "00143305c9a9e153916e5585a7130927aa85e9e5bc5d850596aa9322a98b08e4"
+      },
+      {
+        "seed": 2,
+        "status": "failed",
+        "update": 92,
+        "durable_update": 0,
+        "reason": "InputProtectionError: Snapshot clone/source bytes differ",
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": null
+      }
+    ],
+    "directbytes_smoke200": [
+      {
+        "seed": 0,
+        "status": "failed",
+        "update": 40,
+        "durable_update": 0,
+        "reason": "InputProtectionError: Snapshot clone/source bytes differ",
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": null
+      },
+      {
+        "seed": 1,
+        "status": "failed",
+        "update": 35,
+        "durable_update": 0,
+        "reason": "InputProtectionError: Independent readback source/clone confirmation differs",
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": null
+      },
+      {
+        "seed": 2,
+        "status": "failed",
+        "update": 71,
+        "durable_update": 0,
+        "reason": "InputProtectionError: Snapshot clone/source bytes differ",
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": null
+      }
+    ],
+    "digestbytes_smoke200": [
+      {
+        "seed": 0,
+        "status": "failed",
+        "update": 107,
+        "durable_update": 0,
+        "reason": "InputProtectionError: Independent readback consensus is a third value",
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": null
+      },
+      {
+        "seed": 1,
+        "status": "failed",
+        "update": 95,
+        "durable_update": 0,
+        "reason": "InputProtectionError: Snapshot clone/source bytes differ",
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": null
+      },
+      {
+        "seed": 2,
+        "status": "failed",
+        "update": 114,
+        "durable_update": 0,
+        "reason": "InputProtectionError: Independent readback source/clone confirmation differs",
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": null
+      }
+    ],
+    "torch231_smoke200": [
+      {
+        "seed": 0,
+        "status": "failed",
+        "update": 20,
+        "durable_update": 0,
+        "reason": "InputProtectionError: Independent readback confirmations are not stable",
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": null
+      },
+      {
+        "seed": 1,
+        "status": "paused_at_checkpoint",
+        "update": 200,
+        "durable_update": 200,
+        "reason": null,
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": "4ae5a112f493b3f3019a3d993e1e15599a05f119fede85d7dde81356dc2a77c2"
+      },
+      {
+        "seed": 2,
+        "status": "paused_at_checkpoint",
+        "update": 200,
+        "durable_update": 200,
+        "reason": null,
+        "source_hash": "e8967eb5c1eacf9294b6f4ed23b4c68203c2e96d2f136b54b44fffd254963a4c",
+        "checkpoint_sha256": "083f725dfa93714d5ad9901590cb4fcd2c990a36d6bec645cb942add59f67ebd"
+      }
+    ]
+  }
+}
