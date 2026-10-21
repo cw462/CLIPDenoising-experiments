@@ -172,6 +172,9 @@ def validate_checkpoint(path, opt, expected=None):
 
 
 def save_checkpoint(model, sampler, opt, update, elapsed, run):
+    keep = opt["runtime"].get("checkpoint_keep", 2)
+    if isinstance(keep, bool) or not isinstance(keep, int) or keep < 1:
+        raise ValueError("checkpoint_keep must be a positive integer")
     out = run / "checkpoints"
     out.mkdir(exist_ok=True)
     free = shutil.disk_usage(out).free
@@ -188,7 +191,7 @@ def save_checkpoint(model, sampler, opt, update, elapsed, run):
     atomic_json(out / "latest.json", {"path": str(target), "update": update,
                                     "sha256": sha256_file(target)})
     # Only this run's generated checkpoint files can be retired.
-    old = sorted(out.glob("update_*.pth"))[:-2]
+    old = sorted(out.glob("update_*.pth"))[:-keep]
     for p in old:
         p.unlink()
     return target
