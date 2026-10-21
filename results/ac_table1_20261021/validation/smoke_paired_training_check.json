@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "schema": "ac_triplet_gate_v1",
+  "runs": [
+    {
+      "method": "B0",
+      "seed": 100,
+      "updates": 200,
+      "checkpoint_sha256": "5554c66e9b6a329711f47286c0a14b300cf2914a97eb4837128f5eb8d02d7a62",
+      "log_sha256": "214a201a9ae26a17492467f1174cb2e502f0e35e14e1f5a1c1f8522d19661152",
+      "commit_sha256": "b7f37650ac3c07f2cb840d97e1411832a2270c255da40854fe18015b46e879ef"
+    },
+    {
+      "method": "B1",
+      "seed": 100,
+      "updates": 200,
+      "checkpoint_sha256": "47207bceafaebae15483ea32d80d5fdbb21b35384ad76f8e8a9738039fed7222",
+      "log_sha256": "d0ddbc0b277ca76068f77c45e762cc1f4c018a5bf57508308cf38b64ef14dd7e",
+      "commit_sha256": "b7f37650ac3c07f2cb840d97e1411832a2270c255da40854fe18015b46e879ef"
+    },
+    {
+      "method": "B3",
+      "seed": 100,
+      "updates": 200,
+      "checkpoint_sha256": "fec2c9e28618a79ac4f1927d7beaf3e94a309961febec1f9e038705545f0ba8b",
+      "log_sha256": "dbbc1a5e72a8fe8620bd75d1bdce9d66cdca4882104df3549e7d27d132a93328",
+      "commit_sha256": "b7f37650ac3c07f2cb840d97e1411832a2270c255da40854fe18015b46e879ef"
+    }
+  ]
+}

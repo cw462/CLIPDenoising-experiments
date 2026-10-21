@@ -2,7 +2,7 @@
 
 **状态：实验进行中，未通过最终结果发布核验。**
 
-本地快照时间（UTC）：2026-10-21T09:49:18.460558+00:00。服务器阶段：`smoke`。
+本地快照时间（UTC）：2026-10-21T09:51:45.852013+00:00。服务器阶段：`screen`。
 
 实际执行代码提交：`3f6e1537a5c05bbbe93d7df413f7d3e60703045c`；冻结 Python 源码 SHA256：`733f3f9b0ace567f89121b15f10db812515179b63bf7953f35f11720251babf7`。
 
@@ -26,4 +26,4 @@ B0/A(B1)/C(B3) 使用同一个 C0 建立新优化器。三方法在同一训练�
 
 报告、CSV和PNG按服务器原始字节保存，清单记录精确SHA256；不包含原始数据集、模型权重、连接凭据或任务日志。
 
-最终发布核验待满足：`confirm_independent`, `confirm_results`, `confirm_training`, `screen_independent`, `screen_results`, `screen_training`, `smoke_training`, `table1_results`。
+最终发布核验待满足：`confirm_independent`, `confirm_results`, `confirm_training`, `screen_independent`, `screen_results`, `screen_training`, `table1_results`。

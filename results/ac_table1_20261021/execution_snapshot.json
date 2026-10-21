@@ -1,8 +1,8 @@
 {
-  "snapshot_utc": "2026-10-21T09:49:18.460558+00:00",
+  "snapshot_utc": "2026-10-21T09:51:45.852013+00:00",
   "pipeline_status": "running",
-  "pipeline_phase": "smoke",
-  "server_updated_at_utc": "2026-10-21T09:49:17Z",
+  "pipeline_phase": "screen",
+  "server_updated_at_utc": "2026-10-21T09:51:35Z",
   "server_started_at_utc": "2026-10-21T09:44:42Z",
   "server_ended_at_utc": null,
   "pipeline_reason": "",
@@ -60,11 +60,19 @@
       "ended_at": "2026-10-21T09:48:40Z"
     },
     "smoke_triplet_seed100": {
+      "status": "completed",
+      "gpu": 0,
+      "update": 200,
+      "returncode": 0,
+      "started_at": "2026-10-21T09:48:44Z",
+      "ended_at": "2026-10-21T09:50:57Z"
+    },
+    "screen_triplet_seed100": {
       "status": "running",
       "gpu": 0,
       "update": 20,
       "returncode": null,
-      "started_at": "2026-10-21T09:48:44Z",
+      "started_at": "2026-10-21T09:51:02Z",
       "ended_at": null
     }
   },
@@ -88,6 +96,14 @@
         "raw_images": 210,
         "model_outcome_access": false
       }
+    },
+    "smoke_training": {
+      "status": "passed",
+      "detail": {
+        "runs": 3,
+        "updates_per_run": 200,
+        "exact_training_proof_recomputed": true
+      }
     }
   },
   "missing_final_requirements": [
@@ -97,11 +113,10 @@
     "screen_independent",
     "screen_results",
     "screen_training",
-    "smoke_training",
     "table1_results"
   ],
   "incomplete_or_failed_jobs": [
-    "smoke_triplet_seed100"
+    "screen_triplet_seed100"
   ],
   "full_300k_ac_training_started": false,
   "failed_predecessors": [
