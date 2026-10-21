@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "runs": [
+    {
+      "method": "B0",
+      "seed": 100,
+      "updates": 5000,
+      "checkpoint_sha256": "196718cd4c593b6853a40a62118dc943a14de40975013a80f5d631c546f96475"
+    },
+    {
+      "method": "B1",
+      "seed": 100,
+      "updates": 5000,
+      "checkpoint_sha256": "86ac50e88f826085da25c192b817a92c33968fbf3eb0a2ebc5ab1bd688fbb73c"
+    },
+    {
+      "method": "B3",
+      "seed": 100,
+      "updates": 5000,
+      "checkpoint_sha256": "6c5ca05c0563158e881f0fd1a3730c280672184718a48677c2e8ce7ff913a9ee"
+    }
+  ]
+}
