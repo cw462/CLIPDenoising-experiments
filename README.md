@@ -1,5 +1,7 @@
 # CLIPDenoising：RGB 旁路校准实验与完整结果
 
+**方案 C：** [L1 加平滑梯度结构损失的实现与验证](docs/方案C_实现过程与验证说明.md)，入口 `run_plan_c.cmd`，配置 `configs/plan_c.yaml`。B0/B3 已完成 GPU 短测。
+
 **方案 A 已实现并通过 RTX 3070 测试：** [空间相关 PFA 实现与验证说明](docs/方案A_实现过程与验证说明.md)。入口 `run_plan_a.cmd`，配置 `configs/plan_a.yaml`；B0/B1 已各完成 200 步稳定性检查，正式有效性实验尚未运行。
 
 **本机 Windows 已配置完成：** 使用方法见 [本地运行说明](LOCAL_SETUP.zh-CN.md)。双击 `run_demo.cmd` 运行已有基线模型的单图去噪；`run_checks.cmd` 验证环境、真实数据、模型和断点恢复。本机默认 CPU 配置，正式 CUDA 运行配置另见 `configs/local_paths.cuda.yaml`。

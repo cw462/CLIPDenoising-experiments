@@ -61,7 +61,7 @@ def tensor_hash(value):
     return hashlib.sha256(value.detach().cpu().contiguous().numpy().tobytes()).hexdigest()
 
 
-def run(group, stage, seed, paths, resume=False, stop_after=None):
+def run(group, stage, seed, paths, resume=False, stop_after=None, configuration_builder=None):
     if paths["device"] not in ("cpu", "cuda"):
         raise ValueError("device must be cpu or cuda")
     cuda = paths["device"] == "cuda"
@@ -71,7 +71,7 @@ def run(group, stage, seed, paths, resume=False, stop_after=None):
     if cuda:
         torch.cuda.set_device(int(paths.get("gpu_index", 0)))
     get_root_logger(log_level=logging.ERROR).setLevel(logging.ERROR)
-    opt, directory = configuration(group, stage, seed, paths)
+    opt, directory = (configuration_builder or configuration)(group, stage, seed, paths)
     budget = opt["train"]["total_iter"]
     if stop_after is not None and not 1 <= stop_after <= budget:
         raise ValueError("--stop-after must be between 1 and the stage budget")
@@ -128,10 +128,13 @@ def run(group, stage, seed, paths, resume=False, stop_after=None):
                     row = {"update": current, "loss": loss, "lr": model.optimizer_g.param_groups[0]["lr"],
                            "seconds": seconds, "input_sha256": tensor_hash(model.lq),
                            "target_sha256": tensor_hash(model.gt)}
+                    components = getattr(model.cri_pix, 'last_components', None)
+                    row.update({key: float(value) for key, value in components.items()} if components else
+                               {'pixel_l1': loss, 'structure': 0.0, 'weighted_structure': 0.0})
                     rows.append(row)
                     stream.write(json.dumps(row) + "\n")
                     if current % 20 == 0 or current == stop:
-                        print(f"{group} {stage} {current}/{budget}: L1={loss:.6f}, {seconds:.3f}s/update", flush=True)
+                        print(f"{group} {stage} {current}/{budget}: loss={loss:.6f}, {seconds:.3f}s/update", flush=True)
                     if current % 100 == 0 or current == stop:
                         saved = save_checkpoint(model, sampler, opt, current, elapsed, directory)
                         atomic_json(directory / "status.json", {
@@ -144,7 +147,9 @@ def run(group, stage, seed, paths, resume=False, stop_after=None):
                 "group": group, "stage": stage, "seed": seed, "updates": stop,
                 "budget": budget, "completed": stop == budget, "batch_size": paths["micro_batch"],
                 "device": torch.cuda.get_device_name() if cuda else "cpu", "rho": opt["network_g"]["pfa_rho"],
-                "c0_sha256": opt["plan_a"]["c0_sha256"], "last_loss": rows[-1]["loss"],
+                "c0_sha256": opt.get("plan_c", opt.get("plan_a"))["c0_sha256"], "last_loss": rows[-1]["loss"],
+                "last_pixel_l1": rows[-1]['pixel_l1'], "last_structure": rows[-1]['structure'],
+                "last_weighted_structure": rows[-1]['weighted_structure'],
                 "first_lr": rows[0]["lr"], "last_lr": rows[-1]["lr"],
                 "mean_update_seconds_after_warmup": sum(timings) / len(timings) if timings else None,
                 "peak_allocated_mib": torch.cuda.max_memory_allocated() / 2**20 if cuda else None,

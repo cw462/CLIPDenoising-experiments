@@ -9,7 +9,7 @@ set "OMP_NUM_THREADS=4"
 set "MKL_NUM_THREADS=4"
 "%~dp0.venv\Scripts\python.exe" -m pip check
 if errorlevel 1 goto failed
-"%~dp0.venv\Scripts\python.exe" -m pytest tests\test_data_contract.py tests\test_pipeline_capacity.py tests\test_spatial_pfa.py -q
+"%~dp0.venv\Scripts\python.exe" -m pytest tests\test_data_contract.py tests\test_pipeline_capacity.py tests\test_spatial_pfa.py tests\test_structure_loss.py -q
 if errorlevel 1 goto failed
 "%~dp0.venv\Scripts\python.exe" -u tests\test_calibration_contract.py --weights pretrained\RN50.pt --device cpu --report reports\calibration_contract_cpu.json
 if errorlevel 1 goto failed

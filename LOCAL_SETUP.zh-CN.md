@@ -1,5 +1,7 @@
 # Windows 本地运行说明
 
+方案 C 已提供独立入口 `run_plan_c.cmd`，详见 [实现与验证说明](docs/方案C_实现过程与验证说明.md)。全部检查入口现包含 19 项方案 C 专项测试。
+
 更新：RTX 3070 显卡坞已连接，CUDA 与方案 A 的 GPU 训练测试已通过。方案 A 请使用 `run_plan_a.cmd`，详见 [实现与验证说明](docs/方案A_实现过程与验证说明.md)。下文保留初次配置时的 CPU 运行说明；GPU 不可用的记录指当时尚未连接的状态。`run_checks.cmd` 现已增加 15 项方案 A 测试。
 
 项目目录：`E:\E_MyProjects\school\CLIPDenoisingV1`。

@@ -75,7 +75,7 @@ def metrics(clean, restored):
                                                  use_sample_covariance=False))}
 
 
-def summarize(rows):
+def summarize(rows, candidate='B1'):
     # Noise repeats are averaged within each image first, never bootstrap units.
     per_condition = defaultdict(list)
     for row in rows:
@@ -95,13 +95,13 @@ def summarize(rows):
         value for (m, _, c), value in image_means.items() if m == method and c == category
     ])) for category in ("id", "ood", "spatial")} for method in methods}
     paired = {}
-    if "B0" in methods and "B1" in methods:
+    if "B0" in methods and candidate in methods:
         for category in ("id", "ood", "spatial"):
             differences = np.array([value - image_means[("B0", image, category)]
                                     for (method, image, c), value in image_means.items()
-                                    if method == "B1" and c == category])
+                                    if method == candidate and c == category])
             samples = np.random.RandomState(2026).choice(differences, size=(2000, len(differences)), replace=True).mean(axis=1)
-            paired[category] = {"B1_minus_B0_db": float(differences.mean()),
+            paired[category] = {f"{candidate}_minus_B0_db": float(differences.mean()),
                                 "paired_image_bootstrap_95_ci": np.percentile(samples, [2.5, 97.5]).tolist(),
                                 "independent_images": len(differences),
                                 "scope": "Image uncertainty only; not training-seed variability"}
@@ -110,10 +110,12 @@ def summarize(rows):
                            for (m, f, l), v in conditions.items()]}
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
+def main(proposal='A'):
+    candidate = 'B3' if proposal == 'C' else 'B1'
+    parser = argparse.ArgumentParser(description=__doc__ if proposal == 'A' else
+                                     'Proposal C: fixed seven-condition C0/B0/B3 evaluation')
     parser.add_argument("--b0", type=Path)
-    parser.add_argument("--b1", type=Path)
+    parser.add_argument('--' + candidate.lower(), type=Path)
     parser.add_argument("--split", choices=("dev", "holdout", "kodak"), default="dev")
     parser.add_argument("--seeds", type=int, nargs="+", default=[0, 1, 2])
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cuda")
@@ -131,18 +133,20 @@ def main():
     files = fixed_split(args.split)
     if args.limit:
         files = files[:args.limit]
-    output = args.output or ROOT / f"reports/plan_a/evaluation_{args.split}"
+    output = args.output or ROOT / f"reports/plan_{proposal.lower()}/evaluation_{args.split}"
     checkpoints = {"C0": ROOT / "pretrained/synthetic_baseline.pth"}
-    checkpoints.update({name: path for name, path in (("B0", args.b0), ("B1", args.b1)) if path})
+    checkpoints.update({name: path for name, path in (("B0", args.b0), (candidate, getattr(args, candidate.lower()))) if path})
     rows, identities = [], {}
     for name, path in checkpoints.items():
         checkpoint = torch_load(path)
         if name != "C0":
             if checkpoint.get("experiment") != name or checkpoint.get("pfa_rng") is None:
-                raise ValueError(f"Not a proposal A {name} recovery checkpoint: {path}")
+                raise ValueError(f"Not a proposal {proposal} {name} recovery checkpoint: {path}")
             config = json.loads((path.parent.parent / "effective_config.json").read_text())
             if checkpoint["config_hash"] != config["config_hash"]:
                 raise ValueError("Checkpoint/config mismatch")
+            if 'plan_' + proposal.lower() not in config:
+                raise ValueError(f'Checkpoint belongs to a different proposal: {path}')
             if checkpoint["update"] != config["train"]["total_iter"] and not args.allow_partial:
                 raise ValueError("Incomplete training; use --allow-partial only for diagnostic evaluation")
         identities[name] = {"path": str(path.resolve()), "sha256": sha256_file(path),
@@ -172,7 +176,7 @@ def main():
         if args.device == "cuda":
             torch.cuda.empty_cache()
     write_csv(output / "per_image.csv", rows)
-    report = summarize(rows)
+    report = summarize(rows, candidate=candidate)
     report.update(split=args.split, images=len(files), noise_seeds=args.seeds, checkpoints=identities,
                   protocol="RGB float, data_range=1, crop_border=0, output clamp; Gaussian-window RGB SSIM",
                   selection_disclosure="CBSD68 first 20 are OOD-assisted development; remaining 48 are held out",

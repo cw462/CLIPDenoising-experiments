@@ -161,6 +161,8 @@ class ImageCleanModel(BaseModel):
             l_pix += self.cri_pix(pred, self.gt)
 
         loss_dict['l_pix'] = l_pix
+        if hasattr(self.cri_pix, 'last_components'):
+            loss_dict.update(self.cri_pix.last_components)
 
         l_pix.backward()
         if self.opt['train']['use_grad_clip']:
