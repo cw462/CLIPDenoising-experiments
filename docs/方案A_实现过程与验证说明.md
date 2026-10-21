@@ -14,8 +14,6 @@ C0 为 `pretrained/synthetic_baseline.pth`，SHA256：`09c1809b5dbb41222f423d99b
 
 ## 已完成的验证
 
-设备为 RTX 3070 8GB，Python 3.9.20、PyTorch 2.2.2+cu121，CUDA 可用。
-
 | 检查 | 结果 |
 | --- | --- |
 | 方案 A 专用测试 | 15 项通过，含 CPU/GPU 统计、边界、独立 RNG、默认兼容、评测协议、GPU 反向和完整恢复 |
