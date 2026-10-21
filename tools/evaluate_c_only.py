@@ -1,4 +1,4 @@
-"""Evaluate full-budget C/G1C against the exact reused seed-zero historical inputs."""
+"""Evaluate full-budget C/G1C against the same-seed historical baseline."""
 from __future__ import annotations
 
 import argparse
@@ -46,6 +46,23 @@ PROTOCOL = {
 }
 
 
+def validate_seed(variant, seed):
+    if variant not in VARIANTS or type(seed) is not int or seed not in (0, 1, 2) or (variant == "C" and seed != 0):
+        raise ValueError("Supported evaluation: C seed0 or G1C seeds 0, 1, 2")
+
+
+def protocol_for_seed(seed):
+    if type(seed) is not int or seed not in (0, 1, 2):
+        raise ValueError("Historical training seed must be 0, 1 or 2")
+    if seed == 0:
+        return PROTOCOL
+    return dict(PROTOCOL, version="c-g1c-full300k-historical-per-seed-v2", training_seeds=[seed],
+                baseline=f"Reuse same-seed full G1 seed{seed} final 300000-update CSV metrics; no baseline retraining or re-inference",
+                initialization=f"New full training from RN50 and seed{seed} decoder initialization, not continuation from old final weights",
+                comparison="G1C-G1 pairs the same training seed and exact historical evaluation inputs at equal nominal budgets; the historical baseline is not a new concurrent randomized control",
+                limitations="This artifact contains one seed. Across-seed variation requires all three completed seed artifacts; no causal innovation, SOTA or paper-reference claims. Historical stepwise training inputs are not proven identical.")
+
+
 def cell_key(row):
     return row["dataset"], row["image_id"], row["noise_type"], float(row["noise_level"])
 
@@ -64,8 +81,9 @@ def load_historical(paths, csv_path=None):
     return csv_path, reference, metadata
 
 
-def historical_baseline(csv_path, baseline, reference, expected_source=HISTORICAL_SOURCE):
-    """Extract an exact complete seed0 baseline, preserving its measured scores."""
+def historical_baseline(csv_path, baseline, reference, expected_source=HISTORICAL_SOURCE, seed=0):
+    """Extract one exact complete historical seed, preserving its measured scores."""
+    protocol_for_seed(seed)
     if baseline not in VARIANTS.values():
         raise ValueError("Unknown historical baseline")
     selected, seen, identities = [], set(), set()
@@ -74,11 +92,11 @@ def historical_baseline(csv_path, baseline, reference, expected_source=HISTORICA
               "noise_seed", "noise_sha256", "protocol_group", "domain", "dataset_manifest_hash",
               "height", "width", "psnr", "ssim")
     for source in read_csv(csv_path):
-        if source["experiment"] != baseline or int(source["train_seed"]) != 0:
+        if source["experiment"] != baseline or int(source["train_seed"]) != seed:
             continue
         row = {field: source[field] for field in fields}
         if row["stage"] != "full" or int(row["update"]) != UPDATES or row["source_hash"] != expected_source:
-            raise ValueError("Historical baseline is not the pinned full seed0/300000 source")
+            raise ValueError("Historical baseline is not the pinned full seed/300000 source")
         key = cell_key(row)
         if key in seen:
             raise ValueError("Duplicate historical baseline measurement")
@@ -95,17 +113,25 @@ def historical_baseline(csv_path, baseline, reference, expected_source=HISTORICA
     if seen != set(reference) or len(selected) != 3150 or len(identities) != 1:
         raise ValueError("Missing or ambiguous historical baseline grid/identity")
     identity = dict(zip(("checkpoint_sha256", "config_hash", "source_hash", "git_commit"), identities.pop()))
-    identity.update(method=baseline, training_seed=0, stage="full", update=UPDATES,
+    identity.update(method=baseline, training_seed=seed, stage="full", update=UPDATES,
                     measurement_origin="reused_historical_csv")
     return selected, identity
 
 
 def verify_baseline_checkpoint(paths, baseline, identity):
-    path = resolve_path(paths, paths["historical_baseline_checkpoints"][baseline])
+    seed = identity["training_seed"]
+    configured = paths["historical_baseline_checkpoints"][baseline]
+    if isinstance(configured, dict):
+        if f"seed{seed}" not in configured:
+            raise ValueError("Missing explicit same-seed historical checkpoint path")
+        configured = configured[f"seed{seed}"]
+    elif seed != 0:
+        raise ValueError("A single historical checkpoint path is valid only for seed0")
+    path = resolve_path(paths, configured)
     if sha256_file(path) != identity["checkpoint_sha256"]:
         raise ValueError("Historical baseline checkpoint SHA256 mismatch")
     checkpoint = torch_load(path)
-    for key, expected in (("experiment", baseline), ("seed", 0), ("stage", "full"), ("update", UPDATES),
+    for key, expected in (("experiment", baseline), ("seed", seed), ("stage", "full"), ("update", UPDATES),
                           ("source_hash", identity["source_hash"]), ("config_hash", identity["config_hash"])):
         if checkpoint.get(key) != expected:
             raise ValueError(f"Historical baseline checkpoint identity mismatch: {key}")
@@ -116,14 +142,13 @@ def verify_baseline_checkpoint(paths, baseline, identity):
     return {"checkpoint_sha256": identity["checkpoint_sha256"], "identity_verified": True}
 
 
-def validate_training_documents(config, status, manifest, checks, summary, latest, variant, expected_source):
+def validate_training_documents(config, status, manifest, checks, summary, latest, variant, expected_source, seed=0):
     """Pure validation shared by the filesystem gate and CPU rejection tests."""
-    if variant not in VARIANTS:
-        raise ValueError("Unknown variant")
+    validate_seed(variant, seed)
     if digest({k: v for k, v in config.items() if k != "config_hash"}) != config.get("config_hash"):
         raise ValueError("Effective config hash mismatch")
-    if (config.get("exp"), config.get("stage"), config.get("seed"), config.get("train", {}).get("total_iter")) != (variant, "full", 0, UPDATES):
-        raise ValueError("Only full 300000-update seed0 training is accepted")
+    if (config.get("exp"), config.get("stage"), config.get("seed"), config.get("train", {}).get("total_iter")) != (variant, "full", seed, UPDATES):
+        raise ValueError("Only the requested full 300000-update training seed is accepted")
     if config.get("source_hash") != expected_source:
         raise ValueError("Training/evaluation source mismatch")
     if config.get("train", {}).get("pixel_opt", {}).get("type") != "L1StructureLoss":
@@ -138,6 +163,8 @@ def validate_training_documents(config, status, manifest, checks, summary, lates
     if (full.get("schema"), full.get("variant"), full.get("baseline_experiment"), full.get("budget")) != (
             "c_only_full_v1", variant, VARIANTS[variant], UPDATES):
         raise ValueError("Wrong full-training initialization contract")
+    if full.get("baseline_training_seed", 0) != seed:
+        raise ValueError("Historical baseline training seed mismatch")
     if full.get("from_c0") is not False or full.get("legacy_global_pfa") is not True:
         raise ValueError("Full training requires fresh initialization and legacy global PFA")
     if full.get("diagnostic_tag") is not None or config.get("path", {}).get("pretrain_network_g"):
@@ -160,6 +187,8 @@ def validate_training_documents(config, status, manifest, checks, summary, lates
     if checks.get("update") != UPDATES or not checks.get("complete"):
         raise ValueError("Training checks are incomplete")
     initial = checks.get("initialization_contract", {})
+    if initial.get("seed", 0) != seed:
+        raise ValueError("Initialization seed proof mismatch")
     for field in ("fresh_adamw", "fresh_scheduler", "encoder_parameters_frozen", "encoder_bn_training", "fp32", "legacy_global_pfa"):
         if initial.get(field) is not True:
             raise ValueError(f"Initialization protection proof failed/missing: {field}")
@@ -211,13 +240,14 @@ def validate_input_protection(path, proof, config, training_log=None):
     return count
 
 
-def validated_gate(paths, variant):
-    run = Path(paths["output_root"]) / "full" / variant / "seed0"
+def validated_gate(paths, variant, seed=0):
+    validate_seed(variant, seed)
+    run = Path(paths["output_root"]) / "full" / variant / f"seed{seed}"
     if (run / "input_failure").exists():
         raise ValueError("Run contains a preserved input-protection failure")
     names = ("effective_config.json", "status.json", "manifest.json", "training_checks.json", "summary.json", "checkpoints/latest.json")
     config, status, manifest, checks, summary, latest = [read_json(run / name) for name in names]
-    validate_training_documents(config, status, manifest, checks, summary, latest, variant, source_hash())
+    validate_training_documents(config, status, manifest, checks, summary, latest, variant, source_hash(), seed)
     protection = read_json(run / "input_protection.json")
     validate_input_protection(run / "input_protection.jsonl", protection, config, run / "train.jsonl")
     if any(document.get("input_protection_sha256") != protection["proof_sha256"] for document in (manifest, summary, checks)):
@@ -235,7 +265,7 @@ def validated_gate(paths, variant):
     if sha256_file(checkpoint_path) != latest["sha256"]:
         raise ValueError("Final checkpoint SHA256 mismatch")
     checkpoint = torch_load(checkpoint_path)
-    for field, expected in (("experiment", variant), ("stage", "full"), ("seed", 0), ("update", UPDATES),
+    for field, expected in (("experiment", variant), ("stage", "full"), ("seed", seed), ("update", UPDATES),
                             ("config_hash", config["config_hash"]), ("source_hash", config["source_hash"])):
         if checkpoint.get(field) != expected:
             raise ValueError(f"Final checkpoint identity mismatch: {field}")
@@ -245,7 +275,7 @@ def validated_gate(paths, variant):
     contract = {"variant": variant, "baseline": VARIANTS[variant], "source_hash": config["source_hash"],
                 "config_hash": config["config_hash"], "pretrained_sha256": config["pretrained_sha256"],
                 "data_manifest_hash": config["data_manifest_hash"], "training_updates": UPDATES,
-                "training_seed": 0, "training_checks": checks, "input_protection": protection,
+                "training_seed": seed, "training_checks": checks, "input_protection": protection,
                 "pixel_opt": config["train"]["pixel_opt"], "full_training": config["full_training"],
                 "proof_sha256": {name: sha256_file(run / name) for name in (*names, "train.jsonl", "input_protection.json", "input_protection.jsonl")}}
     return config, checkpoint_path, checkpoint, contract
@@ -268,14 +298,16 @@ def save_panel(directory, clean, noisy, restored, variant, dataset, family, leve
     panel.close()
 
 
-def evaluate_variant(paths, variant, output_root, device):
+def evaluate_variant(paths, variant, output_root, device, seed=0):
+    validate_seed(variant, seed)
+    protocol = protocol_for_seed(seed)
     historical_csv, reference, historical = load_historical(paths)
     baseline_rows, baseline_identity = historical_baseline(historical_csv, VARIANTS[variant], reference,
-                                                          paths.get("baseline_source_hash", HISTORICAL_SOURCE))
+                                                          paths.get("baseline_source_hash", HISTORICAL_SOURCE), seed)
     baseline_proof = verify_baseline_checkpoint(paths, VARIANTS[variant], baseline_identity)
-    config, checkpoint_path, checkpoint, contract = validated_gate(paths, variant)
-    output = output_root / variant / "seed0"
-    identity = {"method": variant, "training_seed": 0, "stage": "full", "update": UPDATES,
+    config, checkpoint_path, checkpoint, contract = validated_gate(paths, variant, seed)
+    output = output_root / variant / f"seed{seed}"
+    identity = {"method": variant, "training_seed": seed, "stage": "full", "update": UPDATES,
                 "checkpoint_sha256": sha256_file(checkpoint_path), "config_hash": config["config_hash"],
                 "source_hash": config["source_hash"], "git_commit": config["git_commit"],
                 "measurement_origin": "new_model_inference"}
@@ -283,7 +315,7 @@ def evaluate_variant(paths, variant, output_root, device):
         if (output / "summary.json").exists():
             old = read_json(output / "summary.json")
             if (old.get("completed") and old.get("identity") == identity
-                    and old.get("protocol_hash") == digest(PROTOCOL)
+                    and old.get("protocol_hash") == digest(protocol)
                     and old.get("contract_hash") == digest(contract)
                     and old.get("historical_csv", {}).get("sha256") == historical["sha256"]
                     and all(sha256_file(output / name) == value for name, value in old["artifact_sha256"].items())):
@@ -291,7 +323,7 @@ def evaluate_variant(paths, variant, output_root, device):
                 return old
             raise FileExistsError(f"Incompatible evaluation output: {output}")
         datasets, manifest, manifest_hash = benchmark_data(paths, reference, historical)
-        atomic_json(output / "access_gate.json", {"at": utc_now(), "variant": variant,
+        atomic_json(output / "access_gate.json", {"at": utc_now(), "variant": variant, "training_seed": seed,
                     "source_hash": source_hash(), "contract_hash": digest(contract), "baseline_proof": baseline_proof})
         network = dict(config["network_g"])
         network.pop("type", None)
@@ -312,7 +344,7 @@ def evaluate_variant(paths, variant, output_root, device):
                     scores = calculate_metrics(clean, restored)
                     if not all(math.isfinite(value) for value in scores.values()):
                         raise FloatingPointError("Nonfinite metric")
-                    rows.append({"experiment": variant, "train_seed": 0, "stage": "full", "update": UPDATES,
+                    rows.append({"experiment": variant, "train_seed": seed, "stage": "full", "update": UPDATES,
                                  **{key: identity[key] for key in ("checkpoint_sha256", "config_hash", "source_hash", "git_commit", "measurement_origin")},
                                  "dataset": dataset, "image_id": image_id, "noise_type": family, "noise_level": level,
                                  "noise_seed": noise_seed, "noise_sha256": noise_hash,
@@ -322,7 +354,7 @@ def evaluate_variant(paths, variant, output_root, device):
                                  "height": clean.shape[0], "width": clean.shape[1], **scores, "forward_ms": elapsed})
                     if file_index == 0 and (dataset, family, float(level)) in TABLE1_CONDITIONS:
                         save_panel(output / "panels", clean, noisy, restored, variant, dataset, family, level)
-                print(f"{variant} seed0: {len(rows)}/3150", flush=True)
+                print(f"{variant} seed{seed}: {len(rows)}/3150", flush=True)
         if len(rows) != 3150:
             raise ValueError("Incomplete four-dataset benchmark")
         write_csv(output / "per_image_results.csv", rows)
@@ -333,7 +365,7 @@ def evaluate_variant(paths, variant, output_root, device):
                   "identity": identity, "baseline_identity": baseline_identity, "baseline_checkpoint_proof": baseline_proof,
                   "historical_csv": historical, "matched_historical_inputs": len(rows),
                   "dataset_manifest": manifest, "dataset_manifest_hash": manifest_hash,
-                  "protocol": PROTOCOL, "protocol_hash": digest(PROTOCOL), "contract": contract,
+                  "protocol": protocol, "protocol_hash": digest(protocol), "contract": contract,
                   "contract_hash": digest(contract), "artifact_sha256": artifacts, "dependencies": dependency_versions()}
         atomic_json(output / "summary.json", result)
         del model
@@ -346,17 +378,21 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--paths", default="configs/plan_c_only_server.yaml")
     parser.add_argument("--variant", choices=tuple(VARIANTS))
+    parser.add_argument("--seed", type=int, choices=(0, 1, 2), default=0)
     parser.add_argument("--output", type=Path, default=ROOT / "reports/c_only/evaluation")
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--verify-inputs-only", action="store_true")
     parser.add_argument("--audit-output", type=Path)
     args = parser.parse_args()
+    if args.variant:
+        validate_seed(args.variant, args.seed)
     paths = load_paths(args.paths)
     historical_csv, reference, historical = load_historical(paths)
     torch.set_num_threads(int(paths.get("cpu_threads", 4)))
     if args.verify_inputs_only:
         identities = {baseline: historical_baseline(historical_csv, baseline, reference,
-                      paths.get("baseline_source_hash", HISTORICAL_SOURCE))[1] for baseline in VARIANTS.values()}
+                      paths.get("baseline_source_hash", HISTORICAL_SOURCE), args.seed)[1]
+                      for baseline in ((VARIANTS[args.variant],) if args.variant else (("G1",) if args.seed else VARIANTS.values()))}
         report = verify_all_inputs(paths, historical_csv)
         report.update(completed=True, status="passed", accepted=True, completed_at=utc_now(), new_model_outcome_access=False,
                       existing_historical_csv_read=True,
@@ -371,7 +407,7 @@ def main():
         parser.error("--variant is required for model evaluation")
     if torch.device(args.device).type == "cuda" and not torch.cuda.is_available():
         parser.error("CUDA unavailable")
-    evaluate_variant(paths, args.variant, args.output, args.device)
+    evaluate_variant(paths, args.variant, args.output, args.device, args.seed)
 
 
 if __name__ == "__main__":

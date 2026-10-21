@@ -109,13 +109,13 @@ def verified_save(path, model, sampler, opt, update):
 def fresh_model(opt, paths, directory):
     directory.mkdir(parents=True, exist_ok=True)
     protection = runner.Protection(directory, opt)
-    seed_all(0)
+    seed_all(opt["seed"])
     model = runner.build_protected_model(opt, protection)
     initialization = runner.initialization_contract(model, opt)
     dataset = runner.build_protected_dataset(opt, paths, protection)
     require(len(dataset) == 432, "The actual diagnostic requires all 432 training images")
-    sampler = legacy.ExactSampler(len(dataset), 20000)
-    seed_all(10000)
+    sampler = legacy.ExactSampler(len(dataset), opt["seed"] + 20000)
+    seed_all(opt["seed"] + 10000)
     return model, dataset, sampler, protection, initialization
 
 
@@ -148,11 +148,11 @@ def compare_legacy(model, opt, legacy_root, report, persist):
     parameters.pop("type", None)
     require(parameters.pop("pfa_rho", None) == 0.0, "C must preserve rho=0 PFA")
     require(parameters.pop("pfa_seed", "missing") is None, "C must preserve global PFA RNG")
-    seed_all(0)
+    seed_all(opt["seed"])
     old = legacy_class(**parameters).to(model.device).train()
     old_init_rng = rng_state()
     # Rebuild the protected model from the exact same seed, not from old weights.
-    seed_all(0)
+    seed_all(opt["seed"])
     candidate = runner.build_protected_model(opt, runner.Protection(Path(report["diagnostic_directory"]) / "legacy_candidate", opt))
     new_init_rng = rng_state()
     initial = compare_states({"params": old.state_dict()}, {"params": candidate.net_g.state_dict()}, device="cpu")
@@ -166,7 +166,7 @@ def compare_legacy(model, opt, legacy_root, report, persist):
     require(report["legacy_initialization"]["global_rng_equal"], "New construction consumes different global RNG")
     value = torch.linspace(0, 1, 16 * 3 * 128 * 128, dtype=torch.float32, device=model.device).reshape(16, 3, 128, 128)
     value_snapshot = runner.checked_clone(value)
-    seed_all(10000)
+    seed_all(opt["seed"] + 10000)
     shared_rng = runner.checked_clone(rng_state())
     original_randn_like = torch.randn_like
 
@@ -210,11 +210,11 @@ def compare_legacy(model, opt, legacy_root, report, persist):
     del old, candidate, old_output, new_output, value, value_snapshot
 
 
-def check_contract(variant, paths, report_path, legacy_root, report):
+def check_contract(variant, paths, report_path, legacy_root, report, seed=0):
     report_path = Path(report_path).resolve()
     report_path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = Path(tempfile.mkdtemp(prefix=f"{variant.lower()}_full_contract_", dir=report_path.parent))
-    report.update(accepted=False, diagnostic_only=True, variant=variant, batch_size=16, seed=0,
+    temporary = Path(tempfile.mkdtemp(prefix=f"{variant.lower()}_seed{seed}_full_contract_", dir=report_path.parent))
+    report.update(accepted=False, diagnostic_only=True, variant=variant, batch_size=16, seed=seed,
         diagnostic_updates=4, checkpoint_update=2, configured_budget=300000,
         diagnostic_directory=str(temporary), evidence_preserved=True, phase="initializing",
         source_hash=source_hash(), started_at=utc_now(),
@@ -235,7 +235,7 @@ def check_contract(variant, paths, report_path, legacy_root, report):
         torch.cuda.set_device(int(paths.get("gpu_index", 0)))
         get_root_logger(log_level=logging.ERROR).setLevel(logging.ERROR)
         diagnostic_paths = dict(paths, output_root=str(temporary / "runs"))
-        opt, directory = runner.configuration(variant, "full", 0, diagnostic_paths, tag="contract")
+        opt, directory = runner.configuration(variant, "full", seed, diagnostic_paths, tag="contract")
         report.update(config_hash=opt["config_hash"], effective_config=opt,
                       rn50_sha256=opt["pretrained_sha256"], device_name=torch.cuda.get_device_name(),
                       cpu_threads=torch.get_num_threads(), execution_contract=opt["execution_contract"])
@@ -257,7 +257,7 @@ def check_contract(variant, paths, report_path, legacy_root, report):
         require(opt["train"]["total_iter"] == 300000 and opt["path"]["pretrain_network_g"] is None,
                 "Diagnostic must use fresh full-budget initialization, without C0")
         directory.mkdir(parents=True, exist_ok=True)
-        seed_all(0)
+        seed_all(seed)
         initial_model = runner.build_protected_model(opt, runner.Protection(directory / "initialization", opt))
         loss = initial_model.cri_pix
         require(isinstance(loss, L1StructureLoss) and loss.structure_weight == 0.05 and loss.eps == 0.001
@@ -335,6 +335,7 @@ def check_contract(variant, paths, report_path, legacy_root, report):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--variant", choices=("C", "G1C"), required=True)
+    parser.add_argument("--seed", type=int, choices=(0, 1, 2), default=0)
     parser.add_argument("--paths", required=True)
     parser.add_argument("--report", required=True)
     parser.add_argument("--legacy-root", required=True)
@@ -342,13 +343,13 @@ def main():
     report = {"accepted": False, "diagnostic_only": True}
     started = time.perf_counter()
     try:
-        check_contract(args.variant, load_paths(args.paths), args.report, args.legacy_root, report)
+        check_contract(args.variant, load_paths(args.paths), args.report, args.legacy_root, report, args.seed)
     except BaseException as error:
         report.update(accepted=False, error=f"{type(error).__name__}: {error}", traceback=traceback.format_exc())
         print(report["traceback"], file=sys.stderr)
     report["wall_seconds"] = time.perf_counter() - started
     atomic_json(args.report, report)
-    print(json.dumps({"accepted": report["accepted"], "variant": args.variant, "report": args.report}), flush=True)
+    print(json.dumps({"accepted": report["accepted"], "variant": args.variant, "seed": args.seed, "report": args.report}), flush=True)
     return 0 if report["accepted"] else 1
 
 

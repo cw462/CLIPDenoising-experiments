@@ -31,11 +31,12 @@ def full_paths(continuation_paths, monkeypatch):
     return paths
 
 
-@pytest.mark.parametrize("variant,baseline,mode", [("C", "B0", "none"), ("G1C", "G1", "gated")])
-def test_full_configuration_retains_legacy_protocol(full_paths, variant, baseline, mode):
-    opt, directory = runner.configuration(variant, "full", 0, full_paths)
-    original, _ = runner.legacy.make_config(baseline, "full", 0, full_paths)
-    assert directory == Path(full_paths["output_root"]) / "full" / variant / "seed0"
+@pytest.mark.parametrize("variant,baseline,mode,seed", [("C", "B0", "none", 0),
+    ("G1C", "G1", "gated", 0), ("G1C", "G1", "gated", 1), ("G1C", "G1", "gated", 2)])
+def test_full_configuration_retains_legacy_protocol(full_paths, variant, baseline, mode, seed):
+    opt, directory = runner.configuration(variant, "full", seed, full_paths)
+    original, _ = runner.legacy.make_config(baseline, "full", seed, full_paths)
+    assert directory == Path(full_paths["output_root"]) / "full" / variant / f"seed{seed}"
     assert opt["train"]["total_iter"] == 300000
     assert opt["train"]["optim_g"] == original["train"]["optim_g"]
     assert opt["train"]["optim_g"]["lr"] == 3e-4
@@ -48,7 +49,37 @@ def test_full_configuration_retains_legacy_protocol(full_paths, variant, baselin
     assert opt["train"]["pixel_opt"]["structure_weight"] == 0.05
     assert opt["train"]["pixel_opt"]["eps"] == 0.001
     assert opt["train"]["pixel_opt"]["deterministic_reflect_padding"]
-    assert opt["runtime"]["data_rng_seed"] == 10000 and opt["runtime"]["sampler_seed"] == 20000
+    assert opt["runtime"]["data_rng_seed"] == seed + 10000 and opt["runtime"]["sampler_seed"] == seed + 20000
+    assert opt["full_training"]["baseline_training_seed"] == seed
+
+
+def test_multiseed_scope_rejects_unplanned_variants_and_seeds(full_paths):
+    paths = dict(full_paths, formal_variants=["G1C"], formal_seeds=[0, 1, 2])
+    for variant, seed in (("C", 0), ("G1C", 3), ("G1C", -1), ("G1C", True)):
+        with pytest.raises(ValueError):
+            runner.configuration(variant, "full", seed, paths)
+    with pytest.raises(ValueError, match="configured training scope"):
+        runner.configuration("G1C", "full", 1, dict(paths, formal_seeds=[0]))
+
+
+def test_each_seed_matches_corresponding_g1_initialization_and_rng(full_paths):
+    fingerprints, samples = set(), set()
+    for seed in (0, 1, 2):
+        opt, _ = runner.configuration("G1C", "full", seed, full_paths)
+        old_opt, _ = runner.legacy.make_config("G1", "full", seed, full_paths)
+        seed_all(seed)
+        old = runner.legacy.build_model(old_opt)
+        old_rng = rng_state()
+        seed_all(seed)
+        candidate = runner.legacy.build_model(opt)
+        assert runner.exact_equal(old.net_g.state_dict(), candidate.net_g.state_dict())
+        assert runner.exact_equal(old_rng, rng_state())
+        initial = runner.initialization_contract(candidate, opt)
+        assert initial["seed"] == seed and initial["baseline_experiment"] == "G1"
+        fingerprints.add(initial["initial_network_sha256"])
+        sampler = runner.legacy.ExactSampler(432, seed + 20000)
+        samples.add(tuple(sampler.take(16)))
+    assert len(fingerprints) == len(samples) == 3
 
 
 def test_global_pfa_exactly_matches_legacy_randn_like_and_rng():
@@ -194,14 +225,15 @@ def test_feed_and_optimizer_faults_are_not_retried(tmp_path, fault):
     assert (tmp_path / "input_failure/failure.json").exists()
 
 
-def test_full_scheduler_four_updates_equal_two_save_restore_two(full_paths):
-    first = runner.run("C", "full", 0, full_paths, stop_after=4, tag="continuous")
-    second = runner.run("C", "full", 0, full_paths, stop_after=2, tag="resumed")
+@pytest.mark.parametrize("variant,seed", [("C", 0), ("G1C", 2)])
+def test_full_scheduler_four_updates_equal_two_save_restore_two(full_paths, variant, seed):
+    first = runner.run(variant, "full", seed, full_paths, stop_after=4, tag="continuous")
+    second = runner.run(variant, "full", seed, full_paths, stop_after=2, tag="resumed")
     assert read_json(second / "status.json")["status"] == "paused_at_checkpoint"
     # An interrupted, uncommitted tail must be archived and ignored on resume.
     with (second / "input_protection.jsonl").open("a", encoding="utf-8") as stream:
         stream.write('{"update":3')
-    runner.run("C", "full", 0, full_paths, resume=True, stop_after=4, tag="resumed")
+    runner.run(variant, "full", seed, full_paths, resume=True, stop_after=4, tag="resumed")
     expected = torch_load(read_json(first / "checkpoints/latest.json")["path"])
     actual = torch_load(read_json(second / "checkpoints/latest.json")["path"])
     for key in ("params", "optimizer", "scheduler", "rng", "sampler", "ema", "scaler", "pfa_rng"):
@@ -219,25 +251,26 @@ def test_full_scheduler_four_updates_equal_two_save_restore_two(full_paths):
     second_rows[0]["raw_unchanged"] = False
     (second / "input_protection.jsonl").write_text("".join(json.dumps(row) + "\n" for row in second_rows))
     with pytest.raises(RuntimeError, match="proof is invalid"):
-        runner.run("C", "full", 0, full_paths, resume=True, stop_after=4, tag="resumed")
+        runner.run(variant, "full", seed, full_paths, resume=True, stop_after=4, tag="resumed")
 
 
-def test_protection_preserves_ordinary_training_state_and_rng(full_paths):
-    opt, directory = runner.configuration("G1C", "full", 0, full_paths)
-    seed_all(0)
+@pytest.mark.parametrize("seed", [0, 1, 2])
+def test_protection_preserves_ordinary_training_state_and_rng(full_paths, seed):
+    opt, directory = runner.configuration("G1C", "full", seed, full_paths)
+    seed_all(seed)
     ordinary = runner.legacy.build_model(opt)
     ordinary_ds = runner.legacy.build_dataset(opt, full_paths)
-    ordinary_sampler = runner.legacy.ExactSampler(len(ordinary_ds), 20000)
-    seed_all(10000)
+    ordinary_sampler = runner.legacy.ExactSampler(len(ordinary_ds), seed + 20000)
+    seed_all(seed + 10000)
     ordinary_loss = runner.legacy.train_update(ordinary, ordinary_ds, ordinary_sampler, 1, 16, 1)
     expected = copy.deepcopy(runner.legacy.checkpoint_payload(ordinary, ordinary_sampler, opt, 1, 0))
     expected_input = runner.checked_clone({"lq": ordinary.lq, "gt": ordinary.gt})
-    seed_all(0)
+    seed_all(seed)
     guard = runner.Protection(directory, opt)
     protected = runner.build_protected_model(opt, guard)
     protected_ds = runner.build_protected_dataset(opt, full_paths, guard)
-    protected_sampler = runner.legacy.ExactSampler(len(protected_ds), 20000)
-    seed_all(10000)
+    protected_sampler = runner.legacy.ExactSampler(len(protected_ds), seed + 20000)
+    seed_all(seed + 10000)
     loss, proof = runner.guarded_train_update(protected, protected_ds, protected_sampler, 1, guard)
     actual = runner.legacy.checkpoint_payload(protected, protected_sampler, opt, 1, 0)
     assert ordinary_loss == loss

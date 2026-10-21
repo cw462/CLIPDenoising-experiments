@@ -58,8 +58,12 @@ configure_deterministic_execution = configure_execution
 
 
 def configuration(variant, stage, seed, paths, tag=None):
-    if variant not in VARIANTS or stage != "full" or seed != 0:
-        raise ValueError("Authorized full training is C/G1C, full, seed 0 only")
+    if (variant not in VARIANTS or stage != "full" or isinstance(seed, bool)
+            or not isinstance(seed, int) or seed not in (0, 1, 2)
+            or (variant == "C" and seed != 0)):
+        raise ValueError("Full training supports G1C seeds 0/1/2; legacy C supports seed 0 only")
+    if variant not in paths.get("formal_variants", VARIANTS) or seed not in paths.get("formal_seeds", (0, 1, 2)):
+        raise ValueError("Variant/seed is outside the explicitly configured training scope")
     if paths["micro_batch"] != 16 or paths["accumulation"] != 1 or paths.get("amp", False):
         raise ValueError("Full C/G1C requires true batch 16, accumulation 1 and FP32")
     opt, _ = legacy.make_config(VARIANTS[variant], "full", seed, paths, tag)
@@ -84,6 +88,7 @@ def configuration(variant, stage, seed, paths, tag=None):
     opt["logger"]["save_checkpoint_freq"] = opt["runtime"]["checkpoint_every"]
     opt["full_training"] = {
         "schema": "c_only_full_v1", "variant": variant, "baseline_experiment": VARIANTS[variant],
+        "baseline_training_seed": seed,
         "initialization": "RN50 pretrained encoder + seeded original decoder/adapter",
         "from_c0": False, "legacy_global_pfa": True, "budget": 300000,
         "diagnostic_tag": tag,
@@ -536,7 +541,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--variant", choices=VARIANTS, required=True)
     parser.add_argument("--stage", choices=["full"], default="full")
-    parser.add_argument("--seed", type=int, choices=[0], default=0)
+    parser.add_argument("--seed", type=int, choices=[0, 1, 2], default=0)
     parser.add_argument("--paths", default="configs/plan_c_only_server.yaml")
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--stop-after", type=int)

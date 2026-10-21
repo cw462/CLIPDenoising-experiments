@@ -231,3 +231,147 @@ def test_input_only_cli_does_not_require_trained_models(monkeypatch, tmp_path):
     result = read_json(output)
     assert result["completed"] and result["matched_inputs"] == 3150
     assert result["new_model_outcome_access"] is False and result["existing_historical_csv_read"] is True
+
+@pytest.fixture
+def multiseed_benchmark(benchmark):
+    from tools.evaluate_c_only import protocol_for_seed
+    import shutil
+    history, root = benchmark["history"], benchmark["root"]
+    initial = copy.deepcopy(benchmark["summaries"]["G1C"])
+    historical_rows = read_csv(history)
+    g1_rows = [r for r in historical_rows if r["experiment"] == "G1"]
+    for seed in (1, 2):
+        for source in g1_rows:
+            historical_rows.append(dict(source, train_seed=seed,
+                checkpoint_sha256=digest(("old-G1", seed)), config_hash=digest(("old-config", seed)),
+                psnr=float(source["psnr"]) + .4 * seed, ssim=float(source["ssim"]) + .001 * seed))
+    write_csv(history, historical_rows)
+    reference, historical = historical_index(history)
+    deltas = {0: .1, 1: .3, 2: -.2}
+    for seed in (0, 1, 2):
+        directory = root / "G1C" / f"seed{seed}"
+        directory.mkdir(parents=True, exist_ok=True)
+        old, old_identity = historical_baseline(history, "G1", reference, seed=seed)
+        identity = dict(initial["identity"], training_seed=seed,
+                        checkpoint_sha256=digest(("new-G1C", seed)), config_hash=digest(("new-config", seed)))
+        manifest = initial["dataset_manifest"]
+        clean = {(r["dataset"], r["image_id"]): r["sha256"] for r in manifest}
+        new = []
+        for source in old:
+            row = dict(source, experiment="G1C", psnr=source["psnr"] + deltas[seed],
+                       ssim=source["ssim"] + deltas[seed] / 100,
+                       clean_sha256=clean[(source["dataset"], source["image_id"])])
+            row.update({k: identity[k] for k in ("checkpoint_sha256", "config_hash", "source_hash", "git_commit", "measurement_origin")})
+            new.append(row)
+        write_csv(directory / "per_image_results.csv", new)
+        write_csv(directory / "baseline_per_image_results.csv", old)
+        checks = copy.deepcopy(valid_documents()[3])
+        checks["initialization_contract"]["seed"] = seed
+        contract = dict(initial["contract"], training_seed=seed, config_hash=identity["config_hash"],
+                        training_checks=checks, input_protection={"schema": "c_only_input_protection_v1",
+                        "status": "passed", "update": 300000, "verified_updates": 300000,
+                        "source_hash": identity["source_hash"], "config_hash": identity["config_hash"]})
+        atomic_json(directory / "access_gate.json", {"variant": "G1C", "training_seed": seed,
+                    "source_hash": identity["source_hash"], "contract_hash": digest(contract)})
+        if seed:
+            shutil.copytree(root / "G1C/seed0/panels", directory / "panels", dirs_exist_ok=True)
+        protocol = protocol_for_seed(seed)
+        metadata = dict(initial, identity=identity, baseline_identity=old_identity,
+                        baseline_checkpoint_proof={"identity_verified": True, "checkpoint_sha256": old_identity["checkpoint_sha256"]},
+                        historical_csv=historical, contract=contract, contract_hash=digest(contract),
+                        protocol=protocol, protocol_hash=digest(protocol),
+                        artifact_sha256={p.relative_to(directory).as_posix(): sha256_file(p)
+                                         for p in directory.rglob("*") if p.is_file() and p.name != "summary.json"})
+        atomic_json(directory / "summary.json", metadata)
+    return dict(benchmark, reference=reference, deltas=deltas)
+
+
+def test_multiseed_summary_uses_same_seed_pairs_and_sample_sd(multiseed_benchmark, tmp_path):
+    import statistics
+    from tools.summarize_g1c_multiseed import summarize as summarize_seeds
+    b = multiseed_benchmark
+    output = tmp_path / "three_seed_report"
+    result = summarize_seeds(b["root"], output, b["history"])
+    assert result["completed"] and result["training_seeds"] == [0, 1, 2]
+    assert result["rows"] == 18900 and result["new_measurement_rows"] == result["reused_baseline_rows"] == 9450
+    assert result["paired_rows"] == 9450 and result["condition_seedwise_rows"] == 360
+    assert result["condition_summary_rows"] == 120 and result["table1_rows"] == 6
+    assert result["table1_seedwise_rows"] == result["fixed_panels"] == 18
+    table = read_csv(output / "table1_conditions.csv")
+    assert [(r["dataset"], r["noise_type"], float(r["noise_level"])) for r in table] == list(TABLE1_CONDITIONS)
+    for row in table:
+        assert int(row["training_seed_count"]) == 3
+        assert float(row["delta_psnr_mean"]) == pytest.approx(statistics.mean(b["deltas"].values()))
+        assert float(row["delta_psnr_std"]) == pytest.approx(statistics.stdev(b["deltas"].values()))
+    for row in read_csv(output / "table1_seedwise.csv"):
+        assert float(row["delta_psnr"]) == pytest.approx(b["deltas"][int(row["train_seed"])])
+    assert len(read_csv(output / "negative_cases.csv")) == 3150
+    assert len(read_csv(output / "id_seedwise.csv")) == 12
+    assert len(read_csv(output / "ood_paired_seedwise.csv")) == 6
+    assert len(read_csv(output / "ood_paired_summary.csv")) == 2
+    for name, expected in result["artifact_sha256"].items():
+        assert sha256_file(output / name) == expected
+    assert "cannot be verified as identical" in (output / "experiment_report.md").read_text(encoding="utf-8")
+
+
+@pytest.mark.parametrize("mutation,message", [("missing", None), ("failed", "Incomplete seed"),
+                                                ("seed", "method/seed"), ("baseline", "baseline scores"),
+                                                ("proof", "protection checks")])
+def test_multiseed_rejects_missing_failed_cross_seed_and_tampered_results(multiseed_benchmark, tmp_path, mutation, message):
+    from tools.summarize_g1c_multiseed import summarize as summarize_seeds
+    b = multiseed_benchmark
+    directory = b["root"] / "G1C/seed1"
+    metadata = read_json(directory / "summary.json")
+    if mutation == "missing":
+        (directory / "summary.json").unlink()
+    elif mutation == "failed":
+        metadata["completed"] = False
+    elif mutation in ("seed", "baseline"):
+        name = "per_image_results.csv" if mutation == "seed" else "baseline_per_image_results.csv"
+        rows = read_csv(directory / name)
+        if mutation == "seed":
+            rows[0]["train_seed"] = 0
+        else:
+            rows[0]["psnr"] = float(rows[0]["psnr"]) + 1
+        write_csv(directory / name, rows)
+        metadata["artifact_sha256"][name] = sha256_file(directory / name)
+    else:
+        metadata["contract"]["training_checks"]["input_protection_passed"] = False
+        metadata["contract_hash"] = digest(metadata["contract"])
+    if mutation != "missing":
+        atomic_json(directory / "summary.json", metadata)
+    with pytest.raises(FileNotFoundError if mutation == "missing" else ValueError, match=message):
+        summarize_seeds(b["root"], tmp_path / "rejected", b["history"])
+    assert not (tmp_path / "rejected/summary.json").exists()
+
+
+def test_nonzero_seed_training_gate_and_baseline_mapping(tmp_path):
+    import torch
+    documents = valid_documents()
+    config, status, manifest, checks, summary, latest = documents
+    config.update(exp="G1C", seed=1)
+    config["network_g"]["adapter_mode"] = "gated"
+    config["full_training"].update(variant="G1C", baseline_experiment="G1", baseline_training_seed=1)
+    checks["initialization_contract"]["seed"] = 1
+    manifest["initialization_contract"] = copy.deepcopy(checks["initialization_contract"])
+    summary["training_checks"] = copy.deepcopy(checks)
+    config["config_hash"] = digest({k: v for k, v in config.items() if k != "config_hash"})
+    for doc in (status, manifest, summary):
+        doc["config_hash"] = config["config_hash"]
+    evaluation.validate_training_documents(*documents, "G1C", "new-source", seed=1)
+    with pytest.raises(ValueError, match="requested full"):
+        evaluation.validate_training_documents(*documents, "G1C", "new-source", seed=2)
+    status["status"] = "failed"
+    with pytest.raises(ValueError, match="not completed"):
+        evaluation.validate_training_documents(*documents, "G1C", "new-source", seed=1)
+    checkpoint = tmp_path / "seed1.pth"
+    torch.save({"experiment": "G1", "seed": 1, "stage": "full", "update": 300000,
+                "source_hash": "old-source", "config_hash": "old-config", "params": {}, "complete_update_boundary": True}, checkpoint)
+    identity = {"training_seed": 1, "checkpoint_sha256": sha256_file(checkpoint), "source_hash": "old-source", "config_hash": "old-config"}
+    paths = {"project_root": str(tmp_path), "historical_baseline_checkpoints": {"G1": {"seed1": str(checkpoint)}}}
+    assert evaluation.verify_baseline_checkpoint(paths, "G1", identity)["identity_verified"]
+    paths["historical_baseline_checkpoints"]["G1"] = str(checkpoint)
+    with pytest.raises(ValueError, match="only for seed0"):
+        evaluation.verify_baseline_checkpoint(paths, "G1", identity)
+    with pytest.raises(ValueError, match="Supported evaluation"):
+        evaluation.validate_seed("C", 1)
