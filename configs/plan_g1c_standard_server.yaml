@@ -1,0 +1,51 @@
+# Explicit user request: ordinary training without added per-update input checks.
+project_root: .
+training_integrity_mode: standard_user_requested_v1
+pretrained_rn50: pretrained/RN50.pt
+train_dir: data/CBSD432
+test_datasets:
+  CBSD68: data/CBSD68
+  Kodak24: data/Kodak24
+  McMaster: data/McMaster
+  Urban100: data/Urban100
+output_root: runs/g1c_standard
+reports_dir: reports/g1c_standard
+data_manifest: data/manifest.json
+dev_train: splits/dev_train.txt
+dev_val: splits/dev_val.txt
+device: cuda
+micro_batch: 16
+accumulation: 1
+amp: false
+cpu_threads: 1
+cache_decoded_images: true
+minimum_free_gb: 2
+gpu_index: 0
+gpu_indices: [0, 1]
+jobs_per_gpu: 2
+checkpoint_every: 5000
+checkpoint_keep: 2
+status_every: 100
+formal_variants: [G1C]
+formal_seeds: [0, 1, 2]
+formal_updates_per_run: 300000
+planned_seed_gpu_map: {0: 0, 1: 1, 2: 1}
+verified_train_capacity_per_gpu: {0: 1, 1: 2}
+concurrent_training_benchmark_required: false
+structure_weight: 0.05
+structure_eps: 0.001
+pixel_opt:
+  type: L1StructureLoss
+  loss_weight: 1.0
+  reduction: mean
+  structure_weight: 0.05
+  eps: 0.001
+  deterministic_reflect_padding: true
+historical_results_csv: /home/imss/cw/CLIPDenoising_20261020/reports/per_image_results.csv
+historical_results_csv_sha256: d3fead06b10e8b86363fe8f17484fccbce2a3a723b96cfeb49db75524c900635
+baseline_source_hash: 40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef
+historical_baseline_checkpoints:
+  G1:
+    seed0: /home/imss/cw/CLIPDenoising_20261020/runs/full/G1/seed0/checkpoints/final.pth
+    seed1: /home/imss/cw/CLIPDenoising_20261020/runs/full/G1/seed1/checkpoints/final.pth
+    seed2: /home/imss/cw/CLIPDenoising_20261020/runs/full/G1/seed2/checkpoints/final.pth

@@ -269,6 +269,46 @@ def test_multiseed_report_discloses_recoveries_without_claiming_zero_anomalies(m
     assert "4 independently confirmed" in report and "root cause, which remains unresolved" in report
     assert "must not be described as zero anomalies" in report
 
+
+def test_multiseed_standard_report_marks_checks_disabled_and_anomalies_unknown(multiseed_benchmark, tmp_path):
+    from tools.summarize_g1c_multiseed import summarize as summarize_seeds
+    fixture = multiseed_benchmark
+    mode = evaluation.STANDARD_MODE
+    for seed in (0, 1, 2):
+        directory = fixture["root"] / "G1C" / f"seed{seed}"
+        item = read_json(directory / "summary.json")
+        contract = item["contract"]
+        contract.pop("input_protection")
+        contract["training_checks"] = {"update": 300000, "loss_finite": True, "frozen_encoder_unchanged": True,
+                                        "training_integrity_mode": mode, "per_update_input_consistency_checks": False}
+        contract.update(training_integrity_mode=mode, per_update_input_consistency_checks=False,
+                        input_consistency_status="not_checked_by_user_request", training_completed=True,
+                        hardware_repair_established=False, known_host_diagnostics=evaluation.STANDARD_LIMITATION)
+        item["contract_hash"] = digest(contract)
+        item["protocol"] = evaluation.protocol_for_seed(seed, mode)
+        item["protocol_hash"] = digest(item["protocol"])
+        item["training_integrity_mode"] = mode
+        item["per_update_input_consistency_checks"] = False
+        gate = read_json(directory / "access_gate.json")
+        gate["contract_hash"] = item["contract_hash"]
+        atomic_json(directory / "access_gate.json", gate)
+        item["artifact_sha256"]["access_gate.json"] = sha256_file(directory / "access_gate.json")
+        atomic_json(directory / "summary.json", item)
+    output = tmp_path / "standard_report"
+    result = summarize_seeds(fixture["root"], output, fixture["history"])
+    assert result["rows"] == 18900 and result["table1_rows"] == 6
+    assert result["training_integrity_mode"] == mode
+    assert result["per_update_input_consistency_checks"] is False
+    assert result["readback_recovery_events_total"] is None
+    assert result["readback_recovery_affected_training_updates"] is None
+    assert result["hardware_repair_established"] is False
+    assert len(read_csv(output / "training_integrity_seedwise.csv")) == 3
+    assert not (output / "readback_recovery_seedwise.csv").exists()
+    report = (output / "experiment_report.md").read_text(encoding="utf-8")
+    assert "checks disabled" in report and "reported as null, not zero" in report
+    assert "root cause remains unresolved" in report
+    assert "passed their full per-update input protection gates" not in report
+
 @pytest.fixture
 def multiseed_benchmark(benchmark):
     from tools.evaluate_c_only import protocol_for_seed

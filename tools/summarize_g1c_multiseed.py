@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools.evaluate_c_only import (DATASET_COUNTS, TABLE1_CONDITIONS, UPDATES, cell_key,
                                     historical_baseline, historical_index, protocol_for_seed,
-                                    validate_recovery_disclosure)
+                                    validate_recovery_disclosure, STANDARD_MODE, GUARDED_MODE, STANDARD_LIMITATION)
 from tools.evaluation_utils import read_csv, write_csv
 from tools.experiment_common import atomic_json, digest, read_json, sha256_file, utc_now
 from tools.summarize_experiments import aggregate, hierarchical_ood
@@ -87,6 +87,23 @@ def validate_completion_contract(contract, identity, seed):
     if any(identity[field] != contract[field] for field in ("source_hash", "config_hash")):
         raise ValueError("Training/evaluation source/config mismatch")
     checks, proof = contract.get("training_checks", {}), contract.get("input_protection", {})
+    mode = contract.get("training_integrity_mode", GUARDED_MODE)
+    if mode == STANDARD_MODE:
+        if (contract.get("training_completed") is not True
+                or contract.get("per_update_input_consistency_checks") is not False
+                or contract.get("input_consistency_status") != "not_checked_by_user_request"
+                or contract.get("hardware_repair_established") is not False):
+            raise ValueError("Standard completion must disclose disabled checks and unresolved host diagnostics")
+        if (checks.get("update") != UPDATES or checks.get("loss_finite") is not True
+                or checks.get("frozen_encoder_unchanged") is not True
+                or checks.get("training_integrity_mode") != STANDARD_MODE
+                or checks.get("per_update_input_consistency_checks") is not False):
+            raise ValueError("Incomplete standard training completion checks")
+        if "input_protection" in contract or "readback_recovery" in contract or checks.get("input_protection_passed") is True:
+            raise ValueError("Standard mode cannot claim additional input protection passed")
+        return
+    if mode != GUARDED_MODE:
+        raise ValueError("Unknown training integrity mode in completion contract")
     if (checks.get("complete"), checks.get("update"), checks.get("verified_updates")) != (True, UPDATES, UPDATES):
         raise ValueError("Incomplete final training checks")
     for field in ("encoder_parameters_unchanged", "encoder_gradients_absent", "last_checkpoint_sha256_verified", "input_protection_passed"):
@@ -122,6 +139,15 @@ def across_seeds(rows, keys, metrics):
 def summarize(evaluation_root, output, historical_csv=None):
     evaluation_root, output = Path(evaluation_root), Path(output)
     summaries = {seed: read_json(evaluation_root / "G1C" / f"seed{seed}" / "summary.json") for seed in SEEDS}
+    modes = {item["contract"].get("training_integrity_mode", GUARDED_MODE) for item in summaries.values()}
+    if len(modes) != 1 or not modes.issubset({STANDARD_MODE, GUARDED_MODE}):
+        raise ValueError("All three seeds must use one explicit supported training integrity mode")
+    mode = modes.pop()
+    standard = mode == STANDARD_MODE
+    final_protocol = (dict(PROTOCOL, version="g1c-three-seed-historical-standard-v1",
+                          training_integrity_mode=STANDARD_MODE, per_update_input_consistency_checks=False,
+                          readback_recovery="Not measured because the additional input consistency checks were disabled by user request.",
+                          known_host_diagnostics=STANDARD_LIMITATION) if standard else PROTOCOL)
     historical_csv = Path(historical_csv or summaries[0]["historical_csv"]["path"])
     reference, historical = historical_index(historical_csv)
     rows, pairs, identities, contracts, panels, recovery_rows = [], [], [], [], [], []
@@ -130,7 +156,7 @@ def summarize(evaluation_root, output, historical_csv=None):
         directory, item = evaluation_root / "G1C" / f"seed{seed}", summaries[seed]
         if not item.get("completed") or (item.get("rows"), item.get("baseline_rows"), item.get("matched_historical_inputs")) != (3150, 3150, 3150):
             raise ValueError("Incomplete seed evaluation")
-        protocol = protocol_for_seed(seed)
+        protocol = protocol_for_seed(seed, mode)
         if item.get("protocol_hash") != digest(protocol) or digest(item["protocol"]) != digest(protocol):
             raise ValueError("Evaluation protocol mismatch")
         if item["historical_csv"]["sha256"] != historical["sha256"]:
@@ -139,8 +165,16 @@ def summarize(evaluation_root, output, historical_csv=None):
         if item["contract_hash"] != digest(contract):
             raise ValueError("Training contract hash mismatch")
         validate_completion_contract(contract, identity, seed)
-        recovery = validate_recovery_disclosure(contract)
-        recovery_rows.append({"train_seed": seed, "policy": recovery["policy"],
+        if standard:
+            recovery_rows.append({"train_seed": seed, "training_integrity_mode": STANDARD_MODE,
+                                  "per_update_input_consistency_checks": False,
+                                  "input_consistency_status": "not_checked_by_user_request",
+                                  "recovered_observation_events": None, "initialization_events": None,
+                                  "training_events": None, "affected_training_updates": None,
+                                  "hardware_repair_established": False})
+        else:
+            recovery = validate_recovery_disclosure(contract)
+            recovery_rows.append({"train_seed": seed, "policy": recovery["policy"],
                               "recovered_observation_events": recovery["events_total"],
                               "initialization_events": recovery["initialization_events"],
                               "training_events": recovery["training_events"],
@@ -222,7 +256,7 @@ def summarize(evaluation_root, output, historical_csv=None):
             new, old = (ood_index[(m, seed, table)] for m in ("G1C", "G1"))
             ood_pairs.append({"train_seed": seed, "table": table, "delta_ood_psnr": new["ood_psnr"] - old["ood_psnr"], "delta_ood_ssim": new["ood_ssim"] - old["ood_ssim"]})
     artifacts = {"per_image_results.csv": rows, "paired_per_image_results.csv": pairs,
-                 "readback_recovery_seedwise.csv": recovery_rows,
+                 ("training_integrity_seedwise.csv" if standard else "readback_recovery_seedwise.csv"): recovery_rows,
                  "condition_seedwise.csv": conditions, "condition_summary.csv": condition_summary,
                  "paired_condition_seedwise.csv": pair_seeds, "paired_condition_summary.csv": pair_summary,
                  "table1_seedwise.csv": table_seed, "table1_conditions.csv": table_summary,
@@ -236,12 +270,15 @@ def summarize(evaluation_root, output, historical_csv=None):
     for source, destination in panels:
         (output / destination).parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, output / destination)
-    recovery_total = sum(row["recovered_observation_events"] for row in recovery_rows)
-    recovery_updates = sum(row["affected_training_updates"] for row in recovery_rows)
-    recovery_initial = sum(row["initialization_events"] for row in recovery_rows)
+    recovery_total = None if standard else sum(row["recovered_observation_events"] for row in recovery_rows)
+    recovery_updates = None if standard else sum(row["affected_training_updates"] for row in recovery_rows)
+    recovery_initial = None if standard else sum(row["initialization_events"] for row in recovery_rows)
+    completion_text = ("All six checkpoints completed 300,000 updates. The three G1C runs used the explicitly requested standard training mode, with additional per-update input consistency checks disabled. Finite-loss, completed-budget and checkpoint identity checks were applied; G1 scores are reused historical measurements." if standard else
+                       "All six checkpoints completed 300,000 updates. The three G1C runs passed their full per-update input protection gates; G1 scores are reused historical measurements.")
+    recovery_text = (STANDARD_LIMITATION + " Anomaly counts and affected-step counts are not measured by this mode and are reported as null, not zero. Per-seed mode disclosures are in training_integrity_seedwise.csv." if standard else
+                     f"The G1C logs record {recovery_total} independently confirmed observation-copy recovery events: {recovery_initial} during initialization and {recovery_total - recovery_initial} during training, affecting {recovery_updates} seed-specific training updates. Per-seed counts and event-log SHA256 values are in readback_recovery_seedwise.csv. Original dataset replay, Mixup replay, snapshot and optimizer input checks remained mandatory. These recoveries do not establish the root cause, which remains unresolved; passing the gates must not be described as zero anomalies.")
     lines = ["# G1C vs historical G1: seeds 0, 1, 2", "",
-             "All six checkpoints completed 300,000 updates. The three G1C runs passed their full per-update input protection gates; G1 scores are reused historical measurements.", "",
-             f"The G1C logs record {recovery_total} independently confirmed observation-copy recovery events: {recovery_initial} during initialization and {recovery_total - recovery_initial} during training, affecting {recovery_updates} seed-specific training updates. Per-seed counts and event-log SHA256 values are in readback_recovery_seedwise.csv. Original dataset replay, Mixup replay, snapshot and optimizer input checks remained mandatory. These recoveries do not establish the root cause, which remains unresolved; passing the gates must not be described as zero anomalies.", "",
+             completion_text, "", recovery_text, "",
              "Each G1C seed is paired with the same historical G1 initialization seed and identical evaluation noise. Historical per-update samples/RNG trajectories were not recorded for this comparison, so full training trajectories cannot be verified as identical.", "",
              "Values below are the mean and sample standard deviation across three training seeds (ddof=1), after averaging images within each seed. Delta variability is computed from paired seed differences. All four datasets were previously evaluated; no unseen-holdout, significance, causal or SOTA claim is made.", "",
              "| Dataset | Noise | G1 PSNR mean ± SD | G1C PSNR mean ± SD | Paired delta mean ± SD (dB) |",
@@ -258,8 +295,12 @@ def summarize(evaluation_root, output, historical_csv=None):
               "readback_recovery_events_total": recovery_total,
               "readback_recovery_initialization_events": recovery_initial,
               "readback_recovery_affected_training_updates": recovery_updates,
-              "readback_recovery_seedwise": recovery_rows, "readback_root_cause_established": False,
-              "historical_csv": historical, "protocol": PROTOCOL, "protocol_hash": digest(PROTOCOL),
+              "readback_recovery_seedwise": None if standard else recovery_rows, "readback_root_cause_established": False,
+              "training_integrity_mode": mode, "per_update_input_consistency_checks": not standard,
+              "training_integrity_seedwise": recovery_rows if standard else None,
+              "known_host_diagnostics": STANDARD_LIMITATION if standard else None,
+              "hardware_repair_established": False,
+              "historical_csv": historical, "protocol": final_protocol, "protocol_hash": digest(final_protocol),
               "evaluation_source_hash": sources.pop(), "checkpoint_identities": identities,
               "source_summary_sha256": {f"seed{seed}": sha256_file(evaluation_root / "G1C" / f"seed{seed}/summary.json") for seed in SEEDS},
               "artifact_sha256": {name: sha256_file(output / name) for name in files}}

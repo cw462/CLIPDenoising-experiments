@@ -31,6 +31,11 @@ VARIANTS = {"C": "B0", "G1C": "G1"}
 HISTORICAL_SHA256 = "d3fead06b10e8b86363fe8f17484fccbce2a3a723b96cfeb49db75524c900635"
 HISTORICAL_SOURCE = "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef"
 UPDATES = 300000
+STANDARD_MODE = "standard_user_requested_v1"
+GUARDED_MODE = "guarded_input_protection_v1"
+STANDARD_LIMITATION = ("The user explicitly requested standard training without additional per-update input consistency checks. "
+                      "Known host memory/execution inconsistency diagnostics are retained and their root cause remains unresolved. "
+                      "Completed training and evaluation do not establish zero anomalies or repaired hardware.")
 READBACK_RECOVERY_POLICY = "independent_stable_v1"
 RECOVERY_METADATA_FIELDS = ("readback_recovery_policy", "readback_recovery_events_total",
                             "readback_recovery_initialization_events", "readback_recovery_sha256")
@@ -56,16 +61,25 @@ def validate_seed(variant, seed):
         raise ValueError("Supported evaluation: C seed0 or G1C seeds 0, 1, 2")
 
 
-def protocol_for_seed(seed):
+def protocol_for_seed(seed, integrity_mode=GUARDED_MODE):
     if type(seed) is not int or seed not in (0, 1, 2):
         raise ValueError("Historical training seed must be 0, 1 or 2")
-    if seed == 0:
-        return PROTOCOL
-    return dict(PROTOCOL, version="c-g1c-full300k-historical-per-seed-v2", training_seeds=[seed],
+    if integrity_mode not in (GUARDED_MODE, STANDARD_MODE):
+        raise ValueError("Unknown training integrity mode")
+    protocol = PROTOCOL if seed == 0 else dict(PROTOCOL, version="c-g1c-full300k-historical-per-seed-v2", training_seeds=[seed],
                 baseline=f"Reuse same-seed full G1 seed{seed} final 300000-update CSV metrics; no baseline retraining or re-inference",
                 initialization=f"New full training from RN50 and seed{seed} decoder initialization, not continuation from old final weights",
                 comparison="G1C-G1 pairs the same training seed and exact historical evaluation inputs at equal nominal budgets; the historical baseline is not a new concurrent randomized control",
                 limitations="This artifact contains one seed. Across-seed variation requires all three completed seed artifacts; no causal innovation, SOTA or paper-reference claims. Historical stepwise training inputs are not proven identical.")
+    if integrity_mode == STANDARD_MODE:
+        protocol = dict(protocol, version="g1c-standard-full300k-historical-per-seed-v1",
+                        variants={"G1C": "G1"},
+                        baseline=f"Reuse same-seed historical G1 seed{seed} final 300000-update CSV metrics; no baseline retraining or re-inference",
+                        comparison="G1C-G1 pairs the same training seed and historical evaluation inputs at equal nominal budgets; historical baseline is not a new concurrent control",
+                        training_integrity_mode=STANDARD_MODE, per_update_input_consistency_checks=False,
+                        readback_recovery="Not monitored by the disabled additional training consistency checks; no zero-anomaly or recovery-count claim.",
+                        known_host_diagnostics=STANDARD_LIMITATION)
+    return protocol
 
 
 def cell_key(row):
@@ -294,6 +308,9 @@ def validate_recovery_disclosure(contract):
 
 def validate_training_documents(config, status, manifest, checks, summary, latest, variant, expected_source, seed=0):
     """Pure validation shared by the filesystem gate and CPU rejection tests."""
+    if config.get("training_integrity_mode") == STANDARD_MODE:
+        return validate_standard_training_documents(config, status, manifest, checks, summary, latest,
+                                                    variant, expected_source, seed)
     validate_seed(variant, seed)
     if digest({k: v for k, v in config.items() if k != "config_hash"}) != config.get("config_hash"):
         raise ValueError("Effective config hash mismatch")
@@ -358,6 +375,91 @@ def validate_training_documents(config, status, manifest, checks, summary, lates
         raise ValueError("Completion documents disagree on readback recovery events/SHA256")
 
 
+def validate_standard_training_documents(config, status, manifest, checks, summary, latest,
+                                         variant, expected_source, seed=0):
+    """The explicit user-requested standard mode has no input-protection gate."""
+    validate_seed(variant, seed)
+    if variant != "G1C" or config.get("training_integrity_mode") != STANDARD_MODE:
+        raise ValueError("Standard evaluation requires explicit G1C standard training mode")
+    if digest({key: value for key, value in config.items() if key != "config_hash"}) != config.get("config_hash"):
+        raise ValueError("Effective config hash mismatch")
+    if (config.get("exp"), config.get("stage"), config.get("seed"), config.get("train", {}).get("total_iter")) != (variant, "full", seed, UPDATES):
+        raise ValueError("Standard evaluation requires completed full 300000-update training")
+    if config.get("source_hash") != expected_source:
+        raise ValueError("Training/evaluation source mismatch")
+    for section in (config.get("runtime", {}), config.get("execution_contract", {})):
+        if section.get("integrity_mode") != STANDARD_MODE or section.get("per_update_input_consistency_checks") is not False:
+            raise ValueError("Standard mode must explicitly disclose disabled per-update consistency checks")
+    if config.get("train", {}).get("pixel_opt", {}).get("type") != "L1StructureLoss":
+        raise ValueError("G1C must use structure loss")
+    network = config.get("network_g", {})
+    if network.get("adapter_mode") != "gated" or network.get("pfa_rho", 0) != 0 or network.get("pfa_seed") is not None:
+        raise ValueError("Wrong standard G1C adapter/PFA configuration")
+    full = config.get("full_training", {})
+    if (full.get("variant"), full.get("baseline_experiment"), full.get("budget"),
+            full.get("baseline_training_seed", seed)) != (variant, "G1", UPDATES, seed):
+        raise ValueError("Wrong standard full-training budget/seed/baseline")
+    if full.get("from_c0") is not False or full.get("diagnostic_tag") is not None or config.get("path", {}).get("pretrain_network_g"):
+        raise ValueError("Diagnostic or continuation runs cannot enter standard full evaluation")
+    if status.get("status") != "completed" or status.get("update") != UPDATES:
+        raise ValueError("Standard training status is not completed at 300000")
+    if summary.get("completed") is not True or summary.get("updates") != UPDATES:
+        raise ValueError("Standard training summary is incomplete")
+    for document in (status, manifest, summary):
+        if any(document.get(field) != config[field] for field in ("source_hash", "config_hash")):
+            raise ValueError("Standard training source/config identity mismatch")
+    for document in (manifest, summary, checks):
+        if document.get("training_integrity_mode") != STANDARD_MODE or document.get("per_update_input_consistency_checks") is not False:
+            raise ValueError("Standard training documents must disclose their unchecked input mode")
+    if checks.get("update") != UPDATES or checks.get("loss_finite") is not True or checks.get("frozen_encoder_unchanged") is not True:
+        raise ValueError("Standard finite-loss/frozen-encoder training checks are incomplete")
+    if latest.get("update") != UPDATES or not _sha256(latest.get("sha256")):
+        raise ValueError("Standard final checkpoint pointer is incomplete")
+    if summary.get("checkpoint_sha256") != latest["sha256"]:
+        raise ValueError("Standard summary/checkpoint SHA mismatch")
+    if manifest.get("completed_optimizer_updates") != UPDATES or manifest.get("final_checkpoint_sha256") != latest["sha256"]:
+        raise ValueError("Standard manifest does not bind the final checkpoint")
+    if "training_checks" in summary and summary["training_checks"] != checks:
+        raise ValueError("Inconsistent standard training checks documents")
+
+
+def validated_standard_gate(paths, variant, seed=0):
+    if paths.get("training_integrity_mode") != STANDARD_MODE:
+        raise ValueError("Standard evaluation must be explicitly selected in the paths configuration")
+    run = Path(paths["output_root"]) / "full" / variant / f"seed{seed}"
+    names = ("effective_config.json", "status.json", "manifest.json", "training_checks.json", "summary.json", "checkpoints/latest.json")
+    config, status, manifest, checks, summary, latest = [read_json(run / name) for name in names]
+    validate_standard_training_documents(config, status, manifest, checks, summary, latest, variant, source_hash(), seed)
+    for field, path_key in (("pretrained_sha256", "pretrained_rn50"), ("data_manifest_hash", "data_manifest")):
+        if config.get(field) != sha256_file(paths[path_key]):
+            raise ValueError(f"Training asset identity mismatch: {field}")
+    if config["train"]["pixel_opt"] != paths["pixel_opt"]:
+        raise ValueError("Structure loss configuration differs from fixed paths")
+    checkpoint_path = resolve_path(paths, latest["path"])
+    if checkpoint_path.resolve().parent != (run / "checkpoints").resolve():
+        raise ValueError("Standard checkpoint is outside the expected run")
+    if sha256_file(checkpoint_path) != latest["sha256"]:
+        raise ValueError("Standard final checkpoint SHA256 mismatch")
+    checkpoint = torch_load(checkpoint_path)
+    for field, expected in (("experiment", variant), ("stage", "full"), ("seed", seed), ("update", UPDATES),
+                            ("source_hash", config["source_hash"]), ("config_hash", config["config_hash"])):
+        if checkpoint.get(field) != expected:
+            raise ValueError(f"Standard checkpoint identity mismatch: {field}")
+    required = {"params", "optimizer", "scheduler", "rng", "sampler", "scaler", "ema", "pfa_rng"}
+    if not required.issubset(checkpoint) or checkpoint.get("complete_update_boundary") is not True or checkpoint["pfa_rng"] is not None:
+        raise ValueError("Incomplete standard final checkpoint")
+    files = (*names, *(("train.jsonl",) if (run / "train.jsonl").is_file() else ()))
+    contract = {"variant": variant, "baseline": "G1", "training_seed": seed, "training_updates": UPDATES,
+                "source_hash": config["source_hash"], "config_hash": config["config_hash"],
+                "pretrained_sha256": config["pretrained_sha256"], "data_manifest_hash": config["data_manifest_hash"],
+                "pixel_opt": config["train"]["pixel_opt"], "full_training": config["full_training"],
+                "training_checks": checks, "training_completed": True, "training_integrity_mode": STANDARD_MODE,
+                "per_update_input_consistency_checks": False, "input_consistency_status": "not_checked_by_user_request",
+                "known_host_diagnostics": STANDARD_LIMITATION, "hardware_repair_established": False,
+                "proof_sha256": {name: sha256_file(run / name) for name in files}}
+    return config, checkpoint_path, checkpoint, contract
+
+
 def validate_input_protection(path, proof, config, training_log=None, recovery_path=None):
     if (proof.get("schema"), proof.get("status"), proof.get("update"), proof.get("verified_updates")) != (
             "c_only_input_protection_v1", "passed", UPDATES, UPDATES):
@@ -408,11 +510,17 @@ def validate_input_protection(path, proof, config, training_log=None, recovery_p
 
 def validated_gate(paths, variant, seed=0):
     validate_seed(variant, seed)
+    if paths.get("training_integrity_mode") == STANDARD_MODE:
+        return validated_standard_gate(paths, variant, seed)
+    if paths.get("training_integrity_mode") not in (None, GUARDED_MODE):
+        raise ValueError("Unknown requested training integrity mode")
     run = Path(paths["output_root"]) / "full" / variant / f"seed{seed}"
     if (run / "input_failure").exists():
         raise ValueError("Run contains a preserved input-protection failure")
     names = ("effective_config.json", "status.json", "manifest.json", "training_checks.json", "summary.json", "checkpoints/latest.json")
     config, status, manifest, checks, summary, latest = [read_json(run / name) for name in names]
+    if config.get("training_integrity_mode") == STANDARD_MODE:
+        raise ValueError("Standard training requires the explicitly selected standard evaluation branch")
     validate_training_documents(config, status, manifest, checks, summary, latest, variant, source_hash(), seed)
     protection = read_json(run / "input_protection.json")
     validate_input_protection(run / "input_protection.jsonl", protection, config, run / "train.jsonl")
@@ -481,12 +589,12 @@ def save_panel(directory, clean, noisy, restored, variant, dataset, family, leve
 
 def evaluate_variant(paths, variant, output_root, device, seed=0):
     validate_seed(variant, seed)
-    protocol = protocol_for_seed(seed)
     historical_csv, reference, historical = load_historical(paths)
     baseline_rows, baseline_identity = historical_baseline(historical_csv, VARIANTS[variant], reference,
                                                           paths.get("baseline_source_hash", HISTORICAL_SOURCE), seed)
     baseline_proof = verify_baseline_checkpoint(paths, VARIANTS[variant], baseline_identity)
     config, checkpoint_path, checkpoint, contract = validated_gate(paths, variant, seed)
+    protocol = protocol_for_seed(seed, contract.get("training_integrity_mode", GUARDED_MODE))
     output = output_root / variant / f"seed{seed}"
     identity = {"method": variant, "training_seed": seed, "stage": "full", "update": UPDATES,
                 "checkpoint_sha256": sha256_file(checkpoint_path), "config_hash": config["config_hash"],
@@ -543,6 +651,8 @@ def evaluate_variant(paths, variant, output_root, device, seed=0):
         artifacts = {path.relative_to(output).as_posix(): sha256_file(path)
                      for path in sorted(output.rglob("*")) if path.is_file() and path.name not in {"process.lock", "summary.json"}}
         result = {"completed": True, "completed_at": utc_now(), "rows": len(rows), "baseline_rows": len(baseline_rows),
+                  "training_integrity_mode": contract.get("training_integrity_mode", GUARDED_MODE),
+                  "per_update_input_consistency_checks": contract.get("training_integrity_mode") != STANDARD_MODE,
                   "identity": identity, "baseline_identity": baseline_identity, "baseline_checkpoint_proof": baseline_proof,
                   "historical_csv": historical, "matched_historical_inputs": len(rows),
                   "dataset_manifest": manifest, "dataset_manifest_hash": manifest_hash,
