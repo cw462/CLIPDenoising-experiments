@@ -1,0 +1,11 @@
+{
+  "phase": "waiting_seed0_completion",
+  "updated_at": "2026-10-22T02:38:01Z",
+  "process": {
+    "pid": 2988721,
+    "create_time": 1792636574.07,
+    "host": "imss"
+  },
+  "seed0_update": 66300,
+  "seed2_update": 38900
+}
