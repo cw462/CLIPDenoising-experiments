@@ -10,9 +10,15 @@
 
 已配置独立自动迁移任务，等待 seed 0 完成 300000 步、训练进程正常退出，并确认 GPU 0 空闲后，再将 seed 2 从 GPU 1 迁至 GPU 0。迁移只暂停 seed 2，seed 1 保持运行。迁移使用 seed 2 的完整常规检查点，经文件身份与完整性校验后恢复模型、优化器、学习率调度、随机数及采样器状态；科学源码和训练配置保持固定，继续同一 seed 的 300000 步计划。
 
-自动等待任务已于北京时间 2026-10-22 10:36 在服务器启动，检查时三个原训练进程均继续运行。见[启动快照](../reproducibility/g1c_standard/migration_armed_snapshot.json)、[迁移计划](../reproducibility/g1c_standard/migration_plan.json)和[控制器](../reproducibility/g1c_standard/gpu_migration_controller.py)。控制器的 20 项模拟测试及服务器只读预检通过；实际跨卡恢复尚待触发。
+自动等待任务于北京时间 2026-10-22 10:36 在服务器启动，见[启动快照](../reproducibility/g1c_standard/migration_armed_snapshot.json)。当日 15:12:57，seed 0 完成 300000 步。15:19:32 首次自动迁移因旧协调器暂停超时失败：该协调器是 tmux 窗格的直接子进程，tmux 收到其停止状态后会发送 `SIGCONT`，因此不能用 `SIGSTOP` 持续暂停它；这一行为可在官方 [`server_child_stopped` 实现](https://github.com/tmux/tmux/blob/master/server.c)中核对。首次失败发生在操作 seed 2 之前，seed 1、2 继续在 GPU 1 训练，GPU 0 保持空闲。
 
-检查点之后尚未保存的尾步会从该检查点重算，不增加最终有效训练步数。迁移计划、状态和审计保存在 `reproducibility/g1c_standard/migration*`，记录实际源/目标 GPU、检查点步数与 SHA256、恢复确认及重算尾步数；无法准确确认的尾步数会标为未知。本文仅说明自动迁移已配置，不声称迁移已经执行或完成，也不承诺跨卡恢复后的整段数值轨迹逐位相同。最终结果导出会依据实际审计记录说明迁移情况。
+修复后的单次重试于 17:08:23 部署，等待 seed 2 保存 240000 步常规检查点后开始交接。修复核对进程身份后仅终止旧协调器，再由独立控制器接管调度；迁移期间 seed 1 未暂停。控制器通过 40 项模拟测试，17:10 的 Linux 实际自有进程测试也验证了 `STOP`、`CONT`、`TERM` 行为，测试未操作训练进程。
+
+17:18:04 已确认实际迁移成功：seed 2 从 240000 步完整检查点在 GPU 0 恢复，并记录到 240200 步；检查点之后原已执行的 6 步被重算。随后检查到 240500 步，`nvidia-smi` 确认 seed 2 新进程位于 GPU 0、seed 1 原进程位于 GPU 1。模型、优化器、学习率、随机数和采样器状态均通过原训练入口恢复，训练配置与科学源码保持固定。见[恢复快照](../reproducibility/g1c_standard/migration_recovered_snapshot.json)和[本次验证记录](../reproducibility/g1c_standard/migration_retry_validation.json)。这证明迁移完成，三组最终训练与评测仍在继续。
+
+首次失败的审计、计划和状态原样归档于 `reproducibility/g1c_standard/migration_controller_attempts/`，当前[迁移审计](../reproducibility/g1c_standard/migration_audit.json)记录本次重试及归档引用；另见[迁移计划](../reproducibility/g1c_standard/migration_plan.json)和[修复后的控制器](../reproducibility/g1c_standard/gpu_migration_controller_retry.py)。后续报告保留首次失败和实际重试结果。
+
+检查点之后尚未保存的尾步会从该检查点重算，不增加最终有效训练步数。迁移计划、状态和审计保存在 `reproducibility/g1c_standard/migration*`，记录实际源/目标 GPU、检查点步数与 SHA256、恢复确认及重算尾步数；无法准确确认的尾步数会标为未知。实际跨卡恢复是否完成以审计记录为准，也不承诺跨卡恢复后的整段数值轨迹逐位相同。最终结果导出会依据实际审计记录说明迁移情况。
 
 ```bash
 .venv/bin/python tools/run_g1c_standard_pipeline.py --paths configs/plan_g1c_standard_server.yaml

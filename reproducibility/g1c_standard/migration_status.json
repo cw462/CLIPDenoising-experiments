@@ -1,11 +1,12 @@
 {
-  "phase": "waiting_seed0_completion",
-  "updated_at": "2026-10-22T02:38:01Z",
+  "phase": "continued_training_and_evaluation",
+  "updated_at": "2026-10-22T09:18:24Z",
   "process": {
-    "pid": 2988721,
-    "create_time": 1792636574.07,
+    "pid": 3206931,
+    "create_time": 1792660099.93,
     "host": "imss"
   },
-  "seed0_update": 66300,
-  "seed2_update": 38900
+  "pipeline_status": "running",
+  "pipeline_phase": "full300k",
+  "migration_status": "completed"
 }

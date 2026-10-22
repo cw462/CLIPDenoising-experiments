@@ -1,6 +1,8 @@
 # CLIPDenoising：门控＋结构损失实验
 
-> 当前运行安排：按用户要求，门控+C 已启动普通训练，关闭新增逐步输入一致性检查。seed 0、1、2 各训练完整 300k，初始分配为 GPU 0 跑 seed 0、GPU 1 并行跑 seed 1、2。**已配置自动迁移：等待 seed 0 满 300k、正常退出且 GPU 0 空闲后，从 seed 2 的完整常规检查点迁至 GPU 0 接续；seed 1 不暂停。**此处不表示迁移已经发生，实际状态、恢复步数和重算尾步数以迁移审计记录为准。三组完成后自动评测与汇总。见[启动记录](results/g1c_standard_launch_20261022/README.md)和[运行说明](docs/G1C_Standard_Training_20261022.md)。已知主机异常尚未确认修复，最终报告保留这一运行条件；以下停止状态与故障证据属于较早尝试。
+> 当前状态（北京时间 2026-10-22 17:18）：门控+C 按用户要求采用普通训练，关闭新增逐步输入一致性检查。**seed 0 已完成 300k；seed 2 已从 240000 步完整检查点迁至 GPU 0，seed 1 留在 GPU 1 持续训练，两组各占一张卡。**17:18:04 已确认 seed 2 恢复完整模型、优化器、学习率、随机数和采样器状态，并产生新的训练步数；仅重算检查点之后的 6 步。首次自动迁移曾于 15:19:32 因协调器暂停超时失败、导致 GPU 0 空闲，此次修复重试已成功，旧失败记录保留。见[迁移审计](reproducibility/g1c_standard/migration_audit.json)和[实际 GPU 分配快照](reproducibility/g1c_standard/migration_recovered_snapshot.json)。三组完整训练尚未全部结束。
+>
+> 三个 seed 各完成 300k 后自动评测与汇总。见[启动记录](results/g1c_standard_launch_20261022/README.md)和[运行说明](docs/G1C_Standard_Training_20261022.md)。已知主机异常尚未确认修复，最终报告保留这一运行条件；以下停止状态与故障证据属于较早尝试。
 
 
 **状态快照（2026-10-21 23:18）：** 当前方法为G1C（原G1门控＋L1＋0.05×平滑梯度结构损失），固定seed **0、1、2**，每种子完整300000步，分别对照历史G1相同seed。独立NumPy环境候选通过三seed短程GPU检查，但长程验证在第761步再次读取不一致；GPU1并发探针seed2在第30步也触发保护。两项均停止，候选退役，三seed正式300k尚未启动，没有后台正式训练或有效最终结果。详见[新故障与完整证据](results/g1c_numpy_isolation_failure_20261021/README.md)及[三种子协议](docs/G1C_Multiseed_20261021.md)。

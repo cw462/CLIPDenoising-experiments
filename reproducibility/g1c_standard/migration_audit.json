@@ -1,6 +1,6 @@
 {
   "schema": "g1c_seed_gpu_migration_v1",
-  "status": "waiting",
+  "status": "completed",
   "job_key": "full_G1C_seed2",
   "seed": 2,
   "from_gpu": 1,
@@ -9,6 +9,85 @@
   "source_hash": "86d821ff44713da6918b73f92ed7b9e2a7b3d83f53082eef9c82f36a654a534d",
   "config_sha256": "9ba8dcdea71c06d9591c865bd85644b81a2c04770fcc0aabfc6bc820bdc22eb8",
   "authorization": "User requested checkpoint migration of seed2 after seed0 completes",
-  "controller_sha256": "b7a353947a1c959663ef70a0ad493a050de75902a150aa698e62f943a9d3424b",
-  "armed_at": "2026-10-22T02:36:16Z"
+  "controller_sha256": "1b0da8ba2e79131f6c217c45a36390e75fcd63d2d6bc01912d7ee3fbd465d682",
+  "armed_at": "2026-10-22T09:08:23Z",
+  "attempt": 2,
+  "retry_of": {
+    "reason": "One repaired retry: the original coordinator STOP timed out before seed2 was touched; tmux resumes stopped pane children, so this attempt terminates only the owned coordinator.",
+    "previous_audit_sha256": "d280e1d178cbb9feabe8ba490fc996999fade8c78a6e39b472d3b5080dc66a69",
+    "seed2_touched_by_previous_attempt": false,
+    "verified_original_child_process": {
+      "pid": 2946310,
+      "create_time": 1792632018.88,
+      "host": "imss"
+    },
+    "verified_original_wrapper_process": {
+      "pid": 2946309,
+      "create_time": 1792632018.84,
+      "host": "imss"
+    },
+    "verified_original_coordinator_process": {
+      "pid": 2946034,
+      "create_time": 1792632002.16,
+      "host": "imss"
+    },
+    "verified_at": "2026-10-22T09:08:23Z",
+    "files": [
+      {
+        "path": "reproducibility/g1c_standard/migration_controller_attempts/1792660103298067632/failed_attempt1_audit.json",
+        "sha256": "d280e1d178cbb9feabe8ba490fc996999fade8c78a6e39b472d3b5080dc66a69"
+      },
+      {
+        "path": "reproducibility/g1c_standard/migration_controller_attempts/1792660103298067632/failed_attempt1_plan.json",
+        "sha256": "b042ba4fbf8b6d80a7813f3cfe271d3676cf82677f23cc707708a4122ca226ca"
+      },
+      {
+        "path": "reproducibility/g1c_standard/migration_controller_attempts/1792660103298067632/failed_attempt1_status.json",
+        "sha256": "9edcd1987a032448dd0b9559210d003f03a138d6e29bf816b673b39d190bed92"
+      }
+    ],
+    "archive_directory": "reproducibility/g1c_standard/migration_controller_attempts/1792660103298067632"
+  },
+  "phase": "restarting_seed2_on_gpu0",
+  "seed0_completed_at": "2026-10-22T07:12:57Z",
+  "previous_checkpoint_update": 235000,
+  "started_at": "2026-10-22T09:17:37Z",
+  "old_child_process": {
+    "pid": 2946310,
+    "create_time": 1792632018.88,
+    "host": "imss"
+  },
+  "old_wrapper_process": {
+    "pid": 2946309,
+    "create_time": 1792632018.84,
+    "host": "imss"
+  },
+  "old_coordinator_process": {
+    "pid": 2946034,
+    "create_time": 1792632002.16,
+    "host": "imss"
+  },
+  "archive_directory": "reproducibility/g1c_standard/migration_attempts/1792660656229110113",
+  "coordinator_handoff": "TERM owned coordinator; tmux automatically resumes STOPped pane children",
+  "checkpoint": {
+    "path": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/runs/g1c_standard/full/G1C/seed2/checkpoints/update_240000.pth",
+    "update": 240000,
+    "sha256": "c1077da6b4672b8188cd8b75550e0c6d0b60459e3d29023ca980aaaa490ebb0b"
+  },
+  "resume_from_update": 240000,
+  "training_config_hash": "345ff3159bad7c6beeec018ac7741c839a042ead76b830024ce24d95689bede6",
+  "last_successful_update_before_stop": 240006,
+  "recomputed_tail_updates": 6,
+  "tail_update_note": "Count of complete logged updates discarded after the saved checkpoint; the trainer archives the original log when resuming",
+  "interrupted_status_sha256": "c56dc7fa5a1945535507853dd999b80b3aa7c43e1147720d4f8dc0008429eaf8",
+  "original_exit_sha256": "1f6fe989bf80ebedb93d53d3aa8f866b8fc1e7657d158880a1993b601a71a3f4",
+  "scheduler_taken_over_at": "2026-10-22T09:17:38Z",
+  "completed_at": "2026-10-22T09:18:04Z",
+  "resume_verified_at": "2026-10-22T09:18:04Z",
+  "resumed_process": {
+    "pid": 3214000,
+    "create_time": 1792660661.12,
+    "host": "imss"
+  },
+  "first_observed_resumed_update": 240200
 }
