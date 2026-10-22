@@ -1,0 +1,66 @@
+{
+  "checked_at": "2026-10-22T01:22:32.007693+00:00",
+  "status": "running",
+  "phase": "full300k",
+  "reason": null,
+  "seeds": [
+    {
+      "seed": 0,
+      "status": "running",
+      "update": 1900,
+      "budget": 300000,
+      "checkpoint_update": 0,
+      "loss": 0.20560471713542938,
+      "reason": null,
+      "process": {
+        "pid": 2946058,
+        "create_time": 1792632006.42,
+        "host": "imss"
+      },
+      "per_update_input_consistency_checks": false,
+      "last_log_update": 1994,
+      "mean_recent_step_seconds": 0.07048058761283756,
+      "remaining_training_hours": 5.834343886708686
+    },
+    {
+      "seed": 1,
+      "status": "running",
+      "update": 1100,
+      "budget": 300000,
+      "checkpoint_update": 0,
+      "loss": 0.019204309210181236,
+      "reason": null,
+      "process": {
+        "pid": 2946259,
+        "create_time": 1792632012.62,
+        "host": "imss"
+      },
+      "per_update_input_consistency_checks": false,
+      "last_log_update": 1171,
+      "mean_recent_step_seconds": 0.11879481266438961,
+      "remaining_training_hours": 9.860926409357466
+    },
+    {
+      "seed": 2,
+      "status": "running",
+      "update": 1000,
+      "budget": 300000,
+      "checkpoint_update": 0,
+      "loss": 0.0210005734115839,
+      "reason": null,
+      "process": {
+        "pid": 2946310,
+        "create_time": 1792632018.88,
+        "host": "imss"
+      },
+      "per_update_input_consistency_checks": false,
+      "last_log_update": 1075,
+      "mean_recent_step_seconds": 0.11872929513081908,
+      "remaining_training_hours": 9.858654040827803
+    }
+  ],
+  "gpus": [
+    "0, 3954 MiB, 24576 MiB, 48 %",
+    "1, 8017 MiB, 24576 MiB, 74 %"
+  ]
+}
