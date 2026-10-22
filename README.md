@@ -1,5 +1,11 @@
 # CLIPDenoising：门控＋结构损失实验
 
+> 最新完成结果（2026-10-22）：G1 与 G1C 的 seed 0、1、2 已按 RGB 逐通道独立椒盐噪声 d=0.02 完成重评测，新增 1,260 条逐图指标。其余三类噪声沿用既有三 seed 结果。查看[最终 16 条件 Table 1](results/table1_channel_salt_3seed_20261022/final/Table1.md)及[完整数据与运行记录](results/table1_channel_salt_3seed_20261022/README.md)。旧版 RGB 共用噪声结果保留，不与新版混用。
+
+## 历史运行记录
+
+以下状态为各阶段历史快照，最新完成状态以上方结果为准。
+
 > 当前状态（北京时间 2026-10-22 17:18）：门控+C 按用户要求采用普通训练，关闭新增逐步输入一致性检查。**seed 0 已完成 300k；seed 2 已从 240000 步完整检查点迁至 GPU 0，seed 1 留在 GPU 1 持续训练，两组各占一张卡。**17:18:04 已确认 seed 2 恢复完整模型、优化器、学习率、随机数和采样器状态，并产生新的训练步数；仅重算检查点之后的 6 步。首次自动迁移曾于 15:19:32 因协调器暂停超时失败、导致 GPU 0 空闲，此次修复重试已成功，旧失败记录保留。见[迁移审计](reproducibility/g1c_standard/migration_audit.json)和[实际 GPU 分配快照](reproducibility/g1c_standard/migration_recovered_snapshot.json)。三组完整训练尚未全部结束。
 >
 > 三个 seed 各完成 300k 后自动评测与汇总。见[启动记录](results/g1c_standard_launch_20261022/README.md)和[运行说明](docs/G1C_Standard_Training_20261022.md)。已知主机异常尚未确认修复，最终报告保留这一运行条件；以下停止状态与故障证据属于较早尝试。
