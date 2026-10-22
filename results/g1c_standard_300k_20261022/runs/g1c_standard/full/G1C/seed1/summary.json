@@ -1,0 +1,17 @@
+{
+  "experiment": "G1C",
+  "stage": "full",
+  "seed": 1,
+  "config_hash": "136ea5d83c4b6228bc219912951a10a21c85f0a6d8d3305d8578ac274d4fa9e4",
+  "source_hash": "86d821ff44713da6918b73f92ed7b9e2a7b3d83f53082eef9c82f36a654a534d",
+  "training_integrity_mode": "standard_user_requested_v1",
+  "integrity_mode": "standard_user_requested_v1",
+  "per_update_input_consistency_checks": false,
+  "completed": true,
+  "updates": 300000,
+  "budget": 300000,
+  "checkpoint": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/runs/g1c_standard/full/G1C/seed1/checkpoints/final.pth",
+  "checkpoint_sha256": "0719ed49ebdfa7a5af99fe3a74fecad8c911fc1a61cda18178adbce34daa0f48",
+  "elapsed_seconds": 32962.0310739167,
+  "ended_at": "2026-10-22T10:29:41Z"
+}

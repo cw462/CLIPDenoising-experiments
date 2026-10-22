@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-22T11:53:02Z",
+  "variant": "G1C",
+  "training_seed": 2,
+  "source_hash": "86d821ff44713da6918b73f92ed7b9e2a7b3d83f53082eef9c82f36a654a534d",
+  "contract_hash": "ed26b1600d42fa03b0ba3fecff6e59fee2438cd2be9d8071345fbeeb302aa757",
+  "baseline_proof": {
+    "checkpoint_sha256": "c20dce5494e399ceb74d240618e009b2f686218730a6123c518ec1696a87d05d",
+    "identity_verified": true
+  }
+}

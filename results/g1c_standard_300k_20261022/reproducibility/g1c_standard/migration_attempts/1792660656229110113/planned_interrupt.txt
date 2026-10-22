@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/tools/run_g1c_standard.py", line 208, in run
+    loss = legacy.train_update(model, dataset, sampler, update, 16, 1)
+  File "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/tools/run_experiment.py", line 123, in train_update
+    model.feed_train_data(default_collate([ds[i] for i in sampler.take(micro_batch)]))
+  File "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/tools/run_experiment.py", line 123, in <listcomp>
+    model.feed_train_data(default_collate([ds[i] for i in sampler.take(micro_batch)]))
+  File "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/basicsr/data/paired_image_dataset.py", line 262, in __getitem__
+    img_gt, img_lq = random_augmentation(img_gt, img_lq)
+  File "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/basicsr/data/transforms.py", line 274, in random_augmentation
+    out.append(data_augmentation(data, flag_aug).copy())
+KeyboardInterrupt

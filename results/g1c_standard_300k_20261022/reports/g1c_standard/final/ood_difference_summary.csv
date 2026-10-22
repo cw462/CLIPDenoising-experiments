@@ -1,0 +1,3 @@
+table,training_seed_count,delta_ood_psnr_mean,delta_ood_psnr_std,delta_ood_ssim_mean,delta_ood_ssim_std
+five_families_with_extensions,3,0.043504874190388655,0.05256634873869844,0.0016297016015381176,0.003422451761408695
+official_three_families,3,0.05994170024987374,0.13074487121538225,0.004184140998351256,0.005373134793297386

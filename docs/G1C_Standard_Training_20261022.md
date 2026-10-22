@@ -27,3 +27,8 @@
 运行目录为 `runs/g1c_standard`，报告目录为 `reports/g1c_standard`。三组训练完成后，队列自动评测 CBSD68、Kodak24、McMaster、Urban100 的原有 15 个噪声条件，汇总三个 seed 的均值、样本标准差、与历史 G1 的配对差值及最高 OOD 水平的 Table 1。完成状态由真实运行日志和 checkpoint 记录决定，本文不是训练已完成的证明。
 
 此前独立测试发现的主机读写异常保留在[诊断记录](../results/g1c_host_integrity_20261022/README.md)。本次按用户指定关闭额外训练输入检查，结果不代表该主机问题已经修复。最终报告会注明这一运行条件。
+
+
+## Completed evaluation (2026-10-22)
+
+All three seeds completed 300,000 training updates and 3,150 evaluation items each. [Final results and execution disclosures](../results/g1c_standard_300k_20261022/README.md) include the report, per-image measurements, Table 1 and OOD summaries. At the user request, recovery checks and seed0/seed2 noisy-input consistency blocking were skipped; seed0 also skipped training-asset and historical-checkpoint identity checks. Historical noise identity is not established for the combined results. Seed1 results were reused and original failures retained.

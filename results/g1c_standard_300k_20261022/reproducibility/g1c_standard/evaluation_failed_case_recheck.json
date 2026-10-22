@@ -1,0 +1,56 @@
+{
+  "checked_at": "2026-10-22T11:13:28.110147+00:00",
+  "scope": "Only the failed evaluation input; no model inference or training changes",
+  "case": [
+    "Kodak24",
+    "kodim18.png",
+    "speckle",
+    0.04
+  ],
+  "expected": {
+    "noise_sha256": "9a63886898edcb14b96118a95bde43ef7abd3912219a1010b2be5e70f69f88a6",
+    "noise_seed": 3289000510,
+    "height": 500,
+    "width": 500
+  },
+  "observations": [
+    {
+      "attempt": 1,
+      "observed": {
+        "noise_seed": 3289000510,
+        "noise_sha256": "9a63886898edcb14b96118a95bde43ef7abd3912219a1010b2be5e70f69f88a6",
+        "height": 500,
+        "width": 500
+      },
+      "matches_historical": true
+    },
+    {
+      "attempt": 2,
+      "observed": {
+        "noise_seed": 3289000510,
+        "noise_sha256": "9a63886898edcb14b96118a95bde43ef7abd3912219a1010b2be5e70f69f88a6",
+        "height": 500,
+        "width": 500
+      },
+      "matches_historical": true
+    },
+    {
+      "attempt": 3,
+      "observed": {
+        "noise_seed": 3289000510,
+        "noise_sha256": "9a63886898edcb14b96118a95bde43ef7abd3912219a1010b2be5e70f69f88a6",
+        "height": 500,
+        "width": 500
+      },
+      "matches_historical": true
+    }
+  ],
+  "all_three_matched": true,
+  "seed1_completed_input_sha256": "9a63886898edcb14b96118a95bde43ef7abd3912219a1010b2be5e70f69f88a6",
+  "raw_image_sha256": "a400f54584a1212d26002970f15e2abfdf334c56a0e02bfe569f4a16515ed731",
+  "historical_csv_sha256": "d3fead06b10e8b86363fe8f17484fccbce2a3a723b96cfeb49db75524c900635",
+  "scientific_commit": "c02ebedd103af716afc3ad29491b3886e6ba37ff",
+  "source_hash": "86d821ff44713da6918b73f92ed7b9e2a7b3d83f53082eef9c82f36a654a534d",
+  "config_sha256": "9ba8dcdea71c06d9591c865bd85644b81a2c04770fcc0aabfc6bc820bdc22eb8",
+  "checks_bypassed": false
+}

@@ -1,0 +1,125 @@
+RN50_LOAD_AUDIT {"checkpoint": "/home/imss/cw/CLIPDenoising_20261020/pretrained/RN50.pt", "expected_state_key_count": 330, "ignored_source_key_count": 162, "matched_parameter_count": 23527264, "matched_parameter_tensor_count": 165, "matched_state_element_count": 23580567, "matched_state_key_count": 330, "missing_keys": [], "shape_mismatches": {}, "source_format": "torchscript", "source_prefix": "visual."}
+G1C seed2: 15/3150
+G1C seed2: 30/3150
+G1C seed2: 45/3150
+G1C seed2: 60/3150
+G1C seed2: 75/3150
+G1C seed2: 90/3150
+G1C seed2: 105/3150
+G1C seed2: 120/3150
+G1C seed2: 135/3150
+G1C seed2: 150/3150
+G1C seed2: 165/3150
+G1C seed2: 180/3150
+G1C seed2: 195/3150
+G1C seed2: 210/3150
+G1C seed2: 225/3150
+G1C seed2: 240/3150
+G1C seed2: 255/3150
+G1C seed2: 270/3150
+G1C seed2: 285/3150
+G1C seed2: 300/3150
+G1C seed2: 315/3150
+G1C seed2: 330/3150
+G1C seed2: 345/3150
+G1C seed2: 360/3150
+G1C seed2: 375/3150
+G1C seed2: 390/3150
+G1C seed2: 405/3150
+G1C seed2: 420/3150
+G1C seed2: 435/3150
+G1C seed2: 450/3150
+G1C seed2: 465/3150
+G1C seed2: 480/3150
+G1C seed2: 495/3150
+G1C seed2: 510/3150
+G1C seed2: 525/3150
+G1C seed2: 540/3150
+G1C seed2: 555/3150
+G1C seed2: 570/3150
+G1C seed2: 585/3150
+G1C seed2: 600/3150
+G1C seed2: 615/3150
+G1C seed2: 630/3150
+G1C seed2: 645/3150
+G1C seed2: 660/3150
+G1C seed2: 675/3150
+G1C seed2: 690/3150
+G1C seed2: 705/3150
+G1C seed2: 720/3150
+G1C seed2: 735/3150
+G1C seed2: 750/3150
+G1C seed2: 765/3150
+G1C seed2: 780/3150
+G1C seed2: 795/3150
+G1C seed2: 810/3150
+G1C seed2: 825/3150
+G1C seed2: 840/3150
+G1C seed2: 855/3150
+G1C seed2: 870/3150
+G1C seed2: 885/3150
+G1C seed2: 900/3150
+G1C seed2: 915/3150
+G1C seed2: 930/3150
+G1C seed2: 945/3150
+G1C seed2: 960/3150
+G1C seed2: 975/3150
+G1C seed2: 990/3150
+G1C seed2: 1005/3150
+G1C seed2: 1020/3150
+G1C seed2: 1035/3150
+G1C seed2: 1050/3150
+G1C seed2: 1065/3150
+G1C seed2: 1080/3150
+G1C seed2: 1095/3150
+G1C seed2: 1110/3150
+G1C seed2: 1125/3150
+G1C seed2: 1140/3150
+G1C seed2: 1155/3150
+G1C seed2: 1170/3150
+G1C seed2: 1185/3150
+G1C seed2: 1200/3150
+G1C seed2: 1215/3150
+G1C seed2: 1230/3150
+G1C seed2: 1245/3150
+G1C seed2: 1260/3150
+G1C seed2: 1275/3150
+G1C seed2: 1290/3150
+G1C seed2: 1305/3150
+G1C seed2: 1320/3150
+G1C seed2: 1335/3150
+G1C seed2: 1350/3150
+G1C seed2: 1365/3150
+G1C seed2: 1380/3150
+G1C seed2: 1395/3150
+G1C seed2: 1410/3150
+G1C seed2: 1425/3150
+G1C seed2: 1440/3150
+G1C seed2: 1455/3150
+G1C seed2: 1470/3150
+G1C seed2: 1485/3150
+G1C seed2: 1500/3150
+G1C seed2: 1515/3150
+G1C seed2: 1530/3150
+G1C seed2: 1545/3150
+G1C seed2: 1560/3150
+G1C seed2: 1575/3150
+G1C seed2: 1590/3150
+G1C seed2: 1605/3150
+G1C seed2: 1620/3150
+G1C seed2: 1635/3150
+G1C seed2: 1650/3150
+G1C seed2: 1665/3150
+G1C seed2: 1680/3150
+G1C seed2: 1695/3150
+G1C seed2: 1710/3150
+Traceback (most recent call last):
+  File "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/tools/evaluate_c_only.py", line 705, in <module>
+    main()
+  File "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/tools/evaluate_c_only.py", line 701, in main
+    evaluate_variant(paths, args.variant, args.output, args.device, args.seed)
+  File "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/tools/evaluate_c_only.py", line 631, in evaluate_variant
+    noisy, noise_seed, noise_hash = checked_noise(clean, family, level, dataset, image_id, reference)
+  File "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/tools/evaluate_ac_table1.py", line 97, in checked_noise
+    raise ValueError(f"Historical noisy-input mismatch: {dataset}/{image_id}/{family}/{level}")
+ValueError: Historical noisy-input mismatch: Urban100/img_005_SRF_2_HR.png/spatial_gaussian/45

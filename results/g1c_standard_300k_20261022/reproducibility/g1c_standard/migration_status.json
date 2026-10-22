@@ -1,0 +1,11 @@
+{
+  "phase": "failed",
+  "updated_at": "2026-10-22T10:32:11Z",
+  "process": {
+    "pid": 3206931,
+    "create_time": 1792660099.93,
+    "host": "imss"
+  },
+  "reason": "RuntimeError: Task failed; preserve exit record without retry: evaluation_G1C_seed0",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reproducibility/g1c_standard/gpu_migration_controller_retry.py\", line 546, in main\n    migrate(audit)\n  File \"/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reproducibility/g1c_standard/gpu_migration_controller_retry.py\", line 403, in migrate\n    MigrationQueue().run()\n  File \"/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/tools/run_g1c_standard_pipeline.py\", line 77, in run\n    action()\n  File \"/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/tools/run_g1c_multiseed_pipeline.py\", line 257, in evaluate\n    self.execute(keys)\n  File \"/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/tools/run_g1c_multiseed_pipeline.py\", line 117, in execute\n    raise RuntimeError(\"Task failed; preserve exit record without retry: \" + key)\nRuntimeError: Task failed; preserve exit record without retry: evaluation_G1C_seed0\n"
+}

@@ -1,0 +1,31 @@
+{
+  "experiment": "G1C",
+  "stage": "full",
+  "seed": 2,
+  "config_hash": "345ff3159bad7c6beeec018ac7741c839a042ead76b830024ce24d95689bede6",
+  "source_hash": "86d821ff44713da6918b73f92ed7b9e2a7b3d83f53082eef9c82f36a654a534d",
+  "training_integrity_mode": "standard_user_requested_v1",
+  "integrity_mode": "standard_user_requested_v1",
+  "per_update_input_consistency_checks": false,
+  "status": "completed",
+  "process": {
+    "pid": 3214000,
+    "create_time": 1792660661.12,
+    "host": "imss"
+  },
+  "started_at": "2026-10-22T09:17:43Z",
+  "updated_at": "2026-10-22T10:29:32Z",
+  "update": 300000,
+  "budget": 300000,
+  "checkpoint": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/runs/g1c_standard/full/G1C/seed2/checkpoints/final.pth",
+  "checkpoint_update": 300000,
+  "log": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/runs/g1c_standard/full/G1C/seed2/train.jsonl",
+  "recovery": "complete params/optimizer/scheduler/RNG/sampler state restored",
+  "loss": 0.013912422582507133,
+  "lr": 1.0000000170523493e-06,
+  "seconds": 0.07125512324273586,
+  "elapsed_seconds": 32935.006324414164,
+  "peak_memory_mb": 2465.7021484375,
+  "checkpoint_sha256": "8b607bfef0c3450b0436e43c1255b1c3e865a3d0286644d64e900adb64a926be",
+  "ended_at": "2026-10-22T10:29:32Z"
+}
