@@ -1,0 +1,154 @@
+{
+  "completed": true,
+  "method": "MaskDenoising",
+  "images": 4,
+  "training_performed": false,
+  "results": [
+    {
+      "psnr": 21.8272352909514,
+      "ssim": 0.536615714492316,
+      "crop_psnr": 20.206538624427917,
+      "crop_ssim": 0.49773564800824244,
+      "method": "MaskDenoising",
+      "row_id": "row1",
+      "dataset": "CBSD68",
+      "image_id": "101087.png",
+      "noise_type": "gaussian",
+      "noise_level": 50,
+      "noise_sha256": "8be93a5f86bf21ef49c21c606c016c4147f5882667622e3f1be68969aa432d73",
+      "mask_seed": 0,
+      "forward_seconds": 2.3519957084208727,
+      "crop": {
+        "x": 112,
+        "y": 192,
+        "width": 96,
+        "height": 96,
+        "error_scale": [
+          0,
+          0.2
+        ],
+        "signed_maps_scale": [
+          -0.1,
+          0.1
+        ],
+        "warning": "Gate is correction modulation, not a noise probability",
+        "offline_regions": "GT grayscale gradient: flat <.02; texture [.02,.08); edge >=.08"
+      },
+      "metric_scope": "Full image RGB PSNR/SSIM from float output, border=0; crop metrics recorded separately",
+      "source_weights": "Official public RGB Gaussian sigma15 checkpoint",
+      "input_protocol": "Exact saved report noisy float32 array; input not clipped or regenerated",
+      "speckle_note": "The report uses Gaussian multiplicative Speckle, no clipping; this is its existing extension protocol, not MATLAB imnoise",
+      "training_performed": false
+    },
+    {
+      "psnr": 24.904485522983038,
+      "ssim": 0.7386532743282076,
+      "crop_psnr": 23.059264221796898,
+      "crop_ssim": 0.7772586100472605,
+      "method": "MaskDenoising",
+      "row_id": "row2",
+      "dataset": "McMaster",
+      "image_id": "1.tif",
+      "noise_type": "spatial_gaussian",
+      "noise_level": 50,
+      "noise_sha256": "6a66506fc5fe68228258c9ad65e74ab95230617437be8e88f7a8a5030f8a7173",
+      "mask_seed": 1,
+      "forward_seconds": 3.3622227422893047,
+      "crop": {
+        "x": 202,
+        "y": 202,
+        "width": 96,
+        "height": 96,
+        "error_scale": [
+          0,
+          0.2
+        ],
+        "signed_maps_scale": [
+          -0.1,
+          0.1
+        ],
+        "warning": "Gate is correction modulation, not a noise probability",
+        "offline_regions": "GT grayscale gradient: flat <.02; texture [.02,.08); edge >=.08"
+      },
+      "metric_scope": "Full image RGB PSNR/SSIM from float output, border=0; crop metrics recorded separately",
+      "source_weights": "Official public RGB Gaussian sigma15 checkpoint",
+      "input_protocol": "Exact saved report noisy float32 array; input not clipped or regenerated",
+      "speckle_note": "The report uses Gaussian multiplicative Speckle, no clipping; this is its existing extension protocol, not MATLAB imnoise",
+      "training_performed": false
+    },
+    {
+      "psnr": 25.136933387816484,
+      "ssim": 0.7506523268564923,
+      "crop_psnr": 24.597054561092513,
+      "crop_ssim": 0.7292697907549851,
+      "method": "MaskDenoising",
+      "row_id": "row3",
+      "dataset": "Kodak24",
+      "image_id": "kodim01.png",
+      "noise_type": "poisson",
+      "noise_level": 3,
+      "noise_sha256": "897912fc8f814711158b42cd3c97d6b205104d256a8e1820a281c840aa16130f",
+      "mask_seed": 2,
+      "forward_seconds": 3.355949303135276,
+      "crop": {
+        "x": 202,
+        "y": 202,
+        "width": 96,
+        "height": 96,
+        "error_scale": [
+          0,
+          0.2
+        ],
+        "signed_maps_scale": [
+          -0.1,
+          0.1
+        ],
+        "warning": "Gate is correction modulation, not a noise probability",
+        "offline_regions": "GT grayscale gradient: flat <.02; texture [.02,.08); edge >=.08"
+      },
+      "metric_scope": "Full image RGB PSNR/SSIM from float output, border=0; crop metrics recorded separately",
+      "source_weights": "Official public RGB Gaussian sigma15 checkpoint",
+      "input_protocol": "Exact saved report noisy float32 array; input not clipped or regenerated",
+      "speckle_note": "The report uses Gaussian multiplicative Speckle, no clipping; this is its existing extension protocol, not MATLAB imnoise",
+      "training_performed": false
+    },
+    {
+      "psnr": 27.91697910342978,
+      "ssim": 0.8755551991068167,
+      "crop_psnr": 28.02563694304994,
+      "crop_ssim": 0.9139146137473726,
+      "method": "MaskDenoising",
+      "row_id": "row4",
+      "dataset": "Urban100",
+      "image_id": "img_002_SRF_2_HR.png",
+      "noise_type": "speckle",
+      "noise_level": 0.03,
+      "noise_sha256": "59ccd411dd462914c32f91ff7125d5d886a7a4dcce4efc1619031ca4e97c8bb9",
+      "mask_seed": 3,
+      "forward_seconds": 2.6980089265853167,
+      "crop": {
+        "x": 208,
+        "y": 144,
+        "width": 96,
+        "height": 96,
+        "error_scale": [
+          0,
+          0.2
+        ],
+        "signed_maps_scale": [
+          -0.1,
+          0.1
+        ],
+        "warning": "Gate is correction modulation, not a noise probability",
+        "offline_regions": "GT grayscale gradient: flat <.02; texture [.02,.08); edge >=.08"
+      },
+      "metric_scope": "Full image RGB PSNR/SSIM from float output, border=0; crop metrics recorded separately",
+      "source_weights": "Official public RGB Gaussian sigma15 checkpoint",
+      "input_protocol": "Exact saved report noisy float32 array; input not clipped or regenerated",
+      "speckle_note": "The report uses Gaussian multiplicative Speckle, no clipping; this is its existing extension protocol, not MATLAB imnoise",
+      "training_performed": false
+    }
+  ],
+  "torch": "2.2.1",
+  "cuda": "12.1"
+}

@@ -1,0 +1,7 @@
+/external/
+/runtime_deps/
+*.npy
+*.npz
+*.tar
+*.part
+__pycache__/

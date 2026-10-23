@@ -1,0 +1,21 @@
+row,dataset,image_id,noise_type,noise_level,method,psnr,ssim,metric_scope,roi_x,roi_y,roi_width,roi_height,checkpoint_replicate
+row1,CBSD68,101087.png,gaussian,50,DnCNN,16.12559731642944,0.18138126475586605,full evaluated image,112,192,96,96,public_checkpoint
+row1,CBSD68,101087.png,gaussian,50,Restormer,20.08598117181799,0.2994995829676355,full evaluated image,112,192,96,96,public_checkpoint
+row1,CBSD68,101087.png,gaussian,50,MaskDenoising,21.8272352909514,0.536615714492316,full evaluated image,112,192,96,96,public_checkpoint
+row1,CBSD68,101087.png,gaussian,50,B0,26.631036732372074,0.6958930276320227,full evaluated image,112,192,96,96,train_seed_0
+row1,CBSD68,101087.png,gaussian,50,G1,27.29790122514831,0.7530706933973671,full evaluated image,112,192,96,96,train_seed_0
+row2,McMaster,1.tif,spatial_gaussian,50,DnCNN,26.28222029808095,0.7625212221770253,full evaluated image,202,202,96,96,public_checkpoint
+row2,McMaster,1.tif,spatial_gaussian,50,Restormer,24.941757193821186,0.704950190170114,full evaluated image,202,202,96,96,public_checkpoint
+row2,McMaster,1.tif,spatial_gaussian,50,MaskDenoising,24.904485522983038,0.7386532743282076,full evaluated image,202,202,96,96,public_checkpoint
+row2,McMaster,1.tif,spatial_gaussian,50,B0,26.12519378527509,0.7857271579156794,full evaluated image,202,202,96,96,train_seed_0
+row2,McMaster,1.tif,spatial_gaussian,50,G1,26.115113168747847,0.7806176741029751,full evaluated image,202,202,96,96,train_seed_0
+row3,Kodak24,kodim01.png,poisson,3,DnCNN,20.416174343411583,0.5430791489157566,full evaluated image,202,202,96,96,public_checkpoint
+row3,Kodak24,kodim01.png,poisson,3,Restormer,22.66138577257503,0.6372490617686322,full evaluated image,202,202,96,96,public_checkpoint
+row3,Kodak24,kodim01.png,poisson,3,MaskDenoising,25.136933387816484,0.7506523268564923,full evaluated image,202,202,96,96,public_checkpoint
+row3,Kodak24,kodim01.png,poisson,3,B0,27.259079767117097,0.8112358120115332,full evaluated image,202,202,96,96,train_seed_0
+row3,Kodak24,kodim01.png,poisson,3,G1,27.385364372578476,0.8141837974432425,full evaluated image,202,202,96,96,train_seed_0
+row4,Urban100,img_002_SRF_2_HR.png,speckle,0.03,DnCNN,24.122652863550083,0.7777250508606951,full evaluated image,208,144,96,96,public_checkpoint
+row4,Urban100,img_002_SRF_2_HR.png,speckle,0.03,Restormer,25.10208785583496,0.8017006370784113,full evaluated image,208,144,96,96,public_checkpoint
+row4,Urban100,img_002_SRF_2_HR.png,speckle,0.03,MaskDenoising,27.91697910342978,0.8755551991068167,full evaluated image,208,144,96,96,public_checkpoint
+row4,Urban100,img_002_SRF_2_HR.png,speckle,0.03,B0,29.245708199616864,0.8906910127503248,full evaluated image,208,144,96,96,train_seed_0
+row4,Urban100,img_002_SRF_2_HR.png,speckle,0.03,G1,29.712276286585826,0.9054822958762917,full evaluated image,208,144,96,96,train_seed_0

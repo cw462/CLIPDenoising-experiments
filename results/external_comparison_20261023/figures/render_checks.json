@@ -1,0 +1,30 @@
+{
+  "width_mm": 183.0,
+  "height_mm": 141.85714285714286,
+  "dpi": 600,
+  "row_count": 4,
+  "column_count": 7,
+  "scored_outputs": 20,
+  "before_external_methods": 5,
+  "after_external_methods": 3,
+  "excluded_methods": [
+    "HAT [11]",
+    "DIL [12]"
+  ],
+  "exclusion_reason": "matching pretrained weights unavailable",
+  "shared_crop_check": "passed",
+  "nearest_zoom_integrity_check": "passed",
+  "required_inputs_check": "passed",
+  "label_column_width_check": "passed",
+  "minimum_source_font_pt": 5.2,
+  "source_data": "comparison_metrics.csv",
+  "image_provenance": "comparison_sources.json",
+  "uncertainty": "none: individual image results, no averaging",
+  "visual_review": "Passed: all 28 panels inspected; four rows align, identical crops, no clipped labels or score overlap; no ranking imposed.",
+  "accepted_source_warning": "PNG preview plus PDF/SVG requested; no TIFF journal-submission export requested",
+  "pdf_font_audit": {
+    "passed": true,
+    "minimum_pt": 5.2,
+    "below_5pt": 0
+  }
+}

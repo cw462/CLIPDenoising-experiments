@@ -1,5 +1,7 @@
 # CLIPDenoising：门控＋结构损失实验
 
+> 新增定性对比（2026-10-23）：已用官方权重完成 DnCNN、Restormer、MaskDenoising 在四个固定示例上的真实推理，与 B0、Ours（G1）、GT 并排展示。本次没有训练；HAT、DIL 尚缺权重，未纳入图中。查看[对比图与复现说明](results/external_comparison_20261023/README.md)、[高清 PNG](results/external_comparison_20261023/figures/comparison_available_methods.png)、[PDF](results/external_comparison_20261023/figures/comparison_available_methods.pdf)及[单图指标](results/external_comparison_20261023/figures/comparison_metrics.csv)。
+
 > 最新完成结果（2026-10-22）：G1 与 G1C 的 seed 0、1、2 已按 RGB 逐通道独立椒盐噪声 d=0.02 完成重评测，新增 1,260 条逐图指标。其余三类噪声沿用既有三 seed 结果。查看[最终 16 条件 Table 1](results/table1_channel_salt_3seed_20261022/final/Table1.md)及[完整数据与运行记录](results/table1_channel_salt_3seed_20261022/README.md)。旧版 RGB 共用噪声结果保留，不与新版混用。
 
 ## 历史运行记录

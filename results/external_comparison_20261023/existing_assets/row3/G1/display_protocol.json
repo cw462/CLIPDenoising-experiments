@@ -1,0 +1,16 @@
+{
+  "x": 202,
+  "y": 202,
+  "width": 96,
+  "height": 96,
+  "error_scale": [
+    0,
+    0.2
+  ],
+  "signed_maps_scale": [
+    -0.1,
+    0.1
+  ],
+  "warning": "Gate is correction modulation, not a noise probability",
+  "offline_regions": "GT grayscale gradient: flat <.02; texture [.02,.08); edge >=.08"
+}

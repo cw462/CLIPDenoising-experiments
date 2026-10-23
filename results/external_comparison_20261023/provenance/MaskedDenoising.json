@@ -1,0 +1,62 @@
+{
+  "retrieved_utc": "2026-10-23T03:44:36.251287+00:00",
+  "repository": "https://github.com/haoyuc/MaskedDenoising",
+  "files": [
+    {
+      "path": "models/network_swinir.py",
+      "url": "https://raw.githubusercontent.com/haoyuc/MaskedDenoising/main/models/network_swinir.py",
+      "sha256": "3147706f9bd509cf34db75317e92b7d7728719a82ca52140744e1018f36e0063",
+      "size_bytes": 46138
+    },
+    {
+      "path": "model_zoo/input_mask_80_90.json",
+      "url": "https://raw.githubusercontent.com/haoyuc/MaskedDenoising/main/model_zoo/input_mask_80_90.json",
+      "sha256": "5172a3fab1405d8f3d361b09793006f26db3008749520e82438771a47bd2ebdf",
+      "size_bytes": 4091
+    },
+    {
+      "path": "model_zoo/input_mask_80_90.pth",
+      "url": "https://raw.githubusercontent.com/haoyuc/MaskedDenoising/main/model_zoo/input_mask_80_90.pth",
+      "sha256": "a8a3fc5b00f8ad72af797c4ef65c362cf476ed2754ee5ddda45a879295206d01",
+      "size_bytes": 16802877
+    },
+    {
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/haoyuc/MaskedDenoising/main/README.md",
+      "sha256": "ebfd24d27bb3093f66919f12e5991d05388c22340338a1d25772f54b28de7390",
+      "size_bytes": 6105
+    },
+    {
+      "path": "requirement.txt",
+      "url": "https://raw.githubusercontent.com/haoyuc/MaskedDenoising/main/requirement.txt",
+      "sha256": "70da3465033b59fc198ab363a107685286a20a0d02ad6521f3e603f5dc7525c1",
+      "size_bytes": 120
+    },
+    {
+      "path": "main_test_swinir.py",
+      "url": "https://raw.githubusercontent.com/haoyuc/MaskedDenoising/main/main_test_swinir.py",
+      "sha256": "63fe1d9297dbc41853a3ec79f05ccc3b2507f102a786419e68c50252805c0f42",
+      "size_bytes": 15007
+    },
+    {
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/haoyuc/MaskedDenoising/main/LICENSE",
+      "status": 404
+    },
+    {
+      "path": "upstream_licenses/SwinIR_LICENSE",
+      "url": "https://raw.githubusercontent.com/JingyunLiang/SwinIR/main/LICENSE",
+      "sha256": "d66ccc11682c7458b19b376e1335e8665cbe412ff71f554bfec25f1791cddfa0",
+      "size_bytes": 11348,
+      "scope": "Upstream SwinIR license only; do not assume this grants a license for all MaskedDenoising additions."
+    }
+  ],
+  "license_note": "MaskedDenoising root LICENSE request returned 404. Original source attribution headers are preserved. Included upstream SwinIR license applies to upstream source only.",
+  "inference_dependencies": [
+    "torch",
+    "numpy",
+    "timm",
+    "entmax"
+  ],
+  "inference_note": "Original attention masking remains active in eval, using Python random and NumPy random; use fixed per-image mask seeds for reproducible inference. No input clipping or resampling is applied by the adapter."
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "file": "gaussian_color_denoising_sigma15.pth",
+    "url": "https://github.com/swz30/Restormer/releases/download/v1.0/gaussian_color_denoising_sigma15.pth",
+    "bytes": 104611957,
+    "sha256": "5841e0d280379da2526252ffcde9ff60a1d7951bf49688136a77cbea0ad6ff51"
+  },
+  {
+    "file": "restormer_arch.py",
+    "url": "https://raw.githubusercontent.com/swz30/Restormer/main/basicsr/models/archs/restormer_arch.py",
+    "bytes": 11428,
+    "sha256": "3be243fa3c8e2cb2c9459eeac062b04d6084dbcc328292dae1c3e52ba6f7434a"
+  },
+  {
+    "file": "GaussianColorDenoising_RestormerSigma15.yml",
+    "url": "https://raw.githubusercontent.com/swz30/Restormer/main/Denoising/Options/GaussianColorDenoising_RestormerSigma15.yml",
+    "bytes": 2990,
+    "sha256": "cdfd64b57955596da123907853514a606377365f9296a27a68f47697acecc6c8"
+  },
+  {
+    "file": "LICENSE",
+    "url": "https://raw.githubusercontent.com/swz30/Restormer/main/LICENSE.md",
+    "bytes": 1090,
+    "sha256": "2b93776512924bc095ec5d97a79d76cf1ab401ae641d1ae1f46e94f1c53a2e59"
+  }
+]

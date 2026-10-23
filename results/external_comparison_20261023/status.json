@@ -1,0 +1,20 @@
+{
+  "status": "partial_waiting_for_external_weights",
+  "training_performed": false,
+  "completed_methods": [
+    "DnCNN",
+    "Restormer",
+    "MaskDenoising"
+  ],
+  "missing_methods": [
+    "HAT",
+    "DIL"
+  ],
+  "existing_comparators": [
+    "B0 seed0 300k",
+    "G1 seed0 300k"
+  ],
+  "newly_evaluated_images": 12,
+  "figure": "figures/comparison_available_methods.png",
+  "all_requested_methods_complete": false
+}
