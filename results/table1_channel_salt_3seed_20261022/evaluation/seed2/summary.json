@@ -1,0 +1,35 @@
+{
+  "completed": true,
+  "training_seed": 2,
+  "completed_at": "2026-10-22T12:52:28Z",
+  "rows": 420,
+  "images": 210,
+  "methods": [
+    "G1",
+    "G1C"
+  ],
+  "model_identities": {
+    "G1": {
+      "checkpoint": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G1/seed2/checkpoints/update_300000.pth",
+      "recorded_checkpoint_sha256": "c20dce5494e399ceb74d240618e009b2f686218730a6123c518ec1696a87d05d",
+      "training_seed": 2,
+      "recorded_training_update": 300000,
+      "config_path": "/home/imss/cw/CLIPDenoising_20261020/runs/full/G1/seed2/effective_config.json"
+    },
+    "G1C": {
+      "checkpoint": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/runs/g1c_standard/full/G1C/seed2/checkpoints/update_300000.pth",
+      "recorded_checkpoint_sha256": "8b607bfef0c3450b0436e43c1255b1c3e865a3d0286644d64e900adb64a926be",
+      "training_seed": 2,
+      "recorded_training_update": 300000,
+      "config_path": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/runs/g1c_standard/full/G1C/seed2/effective_config.json"
+    }
+  },
+  "noise_mode": "independent_RGB_channel_elements",
+  "density": 0.02,
+  "noise_sampling": "H x W x 3 uniform; u<d/2 ->0; d/2<=u<d ->1; otherwise unchanged",
+  "same_input_object_used_for_both_models": true,
+  "noise_seed_independent_of_training_seed": true,
+  "matlab_bitwise_rng_reproduction": false,
+  "additional_historical_identity_gates": false,
+  "training_restarted": false
+}

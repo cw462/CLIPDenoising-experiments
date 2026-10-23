@@ -1,0 +1,33 @@
+{
+  "matched_inputs": 3150,
+  "matched_raw_images": 210,
+  "dataset_counts": {
+    "CBSD68": 68,
+    "Kodak24": 24,
+    "McMaster": 18,
+    "Urban100": 100
+  },
+  "dataset_manifest_hash": "8d0e3f0823f5b7760e4d25266fa62f703c2c79fbb0094d4129f90dbeb50ccacf",
+  "historical_csv": {
+    "path": "/home/imss/cw/CLIPDenoising_20261020/reports/per_image_results.csv",
+    "sha256": "d3fead06b10e8b86363fe8f17484fccbce2a3a723b96cfeb49db75524c900635",
+    "unique_inputs": 3150,
+    "dataset_manifest_hash": "8d0e3f0823f5b7760e4d25266fa62f703c2c79fbb0094d4129f90dbeb50ccacf",
+    "c0_checkpoint_sha256": "123b9091a9c13b17da0e40f25f706efc8e5044ce5d8295bf5701eb1dd8f99675"
+  },
+  "completed": true,
+  "completed_at": "2026-10-21T09:47:00Z",
+  "purpose": "input parity only; no model inference or denoising scores",
+  "model_outcome_access": false,
+  "test_images_opened_for_input_provenance": true,
+  "source_hash": "733f3f9b0ace567f89121b15f10db812515179b63bf7953f35f11720251babf7",
+  "dependencies": {
+    "python": "3.10.18",
+    "torch": "2.2.1",
+    "numpy": "1.26.4",
+    "Pillow": "11.3.0",
+    "scipy": "1.11.4",
+    "opencv-python": "4.10.0.84",
+    "torchvision": "0.17.1"
+  }
+}

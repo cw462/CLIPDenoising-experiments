@@ -1,0 +1,23 @@
+{
+  "export_mode": "snapshot",
+  "publication_ready": false,
+  "exported_at": "2026-10-21T14:39:47.318645+00:00",
+  "pipeline_status": "failed",
+  "pipeline_phase": "full300k",
+  "scientific_commit": "e84673e3d834563b333bb482e196e0334e4f6e0a",
+  "source_hash": "8f102b93c9db2bdf32a6bfa0e10afdfea83ee605dfdd748dd8bf9d864d07f219",
+  "config_sha256": "ec6d751a5d8e1b323165f5126528291d731d03cc9c0fc3426b0c8ad938376d4c",
+  "server_project": "/home/imss/cw/CLIPDenoising_C_20261021",
+  "independent_auditor_sha256": "e4b9011f44f0c24a182678613c9ed986efb67e4da8b5bced815f6f0d1a424b4c",
+  "counts": null,
+  "weights_and_training_logs_exported": false,
+  "scope": [
+    "G1C"
+  ],
+  "paused_variants": [
+    "C"
+  ],
+  "two_variant_pipeline_completed": false,
+  "watcher_sha256": "d606969d27170963a1f26f6416aaf4515faaf80ff5769ed67935525aa48aea6c",
+  "analysis_adapter_sha256": "895d2cce516c076a77f6a6718a2a140461b85506306b6e8bffacbdd9fb4458dc"
+}

@@ -1,0 +1,93 @@
+{
+  "scientific_commit": "e84673e3d834563b333bb482e196e0334e4f6e0a",
+  "source_hash": "8f102b93c9db2bdf32a6bfa0e10afdfea83ee605dfdd748dd8bf9d864d07f219",
+  "config_sha256": "ec6d751a5d8e1b323165f5126528291d731d03cc9c0fc3426b0c8ad938376d4c",
+  "publication_ready": false,
+  "inventory_self_hash_excluded": true,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 290,
+      "sha256": "4867a6ece16d04250523e0af996d5b8262d1866dc80915331e7475eabecbf13d",
+      "origin": "private completion watcher / independent audit"
+    },
+    {
+      "path": "execution_snapshot.json",
+      "bytes": 936,
+      "sha256": "b7eb20d118ef6b8f07614d3414bf81e8c44a452df695ebe0f8fe6e3c4c622885",
+      "origin": "private completion watcher / independent audit"
+    },
+    {
+      "path": "independent_audit.json",
+      "bytes": 11860,
+      "sha256": "a48101d7db0e7dd1a9a9b2aac2289d2e7df1dca38e51ee14e1cb6bc6e3157da1",
+      "origin": "private completion watcher / independent audit"
+    },
+    {
+      "path": "reports/c_only/actual_C_contract.json",
+      "bytes": 72224,
+      "sha256": "57ca6aa77926d52179d6d1dd7df90006c476f83a70ecbcb58461b3e8ff906282",
+      "origin": "SFTP frozen server artifact"
+    },
+    {
+      "path": "reports/c_only/actual_G1C_contract.json",
+      "bytes": 72262,
+      "sha256": "8d0c251de4b888aa769e53c9fcf9b97a49423b552da5bab3b38f34daebabb1ec",
+      "origin": "SFTP frozen server artifact"
+    },
+    {
+      "path": "reports/c_only/input_parity_audit.json",
+      "bytes": 2141,
+      "sha256": "afbb9e732d36416998df2aa7d47f7869ebe0350ea67ec84e26db7ceffa0bdf8c",
+      "origin": "SFTP frozen server artifact"
+    },
+    {
+      "path": "reports/c_only/progress.md",
+      "bytes": 605,
+      "sha256": "2dc153fae30811d5afc8f17a9345939f4ae34b94ca22bee807f6171e931e0b58",
+      "origin": "SFTP frozen server artifact"
+    },
+    {
+      "path": "runs/c_only/full/C/seed0/effective_config.json",
+      "bytes": 6394,
+      "sha256": "a1921a5352d6eff37b5978399507f5fce9e4c2d1f5eec5f09d841f422fd01bdc",
+      "origin": "SFTP frozen server artifact"
+    },
+    {
+      "path": "runs/c_only/full/C/seed0/manifest.json",
+      "bytes": 22379,
+      "sha256": "140352080f0a86a4dee97ef293815f93d10981a18ac6f0849cc2b4da7b531da7",
+      "origin": "SFTP frozen server artifact"
+    },
+    {
+      "path": "runs/c_only/full/C/seed0/status.json",
+      "bytes": 1057,
+      "sha256": "3b21202a6932a40b99238ca55a53b17f8d40522a4038a53a6801e4ce97940fdd",
+      "origin": "SFTP frozen server artifact"
+    },
+    {
+      "path": "runs/c_only/full/G1C/seed0/effective_config.json",
+      "bytes": 6413,
+      "sha256": "b082237d4e0aa3359b00c47c4710ad44a25725a41c35472067246d30479fe4bb",
+      "origin": "SFTP frozen server artifact"
+    },
+    {
+      "path": "runs/c_only/full/G1C/seed0/manifest.json",
+      "bytes": 22385,
+      "sha256": "c902d523817dd927ce8e543194e912bebe4f6a421dedd045d97fcbe5420372df",
+      "origin": "SFTP frozen server artifact"
+    },
+    {
+      "path": "runs/c_only/full/G1C/seed0/status.json",
+      "bytes": 1101,
+      "sha256": "3472ccd64b87ea6d5cccda958689bec4b12fd6f66cf2512f3c1cb4b8cf816cf4",
+      "origin": "SFTP frozen server artifact"
+    },
+    {
+      "path": "runs/c_only/pipeline_state.json",
+      "bytes": 9948,
+      "sha256": "942159e07cf7b2493d5ba1106bbcddbba4e22aca967b953cd648c16d3323648b",
+      "origin": "SFTP frozen server artifact"
+    }
+  ]
+}

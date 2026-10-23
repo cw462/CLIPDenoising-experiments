@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reproducibility/g1c_standard/resume_parallel_direct.py", line 25, in <module>
+    subprocess.run([sys.executable,'reproducibility/g1c_standard/summarize_direct.py'],check=True)
+  File "/home/imss/.conda/envs/copdph4ch_py310/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/.venv/bin/python', 'reproducibility/g1c_standard/summarize_direct.py']' returned non-zero exit status 1.

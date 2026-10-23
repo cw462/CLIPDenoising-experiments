@@ -1,0 +1,12 @@
+{
+  "phase": "continued_training_and_evaluation",
+  "updated_at": "2026-10-22T09:18:24Z",
+  "process": {
+    "pid": 3206931,
+    "create_time": 1792660099.93,
+    "host": "imss"
+  },
+  "pipeline_status": "running",
+  "pipeline_phase": "full300k",
+  "migration_status": "completed"
+}

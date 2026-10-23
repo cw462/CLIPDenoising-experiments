@@ -1,0 +1,19 @@
+{
+  "completed": true,
+  "completed_at": "2026-10-22T12:26:15Z",
+  "training_seeds": [
+    0,
+    1,
+    2
+  ],
+  "new_measurement_rows": 9450,
+  "reused_baseline_rows": 9450,
+  "rows": 18900,
+  "same_seed_comparison_rows": 9450,
+  "paired_rows": null,
+  "historical_noise_identity_verified": false,
+  "evaluation_mode": "direct_user_requested",
+  "additional_recovery_prechecks": false,
+  "independent_publication_reaudit": false,
+  "limitation": "Evaluation completed with the user-requested direct mode. Additional recovery and seed0/seed2 noisy-input consistency checks were skipped. Seed0 also skipped training-asset and historical-checkpoint identity checks. Same-seed differences below are descriptive comparisons; identical historical noise is not established for the combined results. Actual new and baseline noise hashes are retained separately. Training was not restarted. Original failures remain archived."
+}

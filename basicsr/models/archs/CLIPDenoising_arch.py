@@ -8,6 +8,7 @@ from basicsr.models.archs.CLIPEncoder_util import (ModifiedResNet,
                                                       UNetUpBlock_nocat,
                                                       conv3x3)
 from basicsr.models.archs.rgb_calibration import RGBCalibration
+from basicsr.models.archs.spatial_pfa import FeaturePerturbation
 
 class ModifiedResNet_RemoveFinalLayer(ModifiedResNet):
    
@@ -32,7 +33,8 @@ class ModifiedResNet_RemoveFinalLayer(ModifiedResNet):
 
 class CLIPDenoising(nn.Module):
     def __init__(self, num_blocks, inp_channels=3, out_channels=3, depth=5, wf=64, slope=0.2,
-                       bias=True, model_path=None, aug_level=0.05, adapter_mode="none"):
+                       bias=True, model_path=None, aug_level=0.05, adapter_mode="none",
+                       pfa_rho=0.0, pfa_seed=None):
 
         super(CLIPDenoising, self).__init__()
         if adapter_mode not in ("none",) + RGBCalibration.MODES:
@@ -40,6 +42,7 @@ class CLIPDenoising(nn.Module):
         if adapter_mode != "none" and (depth != 5 or inp_channels != 3):
             raise ValueError("The calibration experiment requires depth=5 and RGB input")
         self.adapter_mode = adapter_mode
+        self.pfa = FeaturePerturbation(pfa_rho, pfa_seed)
         
         self.sigmas = [aug_level * i for i in range(1, 5)]
         
@@ -120,7 +123,7 @@ class CLIPDenoising(nn.Module):
         if self.training:
             for idx in range(len(out)):
                 if idx == 0: continue # 
-                alpha = torch.randn_like(out[idx]) * self.sigmas[idx-1] + 1.0
+                alpha = self.pfa(out[idx], idx) * self.sigmas[idx-1] + 1.0
                 out[idx] = out[idx] * alpha
                 
         x = out[-1]

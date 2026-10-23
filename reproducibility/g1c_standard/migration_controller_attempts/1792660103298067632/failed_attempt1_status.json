@@ -1,0 +1,11 @@
+{
+  "phase": "failed",
+  "updated_at": "2026-10-22T07:19:32Z",
+  "process": {
+    "pid": 2988721,
+    "create_time": 1792636574.07,
+    "host": "imss"
+  },
+  "reason": "RuntimeError: Owned process did not enter stopped state",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reproducibility/g1c_standard/gpu_migration_controller.py\", line 388, in main\n    migrate(audit)\n  File \"/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reproducibility/g1c_standard/gpu_migration_controller.py\", line 246, in migrate\n    stop_verified(coordinator)\n  File \"/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reproducibility/g1c_standard/gpu_migration_controller.py\", line 84, in stop_verified\n    raise RuntimeError('Owned process did not enter stopped state')\nRuntimeError: Owned process did not enter stopped state\n"
+}

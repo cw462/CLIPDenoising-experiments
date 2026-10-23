@@ -1,0 +1,1320 @@
+{
+  "completed": true,
+  "completed_at": "2026-10-22T12:06:09Z",
+  "rows": 3150,
+  "baseline_rows": 3150,
+  "training_integrity_mode": "standard_user_requested_v1",
+  "per_update_input_consistency_checks": false,
+  "identity": {
+    "method": "G1C",
+    "training_seed": 2,
+    "stage": "full",
+    "update": 300000,
+    "checkpoint_sha256": "8b607bfef0c3450b0436e43c1255b1c3e865a3d0286644d64e900adb64a926be",
+    "config_hash": "345ff3159bad7c6beeec018ac7741c839a042ead76b830024ce24d95689bede6",
+    "source_hash": "86d821ff44713da6918b73f92ed7b9e2a7b3d83f53082eef9c82f36a654a534d",
+    "git_commit": "c02ebedd103af716afc3ad29491b3886e6ba37ff",
+    "measurement_origin": "new_model_inference"
+  },
+  "baseline_identity": {
+    "checkpoint_sha256": "c20dce5494e399ceb74d240618e009b2f686218730a6123c518ec1696a87d05d",
+    "config_hash": "3d0263edbb2dade495f6eca1156f9b802e13c4dbb8009a4beec2763aca07d07f",
+    "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+    "git_commit": "2647bf815df0299a03d16df34b896fa266ceefda",
+    "method": "G1",
+    "training_seed": 2,
+    "stage": "full",
+    "update": 300000,
+    "measurement_origin": "reused_historical_csv"
+  },
+  "baseline_checkpoint_proof": {
+    "checkpoint_sha256": "c20dce5494e399ceb74d240618e009b2f686218730a6123c518ec1696a87d05d",
+    "identity_verified": true
+  },
+  "historical_csv": {
+    "path": "/home/imss/cw/CLIPDenoising_20261020/reports/per_image_results.csv",
+    "sha256": "d3fead06b10e8b86363fe8f17484fccbce2a3a723b96cfeb49db75524c900635",
+    "unique_inputs": 3150,
+    "dataset_manifest_hash": "8d0e3f0823f5b7760e4d25266fa62f703c2c79fbb0094d4129f90dbeb50ccacf",
+    "c0_checkpoint_sha256": "123b9091a9c13b17da0e40f25f706efc8e5044ce5d8295bf5701eb1dd8f99675"
+  },
+  "matched_historical_inputs": null,
+  "evaluation_input_consistency_checked": false,
+  "evaluation_mode": "direct_user_requested",
+  "dataset_manifest": [
+    {
+      "dataset": "CBSD68",
+      "image_id": "101085.png",
+      "sha256": "728930f013122b3a8dd038efab0792782137962ae7424176d580c87f3c560b6a"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "101087.png",
+      "sha256": "9bd21e8887ea1ab4820e8614e42dbfb37ee330716637507e1593d4658c3c253f"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "102061.png",
+      "sha256": "8bb146be5bfd09e238e8751877f0bd0e065cab9dda20bc8e9d4e7b30129c94f1"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "103070.png",
+      "sha256": "10ac13a2ffac9ede3d065e524df9a8e79c553cc303fe730935b0f29d7884cc90"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "105025.png",
+      "sha256": "e4bcac97c8ebb80f7c30b6dafe64577af680709b84f3cd0ec16f30cb72c6e3c8"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "106024.png",
+      "sha256": "a5a4cd7adff008fcc97b77cd80d9f27855deabe5f2ad81cb10790c6b9c297ebd"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "108005.png",
+      "sha256": "74bd6aea65b7379d19ca3328eca1b09b6937aef28851e5b4457dedb3239bf022"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "108070.png",
+      "sha256": "54b222064c9a3bf4b778e6bf8f112b7d9e4a7008d9d4d985c851617c147d5169"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "108082.png",
+      "sha256": "dd67d1a1fc44e759e267363b5bc0be5efd95aa1177ab14f9e50170997a63d982"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "109053.png",
+      "sha256": "71d3843a9b5a665a848658312a6053e7a7da0af0094317833328e77b77e29f5b"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "119082.png",
+      "sha256": "e52de05206c86063b8c93e31402f97fe7942ed5655e3eb6c2e6d7b01de57887d"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "12084.png",
+      "sha256": "ae5b4b79fef64795ff2be425d02c9c5d6bdc8480cc9cf381db3ebd7cddcb0d0e"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "123074.png",
+      "sha256": "010480676e00fd7f26c34054ef1e7f951396eed6bb32613f0a5ad03057aae4ea"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "126007.png",
+      "sha256": "74f0e5610a50552efc8e0f3ccaa48a5b5f92b9de77e560d02d262299396c5bf8"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "130026.png",
+      "sha256": "8f3fcd60117b450bf7c3d2648786921e5cd315954880dfb0e3e089d05637f276"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "134035.png",
+      "sha256": "ed5d90e93b19e0eb7103c6a999553c2e36259e66f5013c674b5c11ef18bca321"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "14037.png",
+      "sha256": "b912eafbb74564b251bcefa3bb621c163ada16bb4073ec3e71e4507cae076da3"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "143090.png",
+      "sha256": "5f853e0883c7321fae3276a97799ce8a109bc87d770e67f480d9bff681bae4ce"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "145086.png",
+      "sha256": "bd4f523763889685ee9c992aa80cb319dcb707a632e3f6ff51be95dce3d7e9de"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "147091.png",
+      "sha256": "302df626c225bc8841c0176a5ec7d3f25fc52875f3c9ab37330a89ea0f241429"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "148026.png",
+      "sha256": "c960466c058ebe25728225226974d79eccd60399b08cf0efd6648bae7696153f"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "148089.png",
+      "sha256": "dc7fa80ec7404af0937d2e2fd2378ee02aff2185d7e6e68b5d2758e818d14abe"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "157055.png",
+      "sha256": "1502d3f4c8839b08765b19dec1c264f5a3234f02f7bbff2d48b998003da7706a"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "159008.png",
+      "sha256": "d7c1aa98313e6b96b92af9828a34c90ea0f51502693772af1dbed9c950e0f3b8"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "160068.png",
+      "sha256": "1ff3b5dbbfbd1d014fba184cf9ed82e881bb8727418dcea10c3e1d84e65bf880"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "16077.png",
+      "sha256": "91f622fd634ea20ed3fec00062650379839e24d3943f10cbbd6c97e262a127db"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "163085.png",
+      "sha256": "1f58f5cd31c00334e38d14264fceef114fb7d958187ded82bf09f19f894adddd"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "167062.png",
+      "sha256": "6ce71248c20d35bd59c10c8623d18502005b231b6430a5b967b859edb4bed101"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "167083.png",
+      "sha256": "59878a27cd05fab3b2c629cfaa5243b44ecc8352c2969660a6363cd78c7530b7"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "170057.png",
+      "sha256": "5507d8205148540d172dd40aa0c1fc07298d73351dd18a8980ff0d033f62d89f"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "175032.png",
+      "sha256": "818c0249759eac78fb933c1f35e72b9358bd2c2902d8db0ef5aaf88e8ce1c78f"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "175043.png",
+      "sha256": "661b9deb5cbb956c18a6298b53d4a188584103bdeff4cefd415c858d094e51da"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "182053.png",
+      "sha256": "3543814626f50cba23ea39cfc8449160bd5e9d23ce79427e2fa0dbedf51529ff"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "189080.png",
+      "sha256": "a0561b8cdaf074a4461a1d7d509ae11851df81d8b5e78d622c35a0e763a1f878"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "19021.png",
+      "sha256": "0eb3719f03f6d64bb855749b3631d86329652f6f585faf367a7f1b8d1c6a38c6"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "196073.png",
+      "sha256": "f46048c149e2246b731e07cc1d8b828d8a7c4e24efbe83f8cb1671a50da4cacb"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "197017.png",
+      "sha256": "bb584785dccca1bac843df70ce85cd9c7f2e219d013612ceac1e7c4632f70eb0"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "208001.png",
+      "sha256": "d9b7a3318a4d3d28a51cc1dd89ba8f6b5e54e99664a30e37c6fa95e9371830f6"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "210088.png",
+      "sha256": "d8bc8cc7dacda5b31205ec2acbe79548dbae4acb21dd5ff2c37f3166868410f5"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "21077.png",
+      "sha256": "8a25f49a01823055b44800c57710125caf20ba47ef43d63353f3c7cbc7fd2a62"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "216081.png",
+      "sha256": "f173dcc973ba2d30e4a339dfb42d3970684d5a5ee2bf94d1d7afba125645c3c0"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "219090.png",
+      "sha256": "eae5439a6f090cb855e116349c6d2f0dc75c4b0fc1f321ddbd54108b4a0814bc"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "220075.png",
+      "sha256": "cd57b3b126f9df99f9dfdba925f8fe9647997f46b8ca21d56c2cd24e20a2da0c"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "223061.png",
+      "sha256": "ce4d5dc962e35de2d8797f4208681b5f677314cb240f2b7523bdc4167bf17a81"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "227092.png",
+      "sha256": "527a52bd1cc9bff1ba1306aa0cd2e5360a99a7baae20ecdc6b555517b1dca1d9"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "229036.png",
+      "sha256": "551ff3d472c01626ec7d844c8df57395babdc4787d515de69ce4d488aa740dfa"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "236037.png",
+      "sha256": "94a9c48c3031f17ea0bb9aa9fa934a64832b130032ce88c2860628f0b7ba9683"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "24077.png",
+      "sha256": "227b148322970e2b4321efc94e1155773dd24ed1b83a29e36c26488f9ca56d42"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "241004.png",
+      "sha256": "abda35d0064e8fb2ac1250afc7cf59eb68a911fc67166ddf6a07c0c9bc00de26"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "241048.png",
+      "sha256": "17e16350f28ad8b730285875d301cd703046e6f4da17ca8beff56853445e0320"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "253027.png",
+      "sha256": "bc82f560cd96e36e1931b07a917a3aa2c9f23cd761894496d6040bb2ef10dfb2"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "253055.png",
+      "sha256": "dfee71b92b4f9249badb9191cd1809156076fd60a4c06b8201dc0ce901248b60"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "260058.png",
+      "sha256": "d2c3752f0eb867ea0716dce082ae7e6e7049c180a5f8ad133896048a0ff51cf2"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "271035.png",
+      "sha256": "325d6b06eb92141fa04fe85215a57556a5a5798c4c0069c462af969f6e22e236"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "285079.png",
+      "sha256": "570c78b6bc20c0325a09077520631fe338b05b41ea983076fd536cdb9a588563"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "291000.png",
+      "sha256": "3922b3013c08df357b62008c76b18999c9fc851ad094944078e0830d2005e6fa"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "295087.png",
+      "sha256": "5bb069fca2edacb409074733cc01f60f9eb67f56267e11fc0cee3d94a59d018f"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "296007.png",
+      "sha256": "54f5531e29e6ea2edd7faeee8d40a6e7b0c0ebfb9f4ea6bf0d62d097a1b4d418"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "296059.png",
+      "sha256": "cef7442078e4816f318f4d4eac94c0edcd7d3abf1adf0a81a22289c3c8822db7"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "299086.png",
+      "sha256": "f79e12530418ba5598bcfc630f88214ea9e14d6346aa2241bbd7d7fec2146c75"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "300091.png",
+      "sha256": "f2d7452aa683b701384c9b48992941b3776d223f426f47be93a92e7fe50917df"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "302008.png",
+      "sha256": "573eb125df61533d3acc52297f39229fdb106490d65363269a0be60fd388552a"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "304034.png",
+      "sha256": "3f0eb1020b1c9050597519820000429caacf52156cb76b0dc50ebb47194296cc"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "304074.png",
+      "sha256": "4bacdc6cde1965fcabbf6be7cdafd69307bce5fdcaa28cac05933bf587409515"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "306005.png",
+      "sha256": "aaff1715bffdf33245181493bb946f6c9243c8a72f3b2eb4db019e8b504aceab"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "3096.png",
+      "sha256": "cfb0bf09e2204a8073f0c6bbbf0a2fe9624c9de0709206e0be78843c4b140f09"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "33039.png",
+      "sha256": "c120304970c037f44214743b175c28b1b0d5caea1263e78b5fea156aca7cb664"
+    },
+    {
+      "dataset": "CBSD68",
+      "image_id": "351093.png",
+      "sha256": "f9dc764a64ed52a1abad50d4c1e890d73211d823ed4a440d24d9518d85a2931d"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim01.png",
+      "sha256": "4a3ad3164284407659c8c61154303ca45c37995ce8e2fe140640c2a32b6b899b"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim02.png",
+      "sha256": "3b62bcf7f4260d53d396114a945eebe455603a89c130f7036e3ee220d8d1fb81"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim03.png",
+      "sha256": "7d5601f79ba851dc1d415fbd918caf32accd24cd7e862f2810074dcd6324ca8c"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim04.png",
+      "sha256": "042ed626e69fc09398716b1e20e63b26baf2b73db58bc0938b0fbfb2a9715409"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim05.png",
+      "sha256": "2f128530bf758fd58b0ecfa90ea220155c328a3f87aa3b24b86f838631fa4ae9"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim06.png",
+      "sha256": "32b9f94b92ad11eb224dcd919313f49cae6d1b5798ce5bb52c317b506354b91e"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim07.png",
+      "sha256": "d40ec78671a3c98404e779bf8e657774380a27afe3ecb4a7110df2d8744cbdd0"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim08.png",
+      "sha256": "9b9e698a981a76afd86a5c457ddb215b3e2fce2028708541a634d57b6b105fb3"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim09.png",
+      "sha256": "939c71160c267dc4d289cdd35828c746714b782eeb2fc47d3e7b03f69799e00d"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim10.png",
+      "sha256": "2d4ebf3090813f9495719e250ebd3d7ceb73f49317b2f397ef805d80640e05ca"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim11.png",
+      "sha256": "d09010f8a454e5677e3a26525c27f5d20f4b58e70af8b3b95624997985f012d9"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim12.png",
+      "sha256": "eed4a8201bd276b433510eccdb3436d67ee78f1776f765dcd8113ded445e903d"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim13.png",
+      "sha256": "92928cebe24964b4f72e4c8cd7edbefbaa2db67e1c9b405a627a81cf191b6214"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim14.png",
+      "sha256": "0bc7a76fd3667cfce1496defd662f4a68643684f4b919d432fc654f1b63b5756"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim15.png",
+      "sha256": "18c3e450f5e6c1c0bf00bca5de391dd225456df3164e61f10914b7806ba85a5e"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim16.png",
+      "sha256": "da1879efd30bdf25e311fa8c2d628c140619946bb86e3807f9a2ba4562b2064b"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim17.png",
+      "sha256": "a114a6e48f8246dde5eb50b2402fe3bd0888140382a469f21d7527eb2c271997"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim18.png",
+      "sha256": "a400f54584a1212d26002970f15e2abfdf334c56a0e02bfe569f4a16515ed731"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim19.png",
+      "sha256": "cf256bed5534f84904dfef2e30d70c74429399de18d7a223740c67cb9ae83dbd"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim20.png",
+      "sha256": "a078fa791a56f78e3c8fb79726a5a4056f0ce3f357a40e13e4f0cfe1452e2ecb"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim21.png",
+      "sha256": "3bb598b987256ef353e167f78d771588167f029b49900f8197b649fa2d265497"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim22.png",
+      "sha256": "46f108a13fd37e864bf080c4b78e0b127034fc6f07ba8e45d7e581cc7f6a8290"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim23.png",
+      "sha256": "8d7d1e2df33a9ac3b1f8ce1bd65dde74a2c5f244612a123f8e73b80bdc3a54f1"
+    },
+    {
+      "dataset": "Kodak24",
+      "image_id": "kodim24.png",
+      "sha256": "27708263419c77eed6b3b1e64f5224acd8536d1fa0406b8d1ba4fe6a6794ffb9"
+    },
+    {
+      "dataset": "McMaster",
+      "image_id": "1.tif",
+      "sha256": "bcd4625afae223d5d3f584a06ddfd31efa49b6b5109c8b30da641473b570ad52"
+    },
+    {
+      "dataset": "McMaster",
+      "image_id": "10.tif",
+      "sha256": "9b9c1d3f31d6771fd02164bb00f96bcfef8cb7159288e6ad5a638e0ca5119ec2"
+    },
+    {
+      "dataset": "McMaster",
+      "image_id": "11.tif",
+      "sha256": "933d28336dcf3a60f306de2c1b30ba31e08679ebd0f45e4c34dec12682d456a4"
+    },
+    {
+      "dataset": "McMaster",
+      "image_id": "12.tif",
+      "sha256": "802b2fcf6c8f9e1455042ee973966110704b035b24c8fd431babceca56ebdbf2"
+    },
+    {
+      "dataset": "McMaster",
+      "image_id": "13.tif",
+      "sha256": "944a604d609aab0e90596fa1e75a6f0ce2040fc01dc37b0a536ff685b25f0991"
+    },
+    {
+      "dataset": "McMaster",
+      "image_id": "14.tif",
+      "sha256": "e0825be5f3095ce352cfb90b926e98aa5fddd2618f73910c3b2e23cf2e086860"
+    },
+    {
+      "dataset": "McMaster",
+      "image_id": "15.tif",
+      "sha256": "a0f65704a820f0c9431e81a357d1ad0a8998e93f238f2f81827963286dc8cfe7"
+    },
+    {
+      "dataset": "McMaster",
+      "image_id": "16.tif",
+      "sha256": "8927c35e1b331ad71479fe5a15624ee06eec7c44e635c3f82d74cc6adffc5602"
+    },
+    {
+      "dataset": "McMaster",
+      "image_id": "17.tif",
+      "sha256": "dae258efd7a6fc34717fa423a784771dda5f5bdd20b29874029077e6d54aebe9"
+    },
+    {
+      "dataset": "McMaster",
+      "image_id": "18.tif",
+      "sha256": "450fd784e1c042ade47e8efc9be378b85d4ed3efbb3209ee93e5a633a54f24e2"
+    },
+    {
+      "dataset": "McMaster",
+      "image_id": "2.tif",
+      "sha256": "a10ab6554b87af3ef9b042123345e4ca40201db9a3595ba12de90db91c4768ad"
+    },
+    {
+      "dataset": "McMaster",
+      "image_id": "3.tif",
+      "sha256": "28cf21bbce11fc4e6b912430ff37ed3e80b4a514bb103c07b9b7ea2ea1e9ffad"
+    },
+    {
+      "dataset": "McMaster",
+      "image_id": "4.tif",
+      "sha256": "65b3e43209617cd2c359c03cae88a214c237cf29a2d874f904c2e9d69f90dd82"
+    },
+    {
+      "dataset": "McMaster",
+      "image_id": "5.tif",
+      "sha256": "1e5066dcc3a5ed94d54d3f2976c08a01953b3a29642ddb959def635c0e3ab9f6"
+    },
+    {
+      "dataset": "McMaster",
+      "image_id": "6.tif",
+      "sha256": "58ba584574f603fa0e174ce2544afb8e9a3f93f174e05462f2737921eafb1d46"
+    },
+    {
+      "dataset": "McMaster",
+      "image_id": "7.tif",
+      "sha256": "df66d86b3e1c33c65084c5607c650de207a062b4f23c8eed331cacb17dd82779"
+    },
+    {
+      "dataset": "McMaster",
+      "image_id": "8.tif",
+      "sha256": "fd873cad65ab0680c393dd30f400506aa09cffb90df2e82589dd128ec2e84487"
+    },
+    {
+      "dataset": "McMaster",
+      "image_id": "9.tif",
+      "sha256": "8b274e2745ed5249c72f884a190bde06901d88a0f162ec40bb23899e8ef9531a"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_001_SRF_2_HR.png",
+      "sha256": "cc91dcafbc4b8e51139fcb08626aa7d88643a37deb4a405aff76ee2e1bd18bcb"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_002_SRF_2_HR.png",
+      "sha256": "f8c521b30e89a8500cfac842d9a5518c8f5a493a187160e3b6861852eefc4d44"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_003_SRF_2_HR.png",
+      "sha256": "75c5a8c02a5429a84ea739c802eea5c7bf41f1c5815bf8f53c3ec11c3e1e110b"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_004_SRF_2_HR.png",
+      "sha256": "d3034cf589d73f4fc83f9f88216a797939c42148580c91a5cf0d9d5bce2e9c3f"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_005_SRF_2_HR.png",
+      "sha256": "f60710359d87765e8ccd693d5df1017fb2375b8c6f12dd8b3b12f02df10cf695"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_006_SRF_2_HR.png",
+      "sha256": "8741bbf347dae4affda17d7e56763cf9573476afafdcae801401805d453dcdfb"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_007_SRF_2_HR.png",
+      "sha256": "f658ed701c72af720c8aea2a8f4bf087002a184c1ba25b71350b6f898534eb50"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_008_SRF_2_HR.png",
+      "sha256": "758b4a4850dc9176ea57d3de0613c3a3b576cfc9e0b91078c2bee0f084ea03d8"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_009_SRF_2_HR.png",
+      "sha256": "17b504465cbf21f8b7b3680cddd8a78b594da605893b468f5d69ab0c340a569d"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_010_SRF_2_HR.png",
+      "sha256": "f7e0503cadb9397c1873a3f6e3f1c95aacf79e6388c2652c97f86e0a4473f917"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_011_SRF_2_HR.png",
+      "sha256": "c5bc02a29d1ecc54bfb9947d5a9c45eb8fb09a6d6edd4b37feab2f013c25f316"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_012_SRF_2_HR.png",
+      "sha256": "55255161d995f42697cb56df879aac1c51bab01701143798de0e6d25bd02209e"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_013_SRF_2_HR.png",
+      "sha256": "5d02a79205d152c762e7aca7a33aad17e9b4ce3059bc4bceeab016dfd2207dbd"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_014_SRF_2_HR.png",
+      "sha256": "6b2e654f6517f423fbaac250dae20240c39d78b67883c3573efd448be3c45b2a"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_015_SRF_2_HR.png",
+      "sha256": "efc47caa05649be61e27fa1c45b51759d291467524aa5e2b10ce7373b3703207"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_016_SRF_2_HR.png",
+      "sha256": "6d079f622c48f34e3056560c2749b20f6ce2ca5784741014a6807fd563980a8d"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_017_SRF_2_HR.png",
+      "sha256": "5b2b69e13b365adf047d6f3c66950c21558f8cbecfdfd86328ef2a780cff32d8"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_018_SRF_2_HR.png",
+      "sha256": "2ec9ac0b6e71ad66e23cd12a8a4cdf293e3b10ad098c332831c67837a88e5393"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_019_SRF_2_HR.png",
+      "sha256": "a6780083a2c414f1d1d94f137fdd82b8ce9ce0f0d66a607a3cc148ac5f62ae60"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_020_SRF_2_HR.png",
+      "sha256": "a25ac7694e7f76b22c717acfd2fdc89f9cc00a1c8e4bf0d08e4d717c47757b95"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_021_SRF_2_HR.png",
+      "sha256": "4028a8e3174d5ceee013eb9c8bd72fef4cf0d22f99f136f7d18b46465bef2e73"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_022_SRF_2_HR.png",
+      "sha256": "792507a094b23614f47f94e87fa77cf4b0cebcf14b9d4aa04130a2fedb2171a7"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_023_SRF_2_HR.png",
+      "sha256": "87737bac9f6cb4615cf69b64326ea36fbcd1abbda85e1ea827ae04d5a2cccf7d"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_024_SRF_2_HR.png",
+      "sha256": "7b1cf1df326de880d3dffbe8fc69e4c69c29bb13e4b5cb20f58ae50760450c7d"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_025_SRF_2_HR.png",
+      "sha256": "03d9f286f8020ebc59db3c7552551cdaa4716a230a9efba612b41038322ae3a1"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_026_SRF_2_HR.png",
+      "sha256": "43415d26404d668f724aafaea6869e8caea60dc3ceafb7440932bb5d2c71332a"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_027_SRF_2_HR.png",
+      "sha256": "600a7a8b717717b413df28a6aadf9007505df7cbc5197795d29a144316436769"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_028_SRF_2_HR.png",
+      "sha256": "a4726654d85e317f193febbade85d395aa63f1cb3d57cf4e02039d161cba9700"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_029_SRF_2_HR.png",
+      "sha256": "3eb8f1d71c2fc5b0901a0c6d0a9e7208bff0bad879ff897c814acca0467f3dc9"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_030_SRF_2_HR.png",
+      "sha256": "9e92ba9b5c983244d4075d2226376506f6dc73af6a192bdeb05b65734a98ca66"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_031_SRF_2_HR.png",
+      "sha256": "d3d2f275e2d475261ea6151adc4fb235c1f4a05af113e584f42ab48122b5f47c"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_032_SRF_2_HR.png",
+      "sha256": "7f8f942e85c9763db9ea05cce38ba42c36b8155e50fb42c63893fdcc88d70284"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_033_SRF_2_HR.png",
+      "sha256": "86f610a16f4ce1d46da5d584c55f316a62a0f0ad63c89617d934c6418ba722fb"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_034_SRF_2_HR.png",
+      "sha256": "43cbc96c06ee7261e065d2e2515cdc47f14ad509b0c6180a0577f0425dba2d8a"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_035_SRF_2_HR.png",
+      "sha256": "cf123f94f998c0e4d257c782e42cda23f69e0ac4c72a7e2d63baaa9289fa03d4"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_036_SRF_2_HR.png",
+      "sha256": "798a91944372c3d83fb82563014575c5ce55494af6e41e7290d6692c6f9e0c64"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_037_SRF_2_HR.png",
+      "sha256": "7e3e7c408209adaa4d09eb9793ae94f52e82c822bda97e9732692c1349066800"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_038_SRF_2_HR.png",
+      "sha256": "3bfed3dc55be8a0022ee90f2a97d03366699e7cc22d1d33d4b48d16c235d56d0"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_039_SRF_2_HR.png",
+      "sha256": "fff8ebea0d5bd0e243401fde706117116423286e4d047e6902b5ad1fb4a52acd"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_040_SRF_2_HR.png",
+      "sha256": "04b7c715f91521a2bed65b103c25048e757a0001e68d4ff54776314fe21fcf37"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_041_SRF_2_HR.png",
+      "sha256": "7d6f958505ae30d51b304ceb15608646d9f4aef495c891e0683263f596df1607"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_042_SRF_2_HR.png",
+      "sha256": "b510fc38a289a6036bd19b0d07a2aca22b87de7aa9d3454383f7894c64af57a4"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_043_SRF_2_HR.png",
+      "sha256": "cb3fd33251a10e5271c6a9b9ebfa0f9cc2a53f1b015a423bed723a617a4b0436"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_044_SRF_2_HR.png",
+      "sha256": "bb66b19aed2e60243cbebebc7caa70c9149a13d0041284ca085290c694e21e57"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_045_SRF_2_HR.png",
+      "sha256": "b454dd916c8fa12d5914f38e05d7ef53a1731535c3cbb2a1793819a86af1f51f"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_046_SRF_2_HR.png",
+      "sha256": "9773108a8d663f1af8d7b40d37f407025dbe04fc7470efd19ee057734dcc0ebd"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_047_SRF_2_HR.png",
+      "sha256": "9ba90cb50208bad193e16e96801218870f4605fe0b23826e14d7c9cde2660c31"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_048_SRF_2_HR.png",
+      "sha256": "cedd1f7907a2486e0b8b24d846fb341e3af47b24f1a270b32a7f03d2fcd1d982"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_049_SRF_2_HR.png",
+      "sha256": "733f4cbd2ff057e6ae037ea8a890cb44c3c1a18ca08b4bf5bca2aa5a2813a3ad"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_050_SRF_2_HR.png",
+      "sha256": "454db55b9881476a00cd7019764713d674b7b5d2c8109c1bee7f06af2a070230"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_051_SRF_2_HR.png",
+      "sha256": "f228ff2d6ab7567b57e333bebebe792a7551a48bd9c4bba7b0d72ebaba0d9044"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_052_SRF_2_HR.png",
+      "sha256": "690d8f3ceed13343a52533c069c001da159336c1f9ed066630a3fb56026e03e3"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_053_SRF_2_HR.png",
+      "sha256": "58b4d144599980fd25fe7fe2e2a54c6cefb6846137aa9f7dc75d46f1db358c0c"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_054_SRF_2_HR.png",
+      "sha256": "7c3b4f3281eb64427b17c27eec2907cce0cfdf43aaffebad4335b3161329d7c0"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_055_SRF_2_HR.png",
+      "sha256": "414e367d6e854daf367e52b155f3c6a00010161000199b45581f06236ed53f6e"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_056_SRF_2_HR.png",
+      "sha256": "363247ff3130cd495c6e1f218f8402caa7db066f650ee41effc2e5a296b01211"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_057_SRF_2_HR.png",
+      "sha256": "0f547c1e68b24d4992fb586be083b3b2b9e71e38d09d62754587c3f0d0d98c3b"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_058_SRF_2_HR.png",
+      "sha256": "7cf520a5a15d7496c0211a6fc22b6cccfc3df49f2928eeac3d6124f227c2fc34"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_059_SRF_2_HR.png",
+      "sha256": "74e1a8d797fa45e8d8a5d0ec6d4133fa01e81323ad5cb22e308e598beec842bc"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_060_SRF_2_HR.png",
+      "sha256": "b80eda5469a5166e103562e57d52361eec8fbec5996a7ef0d0953d98f389de13"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_061_SRF_2_HR.png",
+      "sha256": "8ea71f01ea4039574e9ea69f3a010c760d4847f71b9f2af8445e04ebe13ea66b"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_062_SRF_2_HR.png",
+      "sha256": "9baa6b37960fdf554f5a8ff5aa6f29cbb8dc660b5ed9da194f3240292e0f102c"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_063_SRF_2_HR.png",
+      "sha256": "8dd7942c6e8b56c795d332c8a33e676c743a23e6ec6e7949609d3813347f2ba9"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_064_SRF_2_HR.png",
+      "sha256": "d01ab354b03f7098642f44dd05b016853bda9523ed8ba43e541e54e18a7db181"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_065_SRF_2_HR.png",
+      "sha256": "4def1e157ccb4a2f159e37bf1cf5eb4f01577b617250a2ac8648df87dde69b47"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_066_SRF_2_HR.png",
+      "sha256": "1e6903dae3faf64fab2e7dc7d57e86cad971b707b38cf7988df495503b605067"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_067_SRF_2_HR.png",
+      "sha256": "9e4b8af7d26f2e4b9b69440d8d08dd2b505578602e5365958dbe9aa0907d5e1a"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_068_SRF_2_HR.png",
+      "sha256": "e38b1506cf2e28875bd5aec8bf2d839ab26d24283a45d0d8bd1b5fd659e46cfb"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_069_SRF_2_HR.png",
+      "sha256": "729044918840cf39c7f090c2d8c838dc6d0f1ca580c1b73c61eee630497b23c7"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_070_SRF_2_HR.png",
+      "sha256": "5d9ee9ae09fc6fcb62f1d95a390058d5799b6d077057f0b7bfc23bf1c6a59c54"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_071_SRF_2_HR.png",
+      "sha256": "5e25ba1e9ca3856756a46c969c269a27602d678d73382a0e66e57748ef3c469d"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_072_SRF_2_HR.png",
+      "sha256": "e2acb9716d60747f779ba26b92a3e2a1b90b15c19252b28dc1941ff3fe47e837"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_073_SRF_2_HR.png",
+      "sha256": "130fb2d1dd56e9e6a5f377a1eddd3bed3b4f399adfd655efe8c1076d18b461b8"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_074_SRF_2_HR.png",
+      "sha256": "9b75dff009cfb5b735a9f07cf88acc418976f66823e58407711bceca4d060751"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_075_SRF_2_HR.png",
+      "sha256": "5c0c56f8c1ca76610fd9b3167bae40358f1ce366b1ff18d5def4ff5a4ee0d2b7"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_076_SRF_2_HR.png",
+      "sha256": "7c057832372e2cb7a5a4c999099d91e2a4c48e34c7a34b99299c449be8fbc431"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_077_SRF_2_HR.png",
+      "sha256": "e6ed7cbc3a78de5070ab484fbfe6b3ae85634bec32a8a50d86243219d89e160a"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_078_SRF_2_HR.png",
+      "sha256": "50b256d5fa3d16d11b3be37751caa5321fbb59019e3fd4a2ae0526815b0d6390"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_079_SRF_2_HR.png",
+      "sha256": "bbfe65a8ee5b493c5db15295a6eb56d84bd1b7175dc96c63b27315c6c5a92a34"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_080_SRF_2_HR.png",
+      "sha256": "07bb388baebc9022c3dc1c2c2ca470a0d9d96060651cc4181caa60e072c3ed09"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_081_SRF_2_HR.png",
+      "sha256": "0c6367851ea442576b04fc92b8c4ef434089e60f06c1e27cba97125ab3ba24cb"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_082_SRF_2_HR.png",
+      "sha256": "4468db77a1962f539f5b549f0cd5f9daf9e04cc5cef0df96685c90ac4e68a5eb"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_083_SRF_2_HR.png",
+      "sha256": "7a502eaced1f01aa93b70622d523cda425d8d3544a681154bfbd6cdb0963d9e8"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_084_SRF_2_HR.png",
+      "sha256": "48af5b48b4b9e57938a7afcbf75c86531d9b3c3e468e2e8e0b45d2d833df14b8"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_085_SRF_2_HR.png",
+      "sha256": "898a26bfc692082c56088497c010868f4e672045471403ec0827c45a1549bb9d"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_086_SRF_2_HR.png",
+      "sha256": "b662de32c2f037afdb39b223d5e0eae669d5fd632cf4061075b3e8f27e6b6710"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_087_SRF_2_HR.png",
+      "sha256": "252d63b43b3785f2595c5ec3e43164397134dc671fef6c9819aa69f3e0fe4bf1"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_088_SRF_2_HR.png",
+      "sha256": "387db78bb58b99961ab0872b7e1819a7b4fee8edc29785bc60d4faf4d14aaaac"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_089_SRF_2_HR.png",
+      "sha256": "3d8446abf4226b23295385784aa6c9566a94b38c40fedebceb1e44c285cd045f"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_090_SRF_2_HR.png",
+      "sha256": "f8c635a974fece6cb0d4c1c85cb713fe1b8512c6686d50a31714553d06084968"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_091_SRF_2_HR.png",
+      "sha256": "f727a9b6849446cb54862bd87c4b5e1c920148f91ba4acb82321190cb9e667c4"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_092_SRF_2_HR.png",
+      "sha256": "139af08759c2bd7140925df1d0d9adbbe4d2d1095461e5e9c7a59e800fb840ca"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_093_SRF_2_HR.png",
+      "sha256": "c24ebe8af6bb2ea1f84b67b1fb1edd071e75d648b272d022d57d6fa1caeefd67"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_094_SRF_2_HR.png",
+      "sha256": "a2b7d279793724f9f6d1e9324188829e3f635cce2f0d1344133ab6185abc2117"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_095_SRF_2_HR.png",
+      "sha256": "206886f0208d6bace4cff2ef9ed7e9a8629f5563ef4047c5e9bc1782c409f27c"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_096_SRF_2_HR.png",
+      "sha256": "8c95463789f64da3a3a9f0c1095af6a14c6ec02fc2adf346de8706555a98a11d"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_097_SRF_2_HR.png",
+      "sha256": "0a6bdfd4b724890d56ac0922cf4dc21ea29dd5d2b7aceb3fb4ba2c2fa3209289"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_098_SRF_2_HR.png",
+      "sha256": "4643e5f915bbbda102b014b967c9921354d698502da8577b7eb84826275f4679"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_099_SRF_2_HR.png",
+      "sha256": "307997691bc8d3c7b31e2a337d146eb64e270c994e9ec5ad9493574d94bc7628"
+    },
+    {
+      "dataset": "Urban100",
+      "image_id": "img_100_SRF_2_HR.png",
+      "sha256": "267ed429a565d89a1b884ef261258638e1e2748c4bcd6d290fb7d3522ea3dcac"
+    }
+  ],
+  "dataset_manifest_hash": "8d0e3f0823f5b7760e4d25266fa62f703c2c79fbb0094d4129f90dbeb50ccacf",
+  "protocol": {
+    "version": "g1c-standard-full300k-historical-per-seed-v1",
+    "historical": {
+      "version": "clipdenoising-local-v1",
+      "official_source": "Denoising/utils.py and Denoising/test_synthetic_denoising.py",
+      "official_noise": "np.random.seed(0) separately before every image/condition",
+      "spatial_gaussian": "per-channel scipy.ndimage.convolve, 3x3 mean, mode=reflect",
+      "poisson": "official.add_poisson_noise(scale=level), clip=True, rounds=False",
+      "extension_noise": "stable SHA256(dataset/image_id/noise_type/level) uint32 seed",
+      "extension_status": "Project extension, not a claim of exact paper reproduction",
+      "speckle": "x + x * N(0, variance), no clipping",
+      "salt_pepper": "one spatial uniform draw, all RGB channels jointly 0 or 1",
+      "input": "RGB /255; Gaussian/spatial/speckle not clipped; no CLIP normalization",
+      "inference": "full-resolution batch1, right/bottom reflect-pad to multiple of 32",
+      "metrics": "crop original size, clamp output [0,1], official RGB float *255 PSNR/SSIM, border0",
+      "aggregation": "images equal; strengths equal within family; families equal; datasets equal",
+      "ood": "Exclude Gaussian sigma15; official three-family and five-family extension scores separate",
+      "visual_selection": "first two lexicographically sorted images per dataset, six fixed conditions",
+      "error_color_scale": "mean absolute RGB error [0,0.20], shared fixed grayscale",
+      "signed_correction_scale": "[-0.10,+0.10], shared fixed display; raw arrays preserved",
+      "runtime": "256x256 seeded tensor, batch1, 3 warmups, 10 forwards; synchronized CUDA"
+    },
+    "evaluation_scope": "reused_four_dataset_full_historical_benchmark",
+    "variants": {
+      "G1C": "G1"
+    },
+    "training_seeds": [
+      2
+    ],
+    "training_updates": 300000,
+    "new_rows_per_variant": 3150,
+    "historical_rows_per_baseline": 3150,
+    "table1": [
+      [
+        "CBSD68",
+        "gaussian",
+        50.0
+      ],
+      [
+        "Urban100",
+        "gaussian",
+        50.0
+      ],
+      [
+        "CBSD68",
+        "spatial_gaussian",
+        55.0
+      ],
+      [
+        "McMaster",
+        "spatial_gaussian",
+        55.0
+      ],
+      [
+        "CBSD68",
+        "poisson",
+        3.5
+      ],
+      [
+        "Kodak24",
+        "salt_pepper",
+        0.02
+      ]
+    ],
+    "baseline": "Reuse same-seed historical G1 seed2 final 300000-update CSV metrics; no baseline retraining or re-inference",
+    "initialization": "New full training from RN50 and seed2 decoder initialization, not continuation from old final weights",
+    "comparison": "Historical same-seed comparison; noise identity not verified by user request",
+    "limitations": "This artifact contains one seed. Across-seed variation requires all three completed seed artifacts; no causal innovation, SOTA or paper-reference claims. Historical stepwise training inputs are not proven identical.",
+    "data_reuse": "All four datasets were evaluated previously; full CBSD68 includes previous 20 development images. Not an unseen holdout.",
+    "preflight": "Additional recovery and noise consistency checks skipped",
+    "visuals": "First lexicographic image per each of six predefined Table1 cells; C/G1C reconstructions only, not historical baseline reconstructions",
+    "readback_recovery": "Not monitored by the disabled additional training consistency checks; no zero-anomaly or recovery-count claim.",
+    "training_integrity_mode": "standard_user_requested_v1",
+    "per_update_input_consistency_checks": false,
+    "known_host_diagnostics": "The user explicitly requested standard training without additional per-update input consistency checks. Known host memory/execution inconsistency diagnostics are retained and their root cause remains unresolved. Completed training and evaluation do not establish zero anomalies or repaired hardware."
+  },
+  "protocol_hash": "e7515d7d77f06f764be9f735d722717ab4a80e9b52d8a584df649f9a4d09253b",
+  "contract": {
+    "variant": "G1C",
+    "baseline": "G1",
+    "training_seed": 2,
+    "training_updates": 300000,
+    "source_hash": "86d821ff44713da6918b73f92ed7b9e2a7b3d83f53082eef9c82f36a654a534d",
+    "config_hash": "345ff3159bad7c6beeec018ac7741c839a042ead76b830024ce24d95689bede6",
+    "pretrained_sha256": "afeb0e10f9e5a86da6080e35cf09123aca3b358a0c3e3b6c78a7b63bc04b6762",
+    "data_manifest_hash": "85b882a4d2470df9b88ebd3382908fec810f2eba1d27719379c69dc3b97a7935",
+    "pixel_opt": {
+      "type": "L1StructureLoss",
+      "loss_weight": 1.0,
+      "reduction": "mean",
+      "structure_weight": 0.05,
+      "eps": 0.001,
+      "deterministic_reflect_padding": true
+    },
+    "full_training": {
+      "schema": "g1c_standard_full_v1",
+      "variant": "G1C",
+      "baseline_experiment": "G1",
+      "baseline_training_seed": 2,
+      "seed": 2,
+      "budget": 300000,
+      "from_c0": false,
+      "initialization": "original RN50 and seed-matched G1 decoder/adapter initialization",
+      "optimizer": "fresh original AdamW",
+      "legacy_global_pfa": true,
+      "integrity_mode": "standard_user_requested_v1",
+      "per_update_input_consistency_checks": false
+    },
+    "training_checks": {
+      "experiment": "G1C",
+      "stage": "full",
+      "seed": 2,
+      "config_hash": "345ff3159bad7c6beeec018ac7741c839a042ead76b830024ce24d95689bede6",
+      "source_hash": "86d821ff44713da6918b73f92ed7b9e2a7b3d83f53082eef9c82f36a654a534d",
+      "training_integrity_mode": "standard_user_requested_v1",
+      "integrity_mode": "standard_user_requested_v1",
+      "per_update_input_consistency_checks": false,
+      "complete": true,
+      "update": 300000,
+      "loss_finite": true,
+      "frozen_encoder_unchanged": true,
+      "encoder_parameters_unchanged": true,
+      "encoder_gradients_absent": true,
+      "encoder_bn_training": true,
+      "bn_running_mean_changed": true,
+      "parameter_counts": {
+        "total": 34533748,
+        "trainable": 11006484
+      },
+      "last_checkpoint_sha256_verified": true,
+      "checkpoint_sha256": "8b607bfef0c3450b0436e43c1255b1c3e865a3d0286644d64e900adb64a926be"
+    },
+    "training_completed": true,
+    "training_integrity_mode": "standard_user_requested_v1",
+    "per_update_input_consistency_checks": false,
+    "input_consistency_status": "not_checked_by_user_request",
+    "known_host_diagnostics": "The user explicitly requested standard training without additional per-update input consistency checks. Known host memory/execution inconsistency diagnostics are retained and their root cause remains unresolved. Completed training and evaluation do not establish zero anomalies or repaired hardware.",
+    "hardware_repair_established": false,
+    "proof_sha256": {
+      "effective_config.json": "cd6b01502a9fe73f42b966212289916ee47771750ead597d2b159eb416cfe358",
+      "status.json": "bc54826fbd51042f232f3d553eabeebda524376213cdb3751c51039cb1fcf2d1",
+      "manifest.json": "2b456f53076f4dec406d2d42157e51ce6e6372091ff94c3bdf66f02908291f8c",
+      "training_checks.json": "f8a5f5e993fa0e5a781499829c093d649817366adaaaffdb44e8ff681590a41b",
+      "summary.json": "f9bf4461df7f80163b7f559fd2173fb5ed271816959634ea6faee381fb0c56c4",
+      "checkpoints/latest.json": "5e2511ac095de5ddbbcb64a9ad78ea5a764feb035922ada60bf5a82f2bf257e1",
+      "train.jsonl": "0313b1facae85e73f910b77c2b26c83aafea286ad73237a42057503fe99ed06b"
+    }
+  },
+  "contract_hash": "ed26b1600d42fa03b0ba3fecff6e59fee2438cd2be9d8071345fbeeb302aa757",
+  "artifact_sha256": {
+    "access_gate.json": "adc6db63a3f45c544ce722c135bd2e0ad2facf49d020bc1ec4f885747d4283df",
+    "baseline_per_image_results.csv": "a7cf958a448b6feeaaaa6e351044e3708ec58db8e768d4cea90f6417e6bdfd9d",
+    "panels/CBSD68_gaussian_50/clean.png": "9c38441be5fe1e4743c9d009157b5ecd92455aa33e55041396e61998ba521c39",
+    "panels/CBSD68_gaussian_50/clean_crop.png": "b94bf9c980080c3bc8dcea2bef46f3cb725f1eca70c512da4526a6083a4bd3c7",
+    "panels/CBSD68_gaussian_50/crop.json": "08a1019a2aebdd98cea0ae3eae8efd9c8c34bbe615d1bddf96b4d5ce7a6de726",
+    "panels/CBSD68_gaussian_50/error.png": "7598f124ba166e40c07a4d5097067f15855ec2ebeab23d6c5a31bd8a6474de40",
+    "panels/CBSD68_gaussian_50/error_crop.png": "0a73d0b10b436a5a2208b344a817f663facdd418e005823e38d9ff140cee9489",
+    "panels/CBSD68_gaussian_50/noisy.png": "21ae8bd8c5fa226a52e139006172a751ad7ea84f0562edf034f80a84f30d4e4b",
+    "panels/CBSD68_gaussian_50/noisy_crop.png": "2da0dffb0c4e30883368d24e5603cb15198d2e408f9975f7df036561abc72966",
+    "panels/CBSD68_gaussian_50/restored.png": "3b34feddfa26ce9f1d9468e26ac724481a7d71602d652bb4409d061b0c56794e",
+    "panels/CBSD68_gaussian_50/restored_crop.png": "2ceb93d24ec14753ffbe305becd30ac8acd6cc3649d73e3a1f79cfb46cf6ca78",
+    "panels/CBSD68_gaussian_50_panel.png": "a82b77b131759ce2082f58d056d5e385bc6c2f86e691146e63a7ce4876da7c6a",
+    "panels/CBSD68_poisson_3.5/clean.png": "9c38441be5fe1e4743c9d009157b5ecd92455aa33e55041396e61998ba521c39",
+    "panels/CBSD68_poisson_3.5/clean_crop.png": "b94bf9c980080c3bc8dcea2bef46f3cb725f1eca70c512da4526a6083a4bd3c7",
+    "panels/CBSD68_poisson_3.5/crop.json": "08a1019a2aebdd98cea0ae3eae8efd9c8c34bbe615d1bddf96b4d5ce7a6de726",
+    "panels/CBSD68_poisson_3.5/error.png": "a5b4eb4a3b97e95bf91f295824fe68e9abbe9765bd106b69cb5965fbf095bd16",
+    "panels/CBSD68_poisson_3.5/error_crop.png": "99d2427a7df8ef9177c02a093a5694e069fc1c90760c93ddd7189d5fd1f6e984",
+    "panels/CBSD68_poisson_3.5/noisy.png": "3d4f362788ba082d0b531038050d84d1ba0d53d4044ff55889f8af2ae24bd632",
+    "panels/CBSD68_poisson_3.5/noisy_crop.png": "a8850ba349ed119a422b86cefd3091191ecb80aa042bf4d056737dd2938eb8ed",
+    "panels/CBSD68_poisson_3.5/restored.png": "1538c764e6ae37049c7f07aabb58f2c85af9cc7a8a81f1ef399e900dea2400b9",
+    "panels/CBSD68_poisson_3.5/restored_crop.png": "dd0fc192008e032b93ef94b2b39c6f6144bbbade11db36beadb6340ea6935d2a",
+    "panels/CBSD68_poisson_3.5_panel.png": "5728419cda4e0701258770ff3fc31ae657b86997bd244d81161a6475c2e4cd98",
+    "panels/CBSD68_spatial_gaussian_55/clean.png": "9c38441be5fe1e4743c9d009157b5ecd92455aa33e55041396e61998ba521c39",
+    "panels/CBSD68_spatial_gaussian_55/clean_crop.png": "b94bf9c980080c3bc8dcea2bef46f3cb725f1eca70c512da4526a6083a4bd3c7",
+    "panels/CBSD68_spatial_gaussian_55/crop.json": "08a1019a2aebdd98cea0ae3eae8efd9c8c34bbe615d1bddf96b4d5ce7a6de726",
+    "panels/CBSD68_spatial_gaussian_55/error.png": "dc0dab867562f4197275379299a9953199d6989bb7cdc060b673fec56c8f54fb",
+    "panels/CBSD68_spatial_gaussian_55/error_crop.png": "fd9bd34703fb40e34563f26977f413dbd80dab4bd0cb239bf528def029acdb20",
+    "panels/CBSD68_spatial_gaussian_55/noisy.png": "091a8109334e9fadb5f9786dd13adaf6ee073b490a2f048b8f753b92a9643d48",
+    "panels/CBSD68_spatial_gaussian_55/noisy_crop.png": "da986a371b339076a1834f94994559000bddde83e5a7761931df656f6ab707cb",
+    "panels/CBSD68_spatial_gaussian_55/restored.png": "37477974775f3e2986d3dc0b36ad280216890bc3b29a10e5d141ffcc5c2321be",
+    "panels/CBSD68_spatial_gaussian_55/restored_crop.png": "9aa68b8c3ff34168c0474420a3df34c613f88cf4928dc50b5653fa106202b994",
+    "panels/CBSD68_spatial_gaussian_55_panel.png": "710b3c89565bb273b05971c27806e6ce81db79b196f43d894b7a2c4f4a8566bd",
+    "panels/Kodak24_salt_pepper_0.02/clean.png": "3957c7ae39564b9091591ba36662693a01ddd5bb447a6c4a69d90205429275e4",
+    "panels/Kodak24_salt_pepper_0.02/clean_crop.png": "3c53130468ec25b3955bb6c5da9945f319289e9052b982219b33b7b82326c391",
+    "panels/Kodak24_salt_pepper_0.02/crop.json": "5439aa100702b712c0b154ce03d0d912b8c964f8cd3536492ea61868f20023ee",
+    "panels/Kodak24_salt_pepper_0.02/error.png": "986e691a99e61d751369a6bd83ba93ea59688bb84efafc8369d89ef421d4390c",
+    "panels/Kodak24_salt_pepper_0.02/error_crop.png": "1c261796a8114e293a729331dff4d63f7d1f420fb4c7404b165063e40ea5337b",
+    "panels/Kodak24_salt_pepper_0.02/noisy.png": "dc0634713c0e81e87e0e1bca47c29408d04e5e820747df268fee470eeabe4b2c",
+    "panels/Kodak24_salt_pepper_0.02/noisy_crop.png": "303872787547ddee10e07940a5267495875ef26e3a677ba5db697535d6cf2b9b",
+    "panels/Kodak24_salt_pepper_0.02/restored.png": "fd05f601341635e57740c3f73312f2c3c05ac509539d41393e3d9f731e12976e",
+    "panels/Kodak24_salt_pepper_0.02/restored_crop.png": "93a6b1d74d566ce44dde401545c8c4b1abc98b8f8cc226d652558112321ea258",
+    "panels/Kodak24_salt_pepper_0.02_panel.png": "fb804fabaab3b5d9d3ad23f2dd29e81e74610a77ad8b4aeef4c4a192bfea565a",
+    "panels/McMaster_spatial_gaussian_55/clean.png": "fe322221e3820891ba3557cc425494886e28b44172db3e70757004fc615b4e4b",
+    "panels/McMaster_spatial_gaussian_55/clean_crop.png": "e00300c62f472c93b22cc151d1c59a9b782cffb48746c4f10db66d1f427d1222",
+    "panels/McMaster_spatial_gaussian_55/crop.json": "5439aa100702b712c0b154ce03d0d912b8c964f8cd3536492ea61868f20023ee",
+    "panels/McMaster_spatial_gaussian_55/error.png": "8087b68578d83c440433f942f319c32a544d0fdbc34cd9015ec961b2255f75bd",
+    "panels/McMaster_spatial_gaussian_55/error_crop.png": "a01589757b4dbf556936ec6ab475e69249dc085a9688913a233a7868036caac0",
+    "panels/McMaster_spatial_gaussian_55/noisy.png": "377a1175d31e2d5f7df4f82df5b41ac44858da56dfe3b72808afe0a1f82133b3",
+    "panels/McMaster_spatial_gaussian_55/noisy_crop.png": "8cca289eab5d97d96e7a136d3835d32097c247ff0edbbd03d6da3d153278ea4c",
+    "panels/McMaster_spatial_gaussian_55/restored.png": "a0450fe32a6aa070fa8f3dc1c45732ebda41dc2966a1c081a9b3adc5762dffda",
+    "panels/McMaster_spatial_gaussian_55/restored_crop.png": "44a82848a4925e90666cece0797e963670bbfd582d630039c5bc97bd9fd2b089",
+    "panels/McMaster_spatial_gaussian_55_panel.png": "81b7ac6a97a20d7a60e28b2bb3a0159569772e19280c65622f479de3e6702c54",
+    "panels/Urban100_gaussian_50/clean.png": "17e691b43f0f2f7484491b81e62dc98254431d9dfec51c2c7945c2d417ff49ed",
+    "panels/Urban100_gaussian_50/clean_crop.png": "030540dca56d6f49a65bc6b9e7908a6e7d8e5424c50cc140b2d32fc3c59f6000",
+    "panels/Urban100_gaussian_50/crop.json": "adbc6fa57f093b7d802b55268b0036722f867ec3b7ab4eb29ba1f7392113c83b",
+    "panels/Urban100_gaussian_50/error.png": "8f8d3eb73df2479d64f324e16fe3cfb45fb8aa08a3b8e38637aabd69abc4f9ce",
+    "panels/Urban100_gaussian_50/error_crop.png": "f94fc787c9fdc7ee0799cabca560e8718e0df1fafbaf80f587c268b2d271483c",
+    "panels/Urban100_gaussian_50/noisy.png": "d2e7ffbb383c4d1c443f0dc5a3aa21b1a4c28f8e07340f753fcf7c793187d812",
+    "panels/Urban100_gaussian_50/noisy_crop.png": "1061f74c22af0f8b9bd7f4bbbf401b41d0e13eaef072ec483ff2917a2ab2f598",
+    "panels/Urban100_gaussian_50/restored.png": "4142bcc3a50ba1dd7d0d513bf91615c46d25f562ed016de17e4d225d0d21dca6",
+    "panels/Urban100_gaussian_50/restored_crop.png": "b7a759e59b445dedfafa72d5644e82ec9ef266d4afdb752aba99fdc64fae9283",
+    "panels/Urban100_gaussian_50_panel.png": "d0ca2076b804cacf38421c41977598daab8dea8498262c6ea0ec2d519889c6e7",
+    "per_image_results.csv": "be3ffb9ff71fbf39bf18a14537326fbf5cbc262a206160fee1255b824f09ded1"
+  },
+  "dependencies": {
+    "python": "3.10.18",
+    "torch": "2.2.1",
+    "numpy": "1.26.4",
+    "Pillow": "11.3.0",
+    "scipy": "1.11.4",
+    "opencv-python": "4.10.0.84",
+    "torchvision": "0.17.1"
+  }
+}

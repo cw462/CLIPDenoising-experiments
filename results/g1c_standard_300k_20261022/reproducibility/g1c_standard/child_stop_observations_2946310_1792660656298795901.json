@@ -1,0 +1,27 @@
+{
+  "pid": 2946310,
+  "created_at": "2026-10-22T09:17:36Z",
+  "observations": [
+    {
+      "pid": 2946310,
+      "create_time": 1792632018.88,
+      "stat_state": "R",
+      "status_state": "R",
+      "starttime_ticks": 1278450488,
+      "tracer_pid": 0,
+      "psutil_status": "running",
+      "observed_at": "2026-10-22T09:17:36Z"
+    },
+    {
+      "pid": 2946310,
+      "create_time": 1792632018.88,
+      "stat_state": "T",
+      "status_state": "T",
+      "starttime_ticks": 1278450488,
+      "tracer_pid": 0,
+      "psutil_status": "stopped",
+      "observed_at": "2026-10-22T09:17:36Z"
+    }
+  ],
+  "status": "stopped"
+}

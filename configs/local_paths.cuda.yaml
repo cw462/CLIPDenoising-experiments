@@ -1,0 +1,25 @@
+# Original full-batch training configuration for a suitable CUDA device.
+# The upstream main queue still requires BOTH gpu_indices below.
+project_root: .
+pretrained_rn50: pretrained/RN50.pt
+train_dir: data/CBSD432
+test_datasets:
+  CBSD68: data/CBSD68
+  Kodak24: data/Kodak24
+  McMaster: data/McMaster
+  Urban100: data/Urban100
+output_root: runs_cuda
+reports_dir: reports_cuda
+data_manifest: data/manifest.json
+dev_train: splits/dev_train.txt
+dev_val: splits/dev_val.txt
+device: cuda
+micro_batch: 16
+accumulation: 1
+amp: false
+cpu_threads: 4
+cache_decoded_images: false
+minimum_free_gb: 2
+gpu_index: 0
+gpu_indices: [0, 1]
+jobs_per_gpu: 1

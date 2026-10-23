@@ -1,4 +1,33 @@
-# CLIPDenoising：RGB 旁路校准实验与完整结果
+# CLIPDenoising：门控＋结构损失实验
+
+> 新增定性对比（2026-10-23）：已用官方权重完成 DnCNN、Restormer、MaskDenoising 在四个固定示例上的真实推理，与 B0、Ours（G1）、GT 并排展示。本次没有训练；HAT、DIL 尚缺权重，未纳入图中。查看[对比图与复现说明](results/external_comparison_20261023/README.md)、[高清 PNG](results/external_comparison_20261023/figures/comparison_available_methods.png)、[PDF](results/external_comparison_20261023/figures/comparison_available_methods.pdf)及[单图指标](results/external_comparison_20261023/figures/comparison_metrics.csv)。
+
+> 最新完成结果（2026-10-22）：G1 与 G1C 的 seed 0、1、2 已按 RGB 逐通道独立椒盐噪声 d=0.02 完成重评测，新增 1,260 条逐图指标。其余三类噪声沿用既有三 seed 结果。查看[最终 16 条件 Table 1](results/table1_channel_salt_3seed_20261022/final/Table1.md)及[完整数据与运行记录](results/table1_channel_salt_3seed_20261022/README.md)。旧版 RGB 共用噪声结果保留，不与新版混用。
+
+## 历史运行记录
+
+以下状态为各阶段历史快照，最新完成状态以上方结果为准。
+
+> 当前状态（北京时间 2026-10-22 17:18）：门控+C 按用户要求采用普通训练，关闭新增逐步输入一致性检查。**seed 0 已完成 300k；seed 2 已从 240000 步完整检查点迁至 GPU 0，seed 1 留在 GPU 1 持续训练，两组各占一张卡。**17:18:04 已确认 seed 2 恢复完整模型、优化器、学习率、随机数和采样器状态，并产生新的训练步数；仅重算检查点之后的 6 步。首次自动迁移曾于 15:19:32 因协调器暂停超时失败、导致 GPU 0 空闲，此次修复重试已成功，旧失败记录保留。见[迁移审计](reproducibility/g1c_standard/migration_audit.json)和[实际 GPU 分配快照](reproducibility/g1c_standard/migration_recovered_snapshot.json)。三组完整训练尚未全部结束。
+>
+> 三个 seed 各完成 300k 后自动评测与汇总。见[启动记录](results/g1c_standard_launch_20261022/README.md)和[运行说明](docs/G1C_Standard_Training_20261022.md)。已知主机异常尚未确认修复，最终报告保留这一运行条件；以下停止状态与故障证据属于较早尝试。
+
+
+**状态快照（2026-10-21 23:18）：** 当前方法为G1C（原G1门控＋L1＋0.05×平滑梯度结构损失），固定seed **0、1、2**，每种子完整300000步，分别对照历史G1相同seed。独立NumPy环境候选通过三seed短程GPU检查，但长程验证在第761步再次读取不一致；GPU1并发探针seed2在第30步也触发保护。两项均停止，候选退役，三seed正式300k尚未启动，没有后台正式训练或有效最终结果。详见[新故障与完整证据](results/g1c_numpy_isolation_failure_20261021/README.md)及[三种子协议](docs/G1C_Multiseed_20261021.md)。
+
+此前单独C已按用户要求在1028步停止；旧环境G1C成功完成1634步，在第1635步因同一CPU输入连续读取不一致自动停止。异常根因未定位，旧失败完整保留。尚无本轮完整训练或最终评测结果。详见[旧运行快照与故障证据](results/c_full_20261021/STATUS.zh-CN.md)。
+
+用户要求独立单卡训练并利用另一张卡运行额外种子，三种子训练、调度、评测和汇总代码已完成。当前真实一致性故障尚未解决，不能通过重试、放宽检查或减少并发假装修复；需要进一步定位读写路径或使用经验证稳定的计算环境。双卡DDP短测完整步耗时0.4472秒，单卡0.4178秒，当前实现双卡慢约7%，因此不采用DDP。原两组执行协议与下面A/C内容保留为工作记录。
+
+**Table 1 对应条件：** [查看前轮六个条件的实际 PSNR/SSIM 与截图参考值](results/ac_20261021/table1/README.md)。B0/G1 为前轮三个训练种子的完整训练结果。当前分支新增[严格配对重跑与完整历史基准协议](docs/AC_Table1_Recovery_20261021.md)，A/C 覆盖相同的四数据集、15 个噪声条件，并单列六项最高噪声强度结果。新一轮的完成状态与有效结果见 [A/C Table 1 执行记录](results/ac_table1_20261021/README.md)。
+
+**当前状态：** r2 通过实际 RN50/C0、batch16、三模型的短程恢复检查（连续4步对照2步＋恢复2步，完整状态逐位一致）及200步试跑；历史210张原图、3,150个噪声输入匹配。随后5k筛选在第3,855步被输入副本一致性检查中止，正式队列已停止，尚无本轮筛选评测、20k确认或A/C Table 1完成结果。独立长程恢复诊断又发现少数步骤的数据与原记录不同，短程检查不能证明整段训练轨迹可逐位复现。最新正式状态与证据索引见执行记录。
+
+**前次 A/C 服务器实验（2026-10-21，失败证据保留）：** 46 项 GPU 验收通过，三组 200 步试跑、5k 筛选和 1,680 条筛选评测完成。六组 20k 续训已跑满，但最终逐步输入/目标哈希配对验收未通过，原队列因此停止；该批次没有有效的最终评测结论。详见[原运行状态与结果](results/ac_20261021/README.md)、[执行协议](docs/AC_Server_Run_20261021.md)及[30 万步完整训练的必要性分析](docs/AC_Full_Training_Assessment_20261021.md)。完整 A/C 300k 训练尚未启动。
+
+实现说明：[A：空间相关 PFA](docs/方案A_实现过程与验证说明.md)、[C：平滑梯度结构损失](docs/方案C_实现过程与验证说明.md)。本分支服务器入口为 `tools/run_ac_table1_pipeline.py`（或 `bash launch_ac_pipeline.sh`），配置为 `configs/plan_a_server.yaml`、`configs/plan_c_server.yaml`。本轮从同一个前轮 B0 检查点续训，不能与从原始初始化训练 300k 混称。
+
+**本机 Windows 已配置完成：** 使用方法见 [本地运行说明](LOCAL_SETUP.zh-CN.md)。双击 `run_demo.cmd` 运行已有基线模型的单图去噪；`run_checks.cmd` 验证环境、真实数据、模型和断点恢复。本机默认 CPU 配置，正式 CUDA 运行配置另见 `configs/local_paths.cuda.yaml`。
 
 本仓库基于 [CLIPDenoising（CVPR 2024）](https://github.com/alwaysuu/CLIPDenoising)，保存末级 RGB 旁路校准的代码、验收工具、训练与评测入口，以及 2026 年 10 月完成的实验记录。上游基准 commit 为 `2647bf815df0299a03d16df34b896fa266ceefda`；下方保留上游 README 与论文引用。
 

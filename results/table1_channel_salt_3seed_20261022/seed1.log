@@ -1,0 +1,14 @@
+RN50_LOAD_AUDIT {"checkpoint": "/home/imss/cw/CLIPDenoising_20261020/pretrained/RN50.pt", "expected_state_key_count": 330, "ignored_source_key_count": 162, "matched_parameter_count": 23527264, "matched_parameter_tensor_count": 165, "matched_state_element_count": 23580567, "matched_state_key_count": 330, "missing_keys": [], "shape_mismatches": {}, "source_format": "torchscript", "source_prefix": "visual."}
+RN50_LOAD_AUDIT {"checkpoint": "/home/imss/cw/CLIPDenoising_20261020/pretrained/RN50.pt", "expected_state_key_count": 330, "ignored_source_key_count": 162, "matched_parameter_count": 23527264, "matched_parameter_tensor_count": 165, "matched_state_element_count": 23580567, "matched_state_key_count": 330, "missing_keys": [], "shape_mismatches": {}, "source_format": "torchscript", "source_prefix": "visual."}
+seed1 CBSD68 20/68; 40/420 measurements
+seed1 CBSD68 40/68; 80/420 measurements
+seed1 CBSD68 60/68; 120/420 measurements
+seed1 CBSD68 68/68; 136/420 measurements
+seed1 McMaster 18/18; 172/420 measurements
+seed1 Kodak24 20/24; 212/420 measurements
+seed1 Kodak24 24/24; 220/420 measurements
+seed1 Urban100 20/100; 260/420 measurements
+seed1 Urban100 40/100; 300/420 measurements
+seed1 Urban100 60/100; 340/420 measurements
+seed1 Urban100 80/100; 380/420 measurements
+seed1 Urban100 100/100; 420/420 measurements

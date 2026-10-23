@@ -1,0 +1,354 @@
+{
+  "name": "plan_a_smoke_B1_seed100",
+  "model_type": "ImageCleanModel",
+  "scale": 1,
+  "num_gpu": 1,
+  "manual_seed": 100,
+  "datasets": {
+    "train": {
+      "name": "TrainSet",
+      "type": "Dataset_GaussianDenoising",
+      "sigma_type": "constant",
+      "sigma_range": 15,
+      "in_ch": 3,
+      "dataroot_gt": "/home/imss/cw/CLIPDenoising_AC_Table1_20261021_r2/data/CBSD432",
+      "dataroot_lq": "none",
+      "geometric_augs": true,
+      "filename_tmpl": "{}",
+      "io_backend": {
+        "type": "disk"
+      },
+      "use_shuffle": true,
+      "num_worker_per_gpu": 0,
+      "batch_size_per_gpu": 16,
+      "mini_batch_sizes": [
+        16
+      ],
+      "iters": [
+        200
+      ],
+      "gt_size": 128,
+      "gt_sizes": [
+        128
+      ],
+      "dataset_enlarge_ratio": 1,
+      "prefetch_mode": null,
+      "phase": "train",
+      "scale": 1,
+      "cache_decoded_images": true
+    },
+    "val": {
+      "name": "ValSet",
+      "type": "Dataset_GaussianDenoising",
+      "sigma_type": "constant",
+      "sigma_test": 15,
+      "in_ch": 3,
+      "dataroot_gt": "/home/imss/cw/CLIPDenoising_AC_Table1_20261021_r2/data/CBSD432",
+      "dataroot_lq": "none",
+      "io_backend": {
+        "type": "disk"
+      },
+      "phase": "val",
+      "scale": 1
+    }
+  },
+  "network_g": {
+    "type": "CLIPDenoising",
+    "inp_channels": 3,
+    "out_channels": 3,
+    "depth": 5,
+    "wf": 64,
+    "num_blocks": [
+      3,
+      4,
+      6,
+      3
+    ],
+    "bias": false,
+    "model_path": "/home/imss/cw/CLIPDenoising_AC_Table1_20261021_r2/pretrained/RN50.pt",
+    "aug_level": 0.025,
+    "adapter_mode": "none",
+    "pfa_rho": 0.5,
+    "pfa_seed": 30100
+  },
+  "path": {
+    "pretrain_network_g": "/home/imss/cw/CLIPDenoising_AC_Table1_20261021_r2/pretrained/synthetic_baseline.pth",
+    "strict_load_g": true,
+    "resume_state": null,
+    "experiments_root": "/home/imss/cw/CLIPDenoising_AC_Table1_20261021_r2/runs/ac/smoke/B1/seed100",
+    "models": "/home/imss/cw/CLIPDenoising_AC_Table1_20261021_r2/runs/ac/smoke/B1/seed100/checkpoints",
+    "training_states": "/home/imss/cw/CLIPDenoising_AC_Table1_20261021_r2/runs/ac/smoke/B1/seed100/checkpoints",
+    "log": "/home/imss/cw/CLIPDenoising_AC_Table1_20261021_r2/runs/ac/smoke/B1/seed100",
+    "visualization": "/home/imss/cw/CLIPDenoising_AC_Table1_20261021_r2/runs/ac/smoke/B1/seed100/visuals",
+    "param_key": "params"
+  },
+  "train": {
+    "total_iter": 200,
+    "warmup_iter": -1,
+    "use_grad_clip": true,
+    "scheduler": {
+      "type": "CosineAnnealingRestartCyclicLR",
+      "periods": [
+        199
+      ],
+      "restart_weights": [
+        1
+      ],
+      "eta_mins": [
+        1e-06
+      ]
+    },
+    "mixing_augs": {
+      "mixup": true,
+      "mixup_beta": 1.2,
+      "use_identity": true
+    },
+    "optim_g": {
+      "type": "AdamW",
+      "lr": 1e-05,
+      "weight_decay": 0.0001,
+      "betas": [
+        0.9,
+        0.999
+      ]
+    },
+    "pixel_opt": {
+      "type": "L1Loss",
+      "loss_weight": 1,
+      "reduction": "mean"
+    }
+  },
+  "val": {
+    "window_size": 32,
+    "val_freq": 0,
+    "save_img": false,
+    "rgb2bgr": true,
+    "use_image": false,
+    "max_minibatch": 8,
+    "metrics": {
+      "psnr": {
+        "type": "calculate_psnr",
+        "crop_border": 0,
+        "test_y_channel": false
+      }
+    }
+  },
+  "logger": {
+    "print_freq": 20,
+    "save_checkpoint_freq": 1000,
+    "use_tb_logger": false,
+    "wandb": {
+      "project": null,
+      "resume_id": null
+    }
+  },
+  "dist_params": {
+    "backend": "nccl",
+    "port": 29500
+  },
+  "exp": "B1",
+  "experiment": "B1",
+  "stage": "smoke",
+  "seed": 100,
+  "train_seed": 100,
+  "is_train": true,
+  "dist": false,
+  "rank": 0,
+  "world_size": 1,
+  "runtime": {
+    "device": "cuda",
+    "micro_batch": 16,
+    "accumulation": 1,
+    "amp": false,
+    "noisy_views_per_update": 16,
+    "clean_patches_per_update": 16,
+    "train_image_count": 432,
+    "data_workers": 0,
+    "sampler": "persisted permutation/cursor/RNG; drop_last; no prefetch",
+    "cache_decoded_images": true,
+    "cpu_threads": 4,
+    "independent_runs_per_gpu": 1,
+    "parallelism": "independent models/optimizers/RNG; no DDP or combined batch",
+    "freeze_bn": false,
+    "data_rng_seed": 10100,
+    "sampler_seed": 20100,
+    "minimum_free_gb": 2,
+    "independent_pfa_seed": 30100,
+    "checkpoint_every": 1000,
+    "checkpoint_keep": 1,
+    "status_every": 20
+  },
+  "data_manifest_hash": "85b882a4d2470df9b88ebd3382908fec810f2eba1d27719379c69dc3b97a7935",
+  "dev_split_hash": "0b72b37e969219442f316fd257351730bd41cacafcc7171c3e5b8c85d480bcb6",
+  "pretrained_sha256": "afeb0e10f9e5a86da6080e35cf09123aca3b358a0c3e3b6c78a7b63bc04b6762",
+  "source_hash": "733f3f9b0ace567f89121b15f10db812515179b63bf7953f35f11720251babf7",
+  "git_commit": "3f6e1537a5c05bbbe93d7df413f7d3e60703045c",
+  "plan_a": {
+    "c0_sha256": "123b9091a9c13b17da0e40f25f706efc8e5044ce5d8295bf5701eb1dd8f99675",
+    "rho": 0.5,
+    "levels": [
+      3,
+      4
+    ],
+    "kernel": "3x3 mean / kernel L2, circular random-field padding",
+    "training_noise": "Gaussian sigma15 only",
+    "new_optimizer": true
+  },
+  "continuation": {
+    "c0_expected": {
+      "experiment": "B0",
+      "stage": "full",
+      "seed": 0,
+      "update": 300000,
+      "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef"
+    },
+    "optimizer_state_from_c0": false,
+    "schedule": "one cosine cycle; update 1=start LR, budget=end LR"
+  },
+  "paired_protocol": {
+    "schema": "ac_paired_continuation_v1",
+    "stage": "smoke",
+    "seed": 100,
+    "c0_sha256": "123b9091a9c13b17da0e40f25f706efc8e5044ce5d8295bf5701eb1dd8f99675",
+    "pretrained_sha256": "afeb0e10f9e5a86da6080e35cf09123aca3b358a0c3e3b6c78a7b63bc04b6762",
+    "data_manifest_hash": "85b882a4d2470df9b88ebd3382908fec810f2eba1d27719379c69dc3b97a7935",
+    "source_hash": "733f3f9b0ace567f89121b15f10db812515179b63bf7953f35f11720251babf7",
+    "train": {
+      "total_iter": 200,
+      "warmup_iter": -1,
+      "use_grad_clip": true,
+      "scheduler": {
+        "type": "CosineAnnealingRestartCyclicLR",
+        "periods": [
+          199
+        ],
+        "restart_weights": [
+          1
+        ],
+        "eta_mins": [
+          1e-06
+        ]
+      },
+      "mixing_augs": {
+        "mixup": true,
+        "mixup_beta": 1.2,
+        "use_identity": true
+      },
+      "optim_g": {
+        "type": "AdamW",
+        "lr": 1e-05,
+        "weight_decay": 0.0001,
+        "betas": [
+          0.9,
+          0.999
+        ]
+      }
+    },
+    "network_except_pfa_rho": {
+      "type": "CLIPDenoising",
+      "inp_channels": 3,
+      "out_channels": 3,
+      "depth": 5,
+      "wf": 64,
+      "num_blocks": [
+        3,
+        4,
+        6,
+        3
+      ],
+      "bias": false,
+      "model_path": "/home/imss/cw/CLIPDenoising_AC_Table1_20261021_r2/pretrained/RN50.pt",
+      "aug_level": 0.025,
+      "adapter_mode": "none",
+      "pfa_seed": 30100
+    },
+    "dataset_train": {
+      "name": "TrainSet",
+      "type": "Dataset_GaussianDenoising",
+      "sigma_type": "constant",
+      "sigma_range": 15,
+      "in_ch": 3,
+      "dataroot_gt": "/home/imss/cw/CLIPDenoising_AC_Table1_20261021_r2/data/CBSD432",
+      "dataroot_lq": "none",
+      "geometric_augs": true,
+      "filename_tmpl": "{}",
+      "io_backend": {
+        "type": "disk"
+      },
+      "use_shuffle": true,
+      "num_worker_per_gpu": 0,
+      "batch_size_per_gpu": 16,
+      "mini_batch_sizes": [
+        16
+      ],
+      "iters": [
+        200
+      ],
+      "gt_size": 128,
+      "gt_sizes": [
+        128
+      ],
+      "dataset_enlarge_ratio": 1,
+      "prefetch_mode": null,
+      "phase": "train",
+      "scale": 1,
+      "cache_decoded_images": true
+    },
+    "runtime": {
+      "micro_batch": 16,
+      "accumulation": 1,
+      "amp": false,
+      "train_image_count": 432,
+      "freeze_bn": false,
+      "data_rng_seed": 10100,
+      "sampler_seed": 20100,
+      "independent_pfa_seed": 30100
+    },
+    "execution_contract": {
+      "schema": "ac_triplet_v2",
+      "groups": [
+        "B0",
+        "B1",
+        "B3"
+      ],
+      "batch": "one sampler/data/Mixup realization per seed/update",
+      "model_inputs": "independent contiguous clones; exact pre/post/reference checks",
+      "optimizer_and_pfa": "independent per group; model steps cannot consume shared RNG",
+      "recovery": "three validated checkpoints, then one atomic coordinator commit",
+      "determinism": {
+        "algorithms": true,
+        "warn_only": false,
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "cudnn_allow_tf32": false,
+        "cuda_matmul_allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "structure_reflect_padding": "one-pixel slices/concatenation; exact reflection values"
+      }
+    }
+  },
+  "paired_protocol_hash": "ae562fde2bd26abf95fd4d78cdcb2af29d73febf04d3a928034d8b9571a3eaa8",
+  "execution_contract": {
+    "schema": "ac_triplet_v2",
+    "groups": [
+      "B0",
+      "B1",
+      "B3"
+    ],
+    "batch": "one sampler/data/Mixup realization per seed/update",
+    "model_inputs": "independent contiguous clones; exact pre/post/reference checks",
+    "optimizer_and_pfa": "independent per group; model steps cannot consume shared RNG",
+    "recovery": "three validated checkpoints, then one atomic coordinator commit",
+    "determinism": {
+      "algorithms": true,
+      "warn_only": false,
+      "cudnn_benchmark": false,
+      "cudnn_deterministic": true,
+      "cudnn_allow_tf32": false,
+      "cuda_matmul_allow_tf32": false,
+      "cublas_workspace_config": ":4096:8",
+      "structure_reflect_padding": "one-pixel slices/concatenation; exact reflection values"
+    }
+  },
+  "config_hash": "dce67e647786ba19a9aeba599d9216a4d129bd3c2ceee88149cb552de9532257"
+}

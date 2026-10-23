@@ -1,0 +1,24 @@
+{
+  "experiment": "G1C",
+  "stage": "full",
+  "seed": 2,
+  "config_hash": "345ff3159bad7c6beeec018ac7741c839a042ead76b830024ce24d95689bede6",
+  "source_hash": "86d821ff44713da6918b73f92ed7b9e2a7b3d83f53082eef9c82f36a654a534d",
+  "training_integrity_mode": "standard_user_requested_v1",
+  "integrity_mode": "standard_user_requested_v1",
+  "per_update_input_consistency_checks": false,
+  "complete": true,
+  "update": 300000,
+  "loss_finite": true,
+  "frozen_encoder_unchanged": true,
+  "encoder_parameters_unchanged": true,
+  "encoder_gradients_absent": true,
+  "encoder_bn_training": true,
+  "bn_running_mean_changed": true,
+  "parameter_counts": {
+    "total": 34533748,
+    "trainable": 11006484
+  },
+  "last_checkpoint_sha256_verified": true,
+  "checkpoint_sha256": "8b607bfef0c3450b0436e43c1255b1c3e865a3d0286644d64e900adb64a926be"
+}

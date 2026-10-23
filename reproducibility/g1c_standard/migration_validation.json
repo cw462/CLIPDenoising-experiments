@@ -1,0 +1,9 @@
+{
+  "controller_sha256": "b7a353947a1c959663ef70a0ad493a050de75902a150aa698e62f943a9d3424b",
+  "mock_tests_passed": 20,
+  "test_scope": "Controller sequencing, process ownership, planned interrupt classification, command identity, failure cleanup, complete-state resume evidence, and publication order; mocked process signals only",
+  "server_check_only": "passed",
+  "server_waiting_task": "running",
+  "actual_migration_completed": false,
+  "scientific_source_and_config_unchanged": true
+}

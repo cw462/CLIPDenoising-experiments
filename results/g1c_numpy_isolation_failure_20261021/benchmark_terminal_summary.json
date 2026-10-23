@@ -1,0 +1,64 @@
+{
+  "schema": "public_g1c_benchmark_failure_summary_v1",
+  "status": "failed",
+  "guard_failed": true,
+  "completed": false,
+  "all_guard_checks_passed": false,
+  "accepted_concurrency2": false,
+  "diagnostic_only": true,
+  "formal_training_started_by_benchmark": false,
+  "formal_schedule_changed": false,
+  "physical_gpu": 1,
+  "batch": 16,
+  "seeds": [
+    1,
+    2
+  ],
+  "source_hash": "51c704dfa85f9cbe938e13984cf063e15c92eaebdf358c5b76cdaad994e2ce54",
+  "candidate_config_sha256": "9c8b92485603fa497558af1775e845469cdc1d709adcb4b8d01713e9fe8a1d75",
+  "environment_manifest_sha256": "49694f24631539ba926a75876e948827e8d070339057b1c97872bd8c7155c25b",
+  "identity": {
+    "scientific_commit": "af56111ad0fe5d9355ff89b16db7568b0a918682",
+    "source_hash": "51c704dfa85f9cbe938e13984cf063e15c92eaebdf358c5b76cdaad994e2ce54",
+    "base_config_sha256": "28b5eb5506852ea40cceb5b111a42bbf83c7d31699b9431d04a75545f6d3f950",
+    "environment_manifest_sha256": "49694f24631539ba926a75876e948827e8d070339057b1c97872bd8c7155c25b",
+    "candidate_config_sha256": "9c8b92485603fa497558af1775e845469cdc1d709adcb4b8d01713e9fe8a1d75",
+    "candidate_config_path": "/home/imss/cw/CLIPDenoising_G1C_Seeds_20261021/reproducibility/candidate_numpy_isolation_r2.yaml",
+    "environment_manifest_path": "/home/imss/cw/CLIPDenoising_G1C_numpy_isolation_20261021/isolation_evidence/environment_manifest_r2.json",
+    "starter_sha256": "44eb10b94e0b273039f868182e343fd4aadd02aba04667c5a5630cf2f7fd56d0",
+    "python": "/home/imss/cw/CLIPDenoising_G1C_numpy_isolation_20261021/bin/python"
+  },
+  "benchmark_script_sha256": "a6186e0469e4cf0088d4a94814f2e05b8583f12ff6b0d962ad7ab13382e44dd4",
+  "benchmark_original_report_sha256": "72dfa498b3f10c65d053888c33c660ed88fca05cc18d9d204747fba5a4f69097",
+  "elapsed_seconds": 49.3150504399091,
+  "single_process": {
+    "seed": 1,
+    "warmup_updates": 20,
+    "timed_updates": 30,
+    "all_50_guard_rows_passed": true,
+    "aggregate_updates_per_second": 2.371553962363457,
+    "aggregate_images_per_second": 37.94486339781531,
+    "mean_step_seconds": 0.42155613185216984,
+    "peak_gpu_used_mib": 4362,
+    "proof_sha256": "cb4cac2c14fac65a76134163ae176853097ba5657cf59210cdce999bb76ede52"
+  },
+  "two_processes": {
+    "status": "failed",
+    "warmup_updates_per_process": 20,
+    "common_timing_barrier_released": true,
+    "failure_seed": 2,
+    "failure_update": 30,
+    "last_successful_update_for_failure_seed": 29,
+    "other_process_stopped_after_peer_failure": true,
+    "completed_timed_comparison": false,
+    "speedup": null,
+    "peak_gpu_used_mib": null,
+    "retry_performed": false
+  },
+  "source_paths": {
+    "fixed_state": "/home/imss/cw/CLIPDenoising_G1C_Seeds_20261021/reproducibility/gpu1_independent_seed_benchmark.json",
+    "raw_diagnostic_directory": "/tmp/g1c_gpu1_concurrency_candidate_20261021_1792595623439114085",
+    "failure_worker_report": "/tmp/g1c_gpu1_concurrency_candidate_20261021_1792595623439114085/parallel/seed2/report.json"
+  },
+  "interpretation": "The two-process diagnostic triggered an input-protection failure. The isolated NumPy environment is not established as repaired, and the paired throughput comparison did not complete. A short successful single-process run does not establish long-term stability."
+}

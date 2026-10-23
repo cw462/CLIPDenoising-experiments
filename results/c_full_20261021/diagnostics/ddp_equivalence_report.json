@@ -1,0 +1,235 @@
+{
+  "diagnostic_only": true,
+  "global_batch": 16,
+  "local_batch": 8,
+  "atol": 1e-06,
+  "rtol": 1e-05,
+  "accepted": false,
+  "sync_bn_count": 55,
+  "initial_state": {
+    "tensor_count": 351,
+    "bitwise": true,
+    "allclose": true,
+    "max_abs": 0.0,
+    "failures": []
+  },
+  "rank_states_identical": true,
+  "pfa_fields": [
+    {
+      "level": 1,
+      "shape": [
+        16,
+        64,
+        64,
+        64
+      ],
+      "exact": true
+    },
+    {
+      "level": 2,
+      "shape": [
+        16,
+        256,
+        32,
+        32
+      ],
+      "exact": true
+    },
+    {
+      "level": 3,
+      "shape": [
+        16,
+        512,
+        16,
+        16
+      ],
+      "exact": true
+    },
+    {
+      "level": 4,
+      "shape": [
+        16,
+        1024,
+        8,
+        8
+      ],
+      "exact": true
+    }
+  ],
+  "rank0_global_rng_exact": true,
+  "output": {
+    "tensor_count": 1,
+    "bitwise": false,
+    "allclose": false,
+    "max_abs": 2.5305896997451782e-05,
+    "failures": [
+      {
+        "name": "root",
+        "max_abs": 2.5305896997451782e-05,
+        "different_elements": 786351
+      }
+    ]
+  },
+  "network_after_update": {
+    "tensor_count": 351,
+    "bitwise": false,
+    "allclose": false,
+    "max_abs": 0.00011071562767028809,
+    "failures": [
+      {
+        "name": "root.encoder.layer3.0.bn2.running_mean",
+        "max_abs": 2.175569534301758e-06,
+        "different_elements": 254
+      },
+      {
+        "name": "root.encoder.layer3.1.bn1.running_mean",
+        "max_abs": 1.8924474716186523e-06,
+        "different_elements": 255
+      },
+      {
+        "name": "root.encoder.layer3.1.bn1.running_var",
+        "max_abs": 1.391395926475525e-06,
+        "different_elements": 256
+      },
+      {
+        "name": "root.encoder.layer3.1.bn2.running_mean",
+        "max_abs": 1.0110437870025635e-05,
+        "different_elements": 255
+      },
+      {
+        "name": "root.encoder.layer3.1.bn2.running_var",
+        "max_abs": 1.0222196578979492e-05,
+        "different_elements": 255
+      },
+      {
+        "name": "root.encoder.layer3.1.bn3.running_mean",
+        "max_abs": 1.1771917343139648e-06,
+        "different_elements": 1015
+      },
+      {
+        "name": "root.encoder.layer3.2.bn1.running_mean",
+        "max_abs": 1.5757977962493896e-06,
+        "different_elements": 253
+      },
+      {
+        "name": "root.encoder.layer3.2.bn1.running_var",
+        "max_abs": 1.3168901205062866e-06,
+        "different_elements": 255
+      },
+      {
+        "name": "root.encoder.layer3.2.bn2.running_mean",
+        "max_abs": 7.554888725280762e-06,
+        "different_elements": 255
+      },
+      {
+        "name": "root.encoder.layer3.2.bn2.running_var",
+        "max_abs": 8.58306884765625e-06,
+        "different_elements": 256
+      },
+      {
+        "name": "root.encoder.layer3.3.bn1.running_mean",
+        "max_abs": 2.643093466758728e-06,
+        "different_elements": 252
+      },
+      {
+        "name": "root.encoder.layer3.3.bn1.running_var",
+        "max_abs": 1.4416873455047607e-06,
+        "different_elements": 256
+      }
+    ]
+  },
+  "batch_norm_after_update": {
+    "tensor_count": 165,
+    "bitwise": false,
+    "allclose": false,
+    "max_abs": 0.00011071562767028809,
+    "failures": [
+      {
+        "name": "root.encoder.layer3.0.bn2.running_mean",
+        "max_abs": 2.175569534301758e-06,
+        "different_elements": 254
+      },
+      {
+        "name": "root.encoder.layer3.1.bn1.running_mean",
+        "max_abs": 1.8924474716186523e-06,
+        "different_elements": 255
+      },
+      {
+        "name": "root.encoder.layer3.1.bn1.running_var",
+        "max_abs": 1.391395926475525e-06,
+        "different_elements": 256
+      },
+      {
+        "name": "root.encoder.layer3.1.bn2.running_mean",
+        "max_abs": 1.0110437870025635e-05,
+        "different_elements": 255
+      },
+      {
+        "name": "root.encoder.layer3.1.bn2.running_var",
+        "max_abs": 1.0222196578979492e-05,
+        "different_elements": 255
+      },
+      {
+        "name": "root.encoder.layer3.1.bn3.running_mean",
+        "max_abs": 1.1771917343139648e-06,
+        "different_elements": 1015
+      },
+      {
+        "name": "root.encoder.layer3.2.bn1.running_mean",
+        "max_abs": 1.5757977962493896e-06,
+        "different_elements": 253
+      },
+      {
+        "name": "root.encoder.layer3.2.bn1.running_var",
+        "max_abs": 1.3168901205062866e-06,
+        "different_elements": 255
+      },
+      {
+        "name": "root.encoder.layer3.2.bn2.running_mean",
+        "max_abs": 7.554888725280762e-06,
+        "different_elements": 255
+      },
+      {
+        "name": "root.encoder.layer3.2.bn2.running_var",
+        "max_abs": 8.58306884765625e-06,
+        "different_elements": 256
+      },
+      {
+        "name": "root.encoder.layer3.3.bn1.running_mean",
+        "max_abs": 2.643093466758728e-06,
+        "different_elements": 252
+      },
+      {
+        "name": "root.encoder.layer3.3.bn1.running_var",
+        "max_abs": 1.4416873455047607e-06,
+        "different_elements": 256
+      }
+    ]
+  },
+  "clipped_gradients": {
+    "tensor_count": 21,
+    "bitwise": false,
+    "allclose": true,
+    "max_abs": 1.8422724679112434e-08,
+    "failures": []
+  },
+  "optimizer": {
+    "tensor_count": 63,
+    "bitwise": false,
+    "allclose": true,
+    "max_abs": 1.8426362657919526e-09,
+    "failures": []
+  },
+  "gate_passed": false,
+  "seconds": 10.567737868055701,
+  "script_sha256": "1299ca89e84d61f4d8d908b36a3c3b63d022a18633276672d46ff6630309ddd0",
+  "source_hash_before": "8f102b93c9db2bdf32a6bfa0e10afdfea83ee605dfdd748dd8bf9d864d07f219",
+  "schema": "g1c_ddp_equivalence_public_v1",
+  "accepted_for_formal_switch": false,
+  "interpretation": "The same intended normalization and training objective have different floating-point reduction paths under SyncBatchNorm and split batches. Failing this strict numerical gate does not imply the DDP method is mathematically incorrect. It prevents claiming an unchanged single-GPU trajectory.",
+  "consequence": "Original strict trial stopped after one update. A separate performance-only trial subsequently measured speed; it did not overwrite this failure.",
+  "source_report": {
+    "name": "ddp_strict_equivalence_original_report.json",
+    "sha256": "7906c1454a3b656f986f9c6a06a11a93a2ed91f77e3c8fae5e49d9f16c0b9052"
+  }
+}

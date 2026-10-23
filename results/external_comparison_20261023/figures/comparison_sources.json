@@ -1,0 +1,366 @@
+[
+  {
+    "row": "row1",
+    "method": "Noisy",
+    "source_image": "existing_assets\\row1\\G1\\noisy_display_clipped_zoom.png",
+    "sha256": "363c14f4f82d32864cef6e7c27310c0895d1d2faea2cfd4717b257516720346e",
+    "crop": {
+      "x": 112,
+      "y": 192,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row1",
+    "method": "DnCNN",
+    "source_image": "inference\\DnCNN\\row1\\restored_zoom.png",
+    "sha256": "c3cda95b3f3a72f4b4b40914ccd87ff339f9420e800c3973c2df53f314bb3614",
+    "crop": {
+      "x": 112,
+      "y": 192,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row1",
+    "method": "Restormer",
+    "source_image": "inference\\Restormer\\row1\\restored_zoom.png",
+    "sha256": "4f4ebc9ec7f545c6df28430a86670f8b423b0ca851b06d11b293e64e03a70334",
+    "crop": {
+      "x": 112,
+      "y": 192,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row1",
+    "method": "MaskDenoising",
+    "source_image": "inference\\MaskDenoising\\row1\\restored_zoom.png",
+    "sha256": "eddcd3a4ca9e85bc9460f8c870f941e060f37cd5d46d55e6deac239d53fe9ea0",
+    "crop": {
+      "x": 112,
+      "y": 192,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row1",
+    "method": "B0",
+    "source_image": "existing_assets\\row1\\B0\\restored_zoom.png",
+    "sha256": "d613d7a1b84e49e8f35b3c1810d18e56c6fef49c26c342fcb54b91d002407a49",
+    "crop": {
+      "x": 112,
+      "y": 192,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row1",
+    "method": "G1",
+    "source_image": "existing_assets\\row1\\G1\\restored_zoom.png",
+    "sha256": "94fc9d8d651ce132604d0165acc556eae571bb88ad705803dba4f2dcf372ea5f",
+    "crop": {
+      "x": 112,
+      "y": 192,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row1",
+    "method": "GT",
+    "source_image": "existing_assets\\row1\\G1\\clean_zoom.png",
+    "sha256": "372f87abb8ffea452d5126541e3b064ead1789c0b0ca88ba51a744c54a75340c",
+    "crop": {
+      "x": 112,
+      "y": 192,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row2",
+    "method": "Noisy",
+    "source_image": "existing_assets\\row2\\G1\\noisy_display_clipped_zoom.png",
+    "sha256": "78705e2cdadff070e21573c53cdf362f6dfee31cb9481334602a8769faf15a3c",
+    "crop": {
+      "x": 202,
+      "y": 202,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row2",
+    "method": "DnCNN",
+    "source_image": "inference\\DnCNN\\row2\\restored_zoom.png",
+    "sha256": "e58d27b0c1c442b25110bfa4fc8e25aad670122b0d267e2f6922dadb88a9564e",
+    "crop": {
+      "x": 202,
+      "y": 202,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row2",
+    "method": "Restormer",
+    "source_image": "inference\\Restormer\\row2\\restored_zoom.png",
+    "sha256": "5e492fd9e62fd51f2b0aaca2623f32cdf1512d1a99c8900afb30e3152f535e41",
+    "crop": {
+      "x": 202,
+      "y": 202,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row2",
+    "method": "MaskDenoising",
+    "source_image": "inference\\MaskDenoising\\row2\\restored_zoom.png",
+    "sha256": "3078e0559ca7e5a1d887d41333cc979bcfbe4f0bbb4f4c1b06d9dba7cebe0268",
+    "crop": {
+      "x": 202,
+      "y": 202,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row2",
+    "method": "B0",
+    "source_image": "existing_assets\\row2\\B0\\restored_zoom.png",
+    "sha256": "5bff52a37d23e16d919950eb26f030d6f9e932ddb20ac5a74343cdd92cb5b9bf",
+    "crop": {
+      "x": 202,
+      "y": 202,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row2",
+    "method": "G1",
+    "source_image": "existing_assets\\row2\\G1\\restored_zoom.png",
+    "sha256": "73df83ffb6b9c98a4231a8fe745ba2929441f72be6ca69a8161163b7450c357b",
+    "crop": {
+      "x": 202,
+      "y": 202,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row2",
+    "method": "GT",
+    "source_image": "existing_assets\\row2\\G1\\clean_zoom.png",
+    "sha256": "59f02d8502fe97414ec8fc12f99d12a3dc82e83ebbe5dade3dda820b8926f771",
+    "crop": {
+      "x": 202,
+      "y": 202,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row3",
+    "method": "Noisy",
+    "source_image": "existing_assets\\row3\\G1\\noisy_display_clipped_zoom.png",
+    "sha256": "47beea7cddce2ee07c287ff5848a341f7c5ba46e64880d4f39f5528205ba57d6",
+    "crop": {
+      "x": 202,
+      "y": 202,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row3",
+    "method": "DnCNN",
+    "source_image": "inference\\DnCNN\\row3\\restored_zoom.png",
+    "sha256": "9bd48ec96062c58c390f8b137588cf4f4b17d842a0e3bd76b03ba1b1aac7269f",
+    "crop": {
+      "x": 202,
+      "y": 202,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row3",
+    "method": "Restormer",
+    "source_image": "inference\\Restormer\\row3\\restored_zoom.png",
+    "sha256": "7f42125559a694ec1929d6cd43447bcb3b95635c917699e75b01211ed1d127e0",
+    "crop": {
+      "x": 202,
+      "y": 202,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row3",
+    "method": "MaskDenoising",
+    "source_image": "inference\\MaskDenoising\\row3\\restored_zoom.png",
+    "sha256": "1ccd0477c3b2ce15273503e9750325f717f1148fe851a408e5d66d5091584cdf",
+    "crop": {
+      "x": 202,
+      "y": 202,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row3",
+    "method": "B0",
+    "source_image": "existing_assets\\row3\\B0\\restored_zoom.png",
+    "sha256": "3f7b7d7638668935488e61f5f974f9904b9b66494c901958bda57e3f241fe98d",
+    "crop": {
+      "x": 202,
+      "y": 202,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row3",
+    "method": "G1",
+    "source_image": "existing_assets\\row3\\G1\\restored_zoom.png",
+    "sha256": "f54756b163330a9798162414051634b68da2a85940cf295576fd477bda0232ac",
+    "crop": {
+      "x": 202,
+      "y": 202,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row3",
+    "method": "GT",
+    "source_image": "existing_assets\\row3\\G1\\clean_zoom.png",
+    "sha256": "3ac2976a92f415c39cf7176456e1c9d72cdd4320574e97e73cf81b2104c74391",
+    "crop": {
+      "x": 202,
+      "y": 202,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row4",
+    "method": "Noisy",
+    "source_image": "existing_assets\\row4\\G1\\noisy_display_clipped_zoom.png",
+    "sha256": "408f3f1e97a182df587a2c3d21f0cc794c121b4729c204ae5732cab08a21d77b",
+    "crop": {
+      "x": 208,
+      "y": 144,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row4",
+    "method": "DnCNN",
+    "source_image": "inference\\DnCNN\\row4\\restored_zoom.png",
+    "sha256": "8b6da8dbd655e57f922cdf4cd5d6ca269a534ed542756a7a856e6a4825b1d459",
+    "crop": {
+      "x": 208,
+      "y": 144,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row4",
+    "method": "Restormer",
+    "source_image": "inference\\Restormer\\row4\\restored_zoom.png",
+    "sha256": "2900a05d6f7b928804bc4dc67e8f30ac3c886f4b29f999faabad04d5b8612975",
+    "crop": {
+      "x": 208,
+      "y": 144,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row4",
+    "method": "MaskDenoising",
+    "source_image": "inference\\MaskDenoising\\row4\\restored_zoom.png",
+    "sha256": "9b0a66825abe12ffa12ad87c33c58c9bc5788377c678213bfdcbbac295d5d49f",
+    "crop": {
+      "x": 208,
+      "y": 144,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row4",
+    "method": "B0",
+    "source_image": "existing_assets\\row4\\B0\\restored_zoom.png",
+    "sha256": "e50df84f1630fedbbfc435c2369d05e314b6bdce2f21bef5c39a441af1dfa873",
+    "crop": {
+      "x": 208,
+      "y": 144,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row4",
+    "method": "G1",
+    "source_image": "existing_assets\\row4\\G1\\restored_zoom.png",
+    "sha256": "aebd021c9f5f30070e609db1434ea54f94d14e2fe5e672f02157fb2deffa5fa5",
+    "crop": {
+      "x": 208,
+      "y": 144,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  },
+  {
+    "row": "row4",
+    "method": "GT",
+    "source_image": "existing_assets\\row4\\G1\\clean_zoom.png",
+    "sha256": "93f1f35399620b99f22a67f0253ec2f3b5299925c73db8a9d6e1debd7d781bc2",
+    "crop": {
+      "x": 208,
+      "y": 144,
+      "width": 96,
+      "height": 96
+    },
+    "display_adjustments": "none; common nearest-neighbor rendering"
+  }
+]

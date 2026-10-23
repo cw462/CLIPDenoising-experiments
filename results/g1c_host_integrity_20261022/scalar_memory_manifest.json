@@ -1,0 +1,28 @@
+{
+  "schema": "bounded_private_scalar_memory_invocation_v1",
+  "server_directory": "/tmp/g1c_scalar_memory_20261022_1792600179416107400",
+  "source_sha256": "169d1988365aea99301a518bb949fe4800d4a99ee68c1bfab9e1c6f642349139",
+  "allocation_bytes": 1073741824,
+  "internal_duration_seconds": 59,
+  "hard_limit_seconds": 60,
+  "single_attempt": true,
+  "project_sources_modified": false,
+  "hardware_parameters_modified": false,
+  "dependencies_installed": false,
+  "only_self_allocated_memory": true,
+  "compiler_flags": [
+    "-std=c11",
+    "-O2",
+    "-fno-tree-vectorize",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic"
+  ],
+  "compiler_exit_code": 0,
+  "compiler_stderr": "",
+  "binary_sha256": "8f6fb2fe71cfbb0dba06bd1189d53a8e1ade591acb3a1c4d2bcac0164f0897a7",
+  "process_exit_code": 2,
+  "remote_call_seconds": 59.056631499901414,
+  "result_sha256": "2a8811616f5d2eaf07568f3ec2c41e88a4d29ad77f540bc5b92da9de46ab1143"
+}

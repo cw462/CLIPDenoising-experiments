@@ -1,0 +1,12 @@
+{
+  "status": "completed",
+  "started_at": 1792673457.864843,
+  "pid": 3325202,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "new_measurement_rows": 1260,
+  "ended_at": 1792673548.802451
+}

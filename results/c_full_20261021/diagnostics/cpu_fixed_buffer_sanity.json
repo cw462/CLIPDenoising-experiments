@@ -1,0 +1,208 @@
+{
+  "scope": "single bounded CPU fixed-buffer diagnostic; no GPU/model/RNG/training",
+  "status": "passed_short_test_only",
+  "pid": 2625508,
+  "affinity": [
+    0
+  ],
+  "test_buffer_limit_bytes": 134217728,
+  "source_buffer_bytes": 8388608,
+  "estimated_live_test_buffers_upper_bytes": 41943040,
+  "memory_limit_note": "128 MiB bounds diagnostic buffers, not Python/PyTorch imported-library RSS; observed process RSS is reported separately",
+  "temperature_before": [
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp10_input",
+      "label": "Core 8",
+      "milli_celsius": 46000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp12_input",
+      "label": "Core 10",
+      "milli_celsius": 48000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp13_input",
+      "label": "Core 11",
+      "milli_celsius": 56000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp14_input",
+      "label": "Core 12",
+      "milli_celsius": 58000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp16_input",
+      "label": "Core 14",
+      "milli_celsius": 46000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp1_input",
+      "label": "Package id 0",
+      "milli_celsius": 58000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp2_input",
+      "label": "Core 0",
+      "milli_celsius": 46000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp3_input",
+      "label": "Core 1",
+      "milli_celsius": 53000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp4_input",
+      "label": "Core 2",
+      "milli_celsius": 49000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp5_input",
+      "label": "Core 3",
+      "milli_celsius": 46000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp6_input",
+      "label": "Core 4",
+      "milli_celsius": 48000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp7_input",
+      "label": "Core 5",
+      "milli_celsius": 45000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp8_input",
+      "label": "Core 6",
+      "milli_celsius": 46000
+    }
+  ],
+  "iterations": 95,
+  "read_counts": {
+    "numpy_source": 190,
+    "ctypes_source": 190,
+    "torch_source": 190,
+    "numpy_clone": 190,
+    "ctypes_clone": 190,
+    "torch_clone": 190
+  },
+  "latest_hashes": {
+    "numpy_source": [
+      "f447927e68db9264c188d81196fd5a200ab2bda7ac6f2e4f65506185f2d1beae",
+      "f447927e68db9264c188d81196fd5a200ab2bda7ac6f2e4f65506185f2d1beae"
+    ],
+    "ctypes_source": [
+      "f447927e68db9264c188d81196fd5a200ab2bda7ac6f2e4f65506185f2d1beae",
+      "f447927e68db9264c188d81196fd5a200ab2bda7ac6f2e4f65506185f2d1beae"
+    ],
+    "torch_source": [
+      "f447927e68db9264c188d81196fd5a200ab2bda7ac6f2e4f65506185f2d1beae",
+      "f447927e68db9264c188d81196fd5a200ab2bda7ac6f2e4f65506185f2d1beae"
+    ],
+    "numpy_clone": [
+      "f447927e68db9264c188d81196fd5a200ab2bda7ac6f2e4f65506185f2d1beae",
+      "f447927e68db9264c188d81196fd5a200ab2bda7ac6f2e4f65506185f2d1beae"
+    ],
+    "ctypes_clone": [
+      "f447927e68db9264c188d81196fd5a200ab2bda7ac6f2e4f65506185f2d1beae",
+      "f447927e68db9264c188d81196fd5a200ab2bda7ac6f2e4f65506185f2d1beae"
+    ],
+    "torch_clone": [
+      "f447927e68db9264c188d81196fd5a200ab2bda7ac6f2e4f65506185f2d1beae",
+      "f447927e68db9264c188d81196fd5a200ab2bda7ac6f2e4f65506185f2d1beae"
+    ]
+  },
+  "torch_version": "2.2.1",
+  "numpy_version": "1.26.4",
+  "torch_threads": 1,
+  "torch_interop_threads": 1,
+  "rss_after_import_bytes": 363212800,
+  "reference_sha256": "f447927e68db9264c188d81196fd5a200ab2bda7ac6f2e4f65506185f2d1beae",
+  "shape": [
+    16,
+    8,
+    128,
+    128
+  ],
+  "stride": [
+    131072,
+    16384,
+    128,
+    1
+  ],
+  "contiguous": true,
+  "source_pointer": 596717472,
+  "interpretation": "No mismatch in this bounded test is not proof that the host is stable or safe to resume a 300k run",
+  "elapsed_seconds": 25.01438737846911,
+  "affinity_after": [
+    0
+  ],
+  "temperature_after": [
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp10_input",
+      "label": "Core 8",
+      "milli_celsius": 46000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp12_input",
+      "label": "Core 10",
+      "milli_celsius": 48000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp13_input",
+      "label": "Core 11",
+      "milli_celsius": 57000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp14_input",
+      "label": "Core 12",
+      "milli_celsius": 59000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp16_input",
+      "label": "Core 14",
+      "milli_celsius": 45000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp1_input",
+      "label": "Package id 0",
+      "milli_celsius": 60000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp2_input",
+      "label": "Core 0",
+      "milli_celsius": 60000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp3_input",
+      "label": "Core 1",
+      "milli_celsius": 47000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp4_input",
+      "label": "Core 2",
+      "milli_celsius": 50000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp5_input",
+      "label": "Core 3",
+      "milli_celsius": 46000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp6_input",
+      "label": "Core 4",
+      "milli_celsius": 48000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp7_input",
+      "label": "Core 5",
+      "milli_celsius": 45000
+    },
+    {
+      "path": "/sys/class/hwmon/hwmon0/temp8_input",
+      "label": "Core 6",
+      "milli_celsius": 45000
+    }
+  ],
+  "peak_rss_bytes": 466878464,
+  "script_sha256": "b5d25c86603a390f253ee1055a56b09ec489e113bc291b6fbb9b90449852484f"
+}

@@ -1,0 +1,32 @@
+{
+  "status": "failed",
+  "experiment": "C",
+  "group": "C",
+  "stage": "full",
+  "seed": 0,
+  "config_hash": "549edca2a6fa231b728c8cf3e027ab98010d5058ed03fa06a0a5774149c7e8c7",
+  "source_hash": "8f102b93c9db2bdf32a6bfa0e10afdfea83ee605dfdd748dd8bf9d864d07f219",
+  "process": {
+    "pid": 2619330,
+    "create_time": 1792592458.12,
+    "host": "imss"
+  },
+  "started_at": "2026-10-21T14:21:00Z",
+  "updated_at": "2026-10-21T14:27:53Z",
+  "ended_at": "2026-10-21T14:27:53Z",
+  "update": 1029,
+  "budget": 300000,
+  "durable_update": 0,
+  "checkpoint": null,
+  "loss": 0.022088902071118355,
+  "lr": 0.0003,
+  "seconds": 0.38741244189441204,
+  "elapsed_seconds": 410.6556839570403,
+  "input_sha256": "c657713bca48e67ff98be75f6ee2d12b744c99f451234364215520fb832b9605",
+  "target_sha256": "4c0087c2410ac85e6fcb77be528476f98bddceceea0f5ac423abfd6ae664826a",
+  "pixel_l1": 0.021849703043699265,
+  "structure": 0.004783971235156059,
+  "weighted_structure": 0.00023919856175780296,
+  "invocation_wall_seconds": 401.2243662253022,
+  "reason": "KeyboardInterrupt: "
+}

@@ -1,0 +1,177 @@
+{
+  "schema": "g1c_ddp_speed_public_v1",
+  "diagnostic_only": true,
+  "accepted_for_formal_switch": false,
+  "method": "G1C, original structure loss and AdamW, FP32, CPU torch threads=1, total batch16",
+  "single_gpu": {
+    "warmup_updates": 20,
+    "timed_updates": 30,
+    "all_input_checks_passed": true,
+    "stages": {
+      "seconds": {
+        "mean_seconds": 0.41778856987754504,
+        "median_seconds": 0.41240368969738483,
+        "p95_seconds": 0.45367629574611784,
+        "n": 30,
+        "p95_method": "linear interpolation of order statistics"
+      },
+      "original_optimizer_seconds": {
+        "mean_seconds": 0.09418924618512392,
+        "median_seconds": 0.09418865572661161,
+        "p95_seconds": 0.09532466614618898,
+        "n": 30,
+        "p95_method": "linear interpolation of order statistics"
+      },
+      "protected_optimizer_seconds": {
+        "mean_seconds": 0.18155995700508357,
+        "median_seconds": 0.18009334057569504,
+        "p95_seconds": 0.19586454881355167,
+        "n": 30,
+        "p95_method": "linear interpolation of order statistics"
+      },
+      "data_feed_and_other_seconds": {
+        "mean_seconds": 0.23622861287246147,
+        "median_seconds": 0.23173956107348204,
+        "p95_seconds": 0.2615018269047141,
+        "n": 30,
+        "p95_method": "linear interpolation of order statistics"
+      }
+    },
+    "gpu_count": 1,
+    "local_batch": 16
+  },
+  "ddp_rank0": {
+    "warmup_updates": 20,
+    "timed_updates": 30,
+    "all_input_checks_passed": true,
+    "stages": {
+      "seconds": {
+        "mean_seconds": 0.447245951431493,
+        "median_seconds": 0.44148778822273016,
+        "p95_seconds": 0.4847555973567068,
+        "n": 30,
+        "p95_method": "linear interpolation of order statistics"
+      },
+      "data_feed_seconds": {
+        "mean_seconds": 0.2637526830037435,
+        "median_seconds": 0.25744031742215157,
+        "p95_seconds": 0.29684257274493575,
+        "n": 30,
+        "p95_method": "linear interpolation of order statistics"
+      },
+      "distribution_checks_seconds": {
+        "mean_seconds": 0.03376316248128811,
+        "median_seconds": 0.0335866492241621,
+        "p95_seconds": 0.03544966643676162,
+        "n": 30,
+        "p95_method": "linear interpolation of order statistics"
+      },
+      "protected_optimizer_seconds": {
+        "mean_seconds": 0.1376499926050504,
+        "median_seconds": 0.13610463868826628,
+        "p95_seconds": 0.14399488996714355,
+        "n": 30,
+        "p95_method": "linear interpolation of order statistics"
+      },
+      "original_optimizer_seconds": {
+        "mean_seconds": 0.09489625692367554,
+        "median_seconds": 0.09431740175932646,
+        "p95_seconds": 0.0964296587742865,
+        "n": 30,
+        "p95_method": "linear interpolation of order statistics"
+      },
+      "post_checks_sync_seconds": {
+        "mean_seconds": 0.012082480204602083,
+        "median_seconds": 0.01169565785676241,
+        "p95_seconds": 0.014400956220924853,
+        "n": 30,
+        "p95_method": "linear interpolation of order statistics"
+      }
+    },
+    "gpu_count": 2,
+    "local_batch": 8
+  },
+  "ddp_rank1": {
+    "warmup_updates": 20,
+    "timed_updates": 30,
+    "all_input_checks_passed": true,
+    "stages": {
+      "seconds": {
+        "mean_seconds": 0.4472462447360158,
+        "median_seconds": 0.4415101520717144,
+        "p95_seconds": 0.4847590756602585,
+        "n": 30,
+        "p95_method": "linear interpolation of order statistics"
+      },
+      "data_feed_seconds": {
+        "mean_seconds": 0.00010248348116874695,
+        "median_seconds": 0.00010010693222284317,
+        "p95_seconds": 0.00011357516050338745,
+        "n": 30,
+        "p95_method": "linear interpolation of order statistics"
+      },
+      "distribution_checks_seconds": {
+        "mean_seconds": 0.29725260827690364,
+        "median_seconds": 0.29090384021401405,
+        "p95_seconds": 0.33016848443076013,
+        "n": 30,
+        "p95_method": "linear interpolation of order statistics"
+      },
+      "protected_optimizer_seconds": {
+        "mean_seconds": 0.13759038895368575,
+        "median_seconds": 0.13608034048229456,
+        "p95_seconds": 0.14318013088777662,
+        "n": 30,
+        "p95_method": "linear interpolation of order statistics"
+      },
+      "original_optimizer_seconds": {
+        "mean_seconds": 0.0951418478662769,
+        "median_seconds": 0.09432573616504669,
+        "p95_seconds": 0.09824024233967064,
+        "n": 30,
+        "p95_method": "linear interpolation of order statistics"
+      },
+      "post_checks_sync_seconds": {
+        "mean_seconds": 0.012303359682361285,
+        "median_seconds": 0.011678419075906277,
+        "p95_seconds": 0.017791389208286983,
+        "n": 30,
+        "p95_method": "linear interpolation of order statistics"
+      }
+    },
+    "gpu_count": 2,
+    "local_batch": 8
+  },
+  "ddp_protocol": "55 SyncBatchNorm layers; rank0 full-batch protected data and Mixup; rank0 full-batch PFA Gaussian fields broadcast then sliced; local actual inputs checked before/after optimizer",
+  "ddp_to_single_wall_ratio": 1.0705078685196725,
+  "throughput_speedup_single_to_ddp": 0.9341360576665609,
+  "formal_training_competition": false,
+  "formal_training_had_failed_before_measurement": true,
+  "source_sha256": "8f102b93c9db2bdf32a6bfa0e10afdfea83ee605dfdd748dd8bf9d864d07f219",
+  "source_unchanged": true,
+  "limitations": [
+    "One bounded timing run per configuration; 30 timed updates each.",
+    "Stage times are wall-clock and include CUDA synchronization/communication; they are not exclusive kernel timings.",
+    "Single-GPU data/feed/other is total minus protected optimizer; DDP stages were directly timed.",
+    "No model quality or statistical equivalence claims; this does not authorize changing a formal training trajectory."
+  ],
+  "conclusion": "No speed advantage observed: DDP was about 7.1% slower; do not switch solely for acceleration.",
+  "source_reports": [
+    {
+      "name": "single_performance_report.json",
+      "sha256": "7527ea910b104a1a28326982b478734b26cef4c9c197995e88e76d1c200c15c0"
+    },
+    {
+      "name": "ddp_performance_report_rank0.json",
+      "sha256": "90eb5decd83372fb43ad4a88c98b99c79cc0180f61764bd0d1a2224302539854"
+    },
+    {
+      "name": "ddp_performance_report_rank1.json",
+      "sha256": "de81b280ec736cdb8db78d54633f17b02a4fcd1e6242f9b57283bebbf40f8aa9"
+    },
+    {
+      "name": "ddp_strict_equivalence_original_report.json",
+      "sha256": "7906c1454a3b656f986f9c6a06a11a93a2ed91f77e3c8fae5e49d9f16c0b9052"
+    }
+  ]
+}

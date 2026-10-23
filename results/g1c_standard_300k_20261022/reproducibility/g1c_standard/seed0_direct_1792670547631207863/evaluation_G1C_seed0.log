@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reproducibility/g1c_standard/evaluate_direct.py", line 13, in <module>
+    e.main()
+  File "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/tools/evaluate_c_only.py", line 701, in main
+    evaluate_variant(paths, args.variant, args.output, args.device, args.seed)
+  File "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reproducibility/g1c_standard/evaluate_direct.py", line 7, in evaluate_variant
+    source=inspect.getsource(e.evaluate_variant)
+  File "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/tools/evaluate_c_only.py", line 514, in validated_gate
+    return validated_standard_gate(paths, variant, seed)
+  File "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/tools/evaluate_c_only.py", line 435, in validated_standard_gate
+    raise ValueError(f"Training asset identity mismatch: {field}")
+ValueError: Training asset identity mismatch: pretrained_sha256

@@ -1,0 +1,27 @@
+{
+  "strict_c0_params": true,
+  "fresh_adamw": true,
+  "fresh_scheduler": true,
+  "encoder_parameters_frozen": true,
+  "encoder_bn_training": true,
+  "fp32": true,
+  "encoder_parameter_sha256": "ad83b297caf8df4519ac1c34ced60e2d19d0ee0b9cc0758d2dca715c2afc5419",
+  "c0_metadata": {
+    "experiment": "B0",
+    "stage": "full",
+    "seed": 0,
+    "update": 300000,
+    "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+    "config_hash": "62054c2c2796f76a87bf339c88d31ffc7635d5eee7ba35754ab8b95860aded62"
+  },
+  "encoder_parameters_unchanged": true,
+  "encoder_bn_training_after": true,
+  "encoder_gradients_absent": true,
+  "last_checkpoint_sha256_verified": true,
+  "exact_reference_pre_post_every_update": true,
+  "shared_rng_unchanged_every_model_step": true,
+  "triplet_commit_update": 200,
+  "update": 200,
+  "complete": true,
+  "checked_at": "2026-10-21T09:50:51Z"
+}

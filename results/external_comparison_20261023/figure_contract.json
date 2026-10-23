@@ -1,0 +1,31 @@
+{
+  "core_conclusion": "Show the actual restoration appearance and full-image scores of available denoisers on four fixed noisy inputs without asserting that one model wins every example.",
+  "archetype": "image plate + quant",
+  "backend": "python",
+  "reuse_level": "style-only inheritance from the user-provided qualitative comparison layout",
+  "evidence_chain": {
+    "row1": "CBSD68 fixed example with Gaussian noise",
+    "row2": "McMaster fixed example with spatial Gaussian noise",
+    "row3": "Kodak24 fixed example with Poisson noise",
+    "row4": "Urban100 fixed example with the existing Gaussian multiplicative Speckle extension"
+  },
+  "columns": ["Noisy", "DnCNN [1]", "Restormer [3]", "MaskDenoising [10]", "B0", "Ours (G1)", "GT"],
+  "mapping": {
+    "images": "restored_zoom.png, clean_zoom.png and noisy_display_clipped_zoom.png at the same display_protocol.json ROI",
+    "metrics": "PSNR and SSIM for each whole evaluated image from selected_rows.json or inference metrics.json",
+    "replicates": "B0 and G1 training seed 0; one public pretrained checkpoint per external method",
+    "uncertainty": "None: individual image outputs, not multi-seed averages or statistical estimates"
+  },
+  "geometry": {"width_mm": 183, "min_font_pt": 5, "roi_pixels": [96, 96], "display_resampling": "nearest"},
+  "image_integrity": {
+    "local_adjustments": "none",
+    "brightness_contrast_gamma": "none",
+    "pseudo_color": "none",
+    "shared_roi": true,
+    "noisy_display_clipping": "[0,1] for display only; inference consumes common original noisy float input",
+    "missing_data": "Fail if any required image or score file is absent; never insert fabricated data"
+  },
+  "exclusions": {"requested_external_methods": 5, "available_external_methods": 3, "excluded_methods": ["HAT [11]", "DIL [12]"], "reason": "Matching pretrained weights unavailable; no substitute images permitted"},
+  "exports": ["PNG", "PDF", "SVG", "per-row PNG", "caption TXT", "source metrics CSV", "source image manifest JSON"],
+  "interpretation_limits": ["No claim of three-seed averaging", "No ranking or winner emphasis", "Public pretrained models may differ from the exact Table I training setup", "Speckle row retains the earlier Gaussian multiplicative extension protocol"]
+}

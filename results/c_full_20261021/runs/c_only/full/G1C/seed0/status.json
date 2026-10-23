@@ -1,0 +1,32 @@
+{
+  "status": "failed",
+  "experiment": "G1C",
+  "group": "G1C",
+  "stage": "full",
+  "seed": 0,
+  "config_hash": "3ba33b76f1d2e6163564f784ab3e29d3ab78d3cdab671a2f07e21599a8ef88d2",
+  "source_hash": "8f102b93c9db2bdf32a6bfa0e10afdfea83ee605dfdd748dd8bf9d864d07f219",
+  "process": {
+    "pid": 2619384,
+    "create_time": 1792592464.4,
+    "host": "imss"
+  },
+  "started_at": "2026-10-21T14:21:07Z",
+  "updated_at": "2026-10-21T14:32:05Z",
+  "ended_at": "2026-10-21T14:32:05Z",
+  "update": 1635,
+  "budget": 300000,
+  "durable_update": 0,
+  "checkpoint": null,
+  "loss": 0.02034051902592182,
+  "lr": 0.0003,
+  "seconds": 0.40369314327836037,
+  "elapsed_seconds": 656.2828268408775,
+  "input_sha256": "0f3319833ab55351c0013202edb1026e2ba9da88185357a2991ce5ceff9b3354",
+  "target_sha256": "c35d477cefe1ac4d3f45b5cfab3a8caed0e0f3a81c42b3333d951ac6cff6994c",
+  "pixel_l1": 0.020116712898015976,
+  "structure": 0.004476121626794338,
+  "weighted_structure": 0.00022380608425009996,
+  "invocation_wall_seconds": 642.6322690565139,
+  "reason": "InputProtectionError: Repeated actual tensor readback differs"
+}

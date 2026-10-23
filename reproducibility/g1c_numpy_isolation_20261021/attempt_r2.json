@@ -1,0 +1,13 @@
+{
+  "attempt_id": "numpy_isolation_r2",
+  "environment_manifest_path": "/home/imss/cw/CLIPDenoising_G1C_numpy_isolation_20261021/isolation_evidence/environment_manifest_r2.json",
+  "environment_manifest_sha256": "49694f24631539ba926a75876e948827e8d070339057b1c97872bd8c7155c25b",
+  "starter_path": "/tmp/g1c_isolated_validation_starter_r2.py",
+  "starter_sha256": "44eb10b94e0b273039f868182e343fd4aadd02aba04667c5a5630cf2f7fd56d0",
+  "launch_path": "reproducibility/isolated_validation_r2_launch.json",
+  "validation_state_path": "reproducibility/isolated_validation_r2_state.json",
+  "candidate_config_path": "reproducibility/candidate_numpy_isolation_r2.yaml",
+  "candidate_output_root": "runs/g1c_numpy_candidate_r2",
+  "candidate_reports_dir": "reports/g1c_numpy_candidate_r2",
+  "validation_tag": "numpy_isolation_validation10000"
+}

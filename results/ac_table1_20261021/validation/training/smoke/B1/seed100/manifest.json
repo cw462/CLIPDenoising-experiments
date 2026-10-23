@@ -1,0 +1,56 @@
+{
+  "group": "B1",
+  "stage": "smoke",
+  "seed": 100,
+  "budget": 200,
+  "config_hash": "dce67e647786ba19a9aeba599d9216a4d129bd3c2ceee88149cb552de9532257",
+  "source_hash": "733f3f9b0ace567f89121b15f10db812515179b63bf7953f35f11720251babf7",
+  "paired_protocol_hash": "ae562fde2bd26abf95fd4d78cdcb2af29d73febf04d3a928034d8b9571a3eaa8",
+  "git_commit": "3f6e1537a5c05bbbe93d7df413f7d3e60703045c",
+  "started_at": "2026-10-21T09:48:49Z",
+  "c0_path": "/home/imss/cw/CLIPDenoising_AC_Table1_20261021_r2/pretrained/synthetic_baseline.pth",
+  "c0_sha256": "123b9091a9c13b17da0e40f25f706efc8e5044ce5d8295bf5701eb1dd8f99675",
+  "initialization_checks": {
+    "strict_c0_params": true,
+    "fresh_adamw": true,
+    "fresh_scheduler": true,
+    "encoder_parameters_frozen": true,
+    "encoder_bn_training": true,
+    "fp32": true,
+    "encoder_parameter_sha256": "ad83b297caf8df4519ac1c34ced60e2d19d0ee0b9cc0758d2dca715c2afc5419",
+    "c0_metadata": {
+      "experiment": "B0",
+      "stage": "full",
+      "seed": 0,
+      "update": 300000,
+      "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+      "config_hash": "62054c2c2796f76a87bf339c88d31ffc7635d5eee7ba35754ab8b95860aded62"
+    }
+  },
+  "execution_contract": {
+    "schema": "ac_triplet_v2",
+    "groups": [
+      "B0",
+      "B1",
+      "B3"
+    ],
+    "batch": "one sampler/data/Mixup realization per seed/update",
+    "model_inputs": "independent contiguous clones; exact pre/post/reference checks",
+    "optimizer_and_pfa": "independent per group; model steps cannot consume shared RNG",
+    "recovery": "three validated checkpoints, then one atomic coordinator commit",
+    "determinism": {
+      "algorithms": true,
+      "warn_only": false,
+      "cudnn_benchmark": false,
+      "cudnn_deterministic": true,
+      "cudnn_allow_tf32": false,
+      "cuda_matmul_allow_tf32": false,
+      "cublas_workspace_config": ":4096:8",
+      "structure_reflect_padding": "one-pixel slices/concatenation; exact reflection values"
+    }
+  },
+  "paired_data_rng_seed": 10100,
+  "sampler_seed": 20100,
+  "independent_pfa_seed": 30100,
+  "checkpoint_every": 1000
+}

@@ -2,6 +2,7 @@ import torch
 from torch import nn as nn
 from torch.nn import functional as F
 import numpy as np
+import math
 
 from basicsr.models.losses.loss_util import weighted_loss
 
@@ -51,6 +52,65 @@ class L1Loss(nn.Module):
         """
         return self.loss_weight * l1_loss(
             pred, target, weight, reduction=self.reduction)
+
+def deterministic_reflect_pad_one(image):
+    """One-pixel reflection with fixed-order gradients instead of CUDA atomics."""
+    if image.ndim != 4 or min(image.shape[-2:]) < 2:
+        raise ValueError('One-pixel reflection requires NCHW with H,W >= 2')
+    width = torch.cat((image[..., 1:2], image, image[..., -2:-1]), dim=-1)
+    return torch.cat((width[..., 1:2, :], width, width[..., -2:-1, :]), dim=-2)
+
+
+class L1StructureLoss(nn.Module):
+    """Pixel L1 + Gaussian-smoothed, per-RGB Sobel Charbonnier matching.
+
+    Only mean reduction is defined by this experiment. Kernels are buffers;
+    this criterion introduces no trainable or inference-model parameters.
+    """
+    def __init__(self, loss_weight=1.0, reduction='mean', structure_weight=0.05, eps=1e-3,
+                 deterministic_reflect_padding=False):
+        super().__init__()
+        if reduction != 'mean':
+            raise ValueError("L1StructureLoss requires reduction='mean'")
+        for name, value in (("loss_weight", loss_weight), ("structure_weight", structure_weight), ("eps", eps)):
+            if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value < 0:
+                raise ValueError(f'{name} must be finite and nonnegative')
+        if eps == 0:
+            raise ValueError('eps must be positive')
+        if not isinstance(deterministic_reflect_padding, bool):
+            raise ValueError('deterministic_reflect_padding must be bool')
+        self.deterministic_reflect_padding = deterministic_reflect_padding
+        self.loss_weight, self.structure_weight, self.eps = loss_weight, structure_weight, eps
+        gaussian = torch.tensor([[1., 2., 1.], [2., 4., 2.], [1., 2., 1.]]) / 16
+        sobel = torch.tensor([[-1., 0., 1.], [-2., 0., 2.], [-1., 0., 1.]]) / 8
+        self.register_buffer('gaussian', gaussian[None, None])
+        self.register_buffer('sobel_x', sobel[None, None])
+        self.register_buffer('sobel_y', sobel.t().contiguous()[None, None])
+        self.last_components = {}
+
+    def _filter(self, image, kernel):
+        padded = (deterministic_reflect_pad_one(image) if self.deterministic_reflect_padding
+                  else F.pad(image, (1, 1, 1, 1), mode='reflect'))
+        return F.conv2d(padded,
+                        kernel.to(image).expand(3, 1, 3, 3), groups=3)
+
+    def forward(self, pred, target, weight=None, **kwargs):
+        if pred.shape != target.shape or pred.ndim != 4 or pred.shape[1] != 3 or min(pred.shape[-2:]) < 2:
+            raise ValueError('Expected matching NCHW RGB tensors with H,W >= 2')
+        if weight is not None:
+            raise ValueError('Element-wise weights are not defined for this structure loss')
+        pixel = l1_loss(pred, target, reduction='mean')
+        structure = pred.new_zeros(())
+        if self.structure_weight:
+            smooth_pred, smooth_target = self._filter(pred, self.gaussian), self._filter(target, self.gaussian)
+            for kernel in (self.sobel_x, self.sobel_y):
+                delta = self._filter(smooth_pred, kernel) - self._filter(smooth_target, kernel)
+                structure = structure + 0.5 * (torch.sqrt(delta.square() + self.eps ** 2) - self.eps).mean()
+        weighted = self.structure_weight * structure
+        self.last_components = {'pixel_l1': pixel.detach(), 'structure': structure.detach(),
+                                'weighted_structure': weighted.detach()}
+        return self.loss_weight * (pixel + weighted)
+
 
 class MSELoss(nn.Module):
     """MSE (L2) loss.

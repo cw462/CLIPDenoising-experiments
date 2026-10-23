@@ -1,0 +1,51 @@
+{
+  "group": "B0",
+  "stage": "smoke",
+  "seed": 100,
+  "updates": 200,
+  "budget": 200,
+  "completed": true,
+  "batch_size": 16,
+  "device": "NVIDIA GeForce RTX 3090",
+  "rho": 0.0,
+  "c0_sha256": "123b9091a9c13b17da0e40f25f706efc8e5044ce5d8295bf5701eb1dd8f99675",
+  "last_loss": 0.014565976336598396,
+  "last_pixel_l1": 0.014565976336598396,
+  "last_structure": 0.0,
+  "last_weighted_structure": 0.0,
+  "first_lr": 1e-05,
+  "last_lr": 1e-06,
+  "elapsed_seconds": 26.259996592998505,
+  "invocation_started_at": "2026-10-21T09:48:49Z",
+  "ended_at": "2026-10-21T09:50:50Z",
+  "invocation_wall_seconds": 121.15563265047967,
+  "checkpoint": "/home/imss/cw/CLIPDenoising_AC_Table1_20261021_r2/runs/ac/smoke/B0/seed100/checkpoints/update_000200.pth",
+  "checkpoint_sha256": "5554c66e9b6a329711f47286c0a14b300cf2914a97eb4837128f5eb8d02d7a62",
+  "execution_contract": {
+    "schema": "ac_triplet_v2",
+    "groups": [
+      "B0",
+      "B1",
+      "B3"
+    ],
+    "batch": "one sampler/data/Mixup realization per seed/update",
+    "model_inputs": "independent contiguous clones; exact pre/post/reference checks",
+    "optimizer_and_pfa": "independent per group; model steps cannot consume shared RNG",
+    "recovery": "three validated checkpoints, then one atomic coordinator commit",
+    "determinism": {
+      "algorithms": true,
+      "warn_only": false,
+      "cudnn_benchmark": false,
+      "cudnn_deterministic": true,
+      "cudnn_allow_tf32": false,
+      "cuda_matmul_allow_tf32": false,
+      "cublas_workspace_config": ":4096:8",
+      "structure_reflect_padding": "one-pixel slices/concatenation; exact reflection values"
+    }
+  },
+  "mean_update_seconds_after_warmup": 0.12736491634461442,
+  "mean_triplet_wall_seconds_after_warmup": 0.547399829945674,
+  "peak_allocated_mib": 3021.2685546875,
+  "peak_reserved_mib": 3874.0,
+  "training_result_claim": "Runtime/stability verification only"
+}

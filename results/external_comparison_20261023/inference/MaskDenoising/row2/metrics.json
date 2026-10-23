@@ -1,0 +1,36 @@
+{
+  "psnr": 24.904485522983038,
+  "ssim": 0.7386532743282076,
+  "crop_psnr": 23.059264221796898,
+  "crop_ssim": 0.7772586100472605,
+  "method": "MaskDenoising",
+  "row_id": "row2",
+  "dataset": "McMaster",
+  "image_id": "1.tif",
+  "noise_type": "spatial_gaussian",
+  "noise_level": 50,
+  "noise_sha256": "6a66506fc5fe68228258c9ad65e74ab95230617437be8e88f7a8a5030f8a7173",
+  "mask_seed": 1,
+  "forward_seconds": 3.3622227422893047,
+  "crop": {
+    "x": 202,
+    "y": 202,
+    "width": 96,
+    "height": 96,
+    "error_scale": [
+      0,
+      0.2
+    ],
+    "signed_maps_scale": [
+      -0.1,
+      0.1
+    ],
+    "warning": "Gate is correction modulation, not a noise probability",
+    "offline_regions": "GT grayscale gradient: flat <.02; texture [.02,.08); edge >=.08"
+  },
+  "metric_scope": "Full image RGB PSNR/SSIM from float output, border=0; crop metrics recorded separately",
+  "source_weights": "Official public RGB Gaussian sigma15 checkpoint",
+  "input_protocol": "Exact saved report noisy float32 array; input not clipped or regenerated",
+  "speckle_note": "The report uses Gaussian multiplicative Speckle, no clipping; this is its existing extension protocol, not MATLAB imnoise",
+  "training_performed": false
+}

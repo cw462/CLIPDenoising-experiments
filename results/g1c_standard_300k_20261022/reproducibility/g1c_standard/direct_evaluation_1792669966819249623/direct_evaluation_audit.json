@@ -1,0 +1,9 @@
+{
+  "authorization": "User requested direct evaluation without added recovery checks",
+  "at": "2026-10-22T11:52:46Z",
+  "recovery_prechecks_performed": false,
+  "evaluation_program": "original unchanged tools/evaluate_c_only.py",
+  "seed1_reused": true,
+  "training_restarted": false,
+  "archive": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reproducibility/g1c_standard/direct_evaluation_1792669966819249623"
+}

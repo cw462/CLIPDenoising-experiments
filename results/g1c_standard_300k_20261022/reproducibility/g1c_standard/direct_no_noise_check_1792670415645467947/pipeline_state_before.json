@@ -1,0 +1,266 @@
+{
+  "identity": {
+    "source_hash": "86d821ff44713da6918b73f92ed7b9e2a7b3d83f53082eef9c82f36a654a534d",
+    "config_sha256": "9ba8dcdea71c06d9591c865bd85644b81a2c04770fcc0aabfc6bc820bdc22eb8"
+  },
+  "status": "failed",
+  "phase": "evaluation",
+  "started_at": "2026-10-22T01:20:03Z",
+  "jobs": {
+    "full_G1C_seed0": {
+      "command": [
+        "env",
+        "OMP_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "CUBLAS_WORKSPACE_CONFIG=:4096:8",
+        "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/.venv/bin/python",
+        "tools/run_g1c_standard.py",
+        "--seed",
+        "0",
+        "--paths",
+        "configs/plan_g1c_standard_server.yaml",
+        "--resume"
+      ],
+      "kind": "train",
+      "status": "completed",
+      "exit_file": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/runs/g1c_standard/jobs/full_G1C_seed0.exit.json",
+      "log": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reports/g1c_standard/jobs/full_G1C_seed0.log",
+      "run_dir": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/runs/g1c_standard/full/G1C/seed0",
+      "preferred_gpu": 0,
+      "gpu": 0,
+      "started_at": "2026-10-22T01:20:06Z",
+      "process": {
+        "pid": 2946057,
+        "create_time": 1792632006.37,
+        "host": "imss"
+      },
+      "update": 300000,
+      "returncode": 0,
+      "ended_at": "2026-10-22T10:29:45Z"
+    },
+    "full_G1C_seed1": {
+      "command": [
+        "env",
+        "OMP_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "CUBLAS_WORKSPACE_CONFIG=:4096:8",
+        "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/.venv/bin/python",
+        "tools/run_g1c_standard.py",
+        "--seed",
+        "1",
+        "--paths",
+        "configs/plan_g1c_standard_server.yaml",
+        "--resume"
+      ],
+      "kind": "train",
+      "status": "completed",
+      "exit_file": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/runs/g1c_standard/jobs/full_G1C_seed1.exit.json",
+      "log": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reports/g1c_standard/jobs/full_G1C_seed1.log",
+      "run_dir": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/runs/g1c_standard/full/G1C/seed1",
+      "preferred_gpu": 1,
+      "gpu": 1,
+      "started_at": "2026-10-22T01:20:12Z",
+      "process": {
+        "pid": 2946258,
+        "create_time": 1792632012.58,
+        "host": "imss"
+      },
+      "update": 300000,
+      "returncode": 0,
+      "ended_at": "2026-10-22T10:29:45Z"
+    },
+    "full_G1C_seed2": {
+      "command": [
+        "env",
+        "OMP_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "CUBLAS_WORKSPACE_CONFIG=:4096:8",
+        "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/.venv/bin/python",
+        "tools/run_g1c_standard.py",
+        "--seed",
+        "2",
+        "--paths",
+        "configs/plan_g1c_standard_server.yaml",
+        "--resume"
+      ],
+      "kind": "train",
+      "status": "completed",
+      "exit_file": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/runs/g1c_standard/jobs/full_G1C_seed2.exit.json",
+      "log": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reports/g1c_standard/jobs/full_G1C_seed2.log",
+      "run_dir": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/runs/g1c_standard/full/G1C/seed2",
+      "preferred_gpu": 0,
+      "gpu": 0,
+      "process": {
+        "pid": 3213999,
+        "create_time": 1792660661.07,
+        "host": "imss"
+      },
+      "update": 300000,
+      "migration_history": [
+        {
+          "archive": "reproducibility/g1c_standard/migration_attempts/1792660656229110113",
+          "from_gpu": 1,
+          "to_gpu": 0,
+          "checkpoint_update": 240000
+        }
+      ],
+      "started_at": "2026-10-22T09:17:41Z",
+      "returncode": 0,
+      "ended_at": "2026-10-22T10:29:45Z"
+    },
+    "evaluation_G1C_seed0": {
+      "command": [
+        "env",
+        "OMP_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "CUBLAS_WORKSPACE_CONFIG=:4096:8",
+        "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/.venv/bin/python",
+        "tools/evaluate_c_only.py",
+        "--variant",
+        "G1C",
+        "--seed",
+        "0",
+        "--paths",
+        "configs/plan_g1c_standard_server.yaml",
+        "--output",
+        "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reports/g1c_standard/evaluation",
+        "--device",
+        "cuda"
+      ],
+      "kind": "eval",
+      "status": "running",
+      "exit_file": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/runs/g1c_standard/jobs/evaluation_G1C_seed0.exit.json",
+      "log": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reports/g1c_standard/jobs/evaluation_G1C_seed0.log",
+      "preferred_gpu": 0,
+      "gpu": 0,
+      "started_at": "2026-10-22T11:52:50Z",
+      "process": {
+        "pid": 3295479,
+        "create_time": 1792669969.72,
+        "host": "imss"
+      }
+    },
+    "evaluation_G1C_seed1": {
+      "command": [
+        "env",
+        "OMP_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "CUBLAS_WORKSPACE_CONFIG=:4096:8",
+        "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/.venv/bin/python",
+        "tools/evaluate_c_only.py",
+        "--variant",
+        "G1C",
+        "--seed",
+        "1",
+        "--paths",
+        "configs/plan_g1c_standard_server.yaml",
+        "--output",
+        "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reports/g1c_standard/evaluation",
+        "--device",
+        "cuda"
+      ],
+      "kind": "eval",
+      "status": "completed",
+      "exit_file": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/runs/g1c_standard/jobs/evaluation_G1C_seed1.exit.json",
+      "log": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reports/g1c_standard/jobs/evaluation_G1C_seed1.log",
+      "preferred_gpu": 1,
+      "gpu": 1,
+      "started_at": "2026-10-22T10:29:55Z",
+      "process": {
+        "pid": 3254295,
+        "create_time": 1792664994.97,
+        "host": "imss"
+      },
+      "returncode": 0,
+      "ended_at": "2026-10-22T11:56:09Z"
+    },
+    "evaluation_G1C_seed2": {
+      "command": [
+        "env",
+        "OMP_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "CUBLAS_WORKSPACE_CONFIG=:4096:8",
+        "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/.venv/bin/python",
+        "tools/evaluate_c_only.py",
+        "--variant",
+        "G1C",
+        "--seed",
+        "2",
+        "--paths",
+        "configs/plan_g1c_standard_server.yaml",
+        "--output",
+        "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reports/g1c_standard/evaluation",
+        "--device",
+        "cuda"
+      ],
+      "kind": "eval",
+      "status": "failed",
+      "exit_file": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/runs/g1c_standard/jobs/evaluation_G1C_seed2.exit.json",
+      "log": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reports/g1c_standard/jobs/evaluation_G1C_seed2.log",
+      "preferred_gpu": 1,
+      "gpu": 1,
+      "started_at": "2026-10-22T11:52:56Z",
+      "process": {
+        "pid": 3295526,
+        "create_time": 1792669975.95,
+        "host": "imss"
+      },
+      "returncode": 1,
+      "ended_at": "2026-10-22T11:56:09Z"
+    }
+  },
+  "protocol": {
+    "variant": "G1C",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "updates_per_run": 300000,
+    "formal_optimizer_updates": 900000,
+    "batch": 16,
+    "fp32": true,
+    "loss": "L1 + 0.05 * smoothed-gradient structure loss",
+    "baseline": "archived G1 seed0/seed1/seed2, paired by training seed",
+    "initialization": "RN50 plus original G1 initialization for each same seed",
+    "fresh_training": true,
+    "ddp": false,
+    "new_inference_rows": 9450,
+    "reused_baseline_rows": 9450,
+    "historical_trajectory": "full historical per-step inputs unavailable; not claimed bitwise identical",
+    "planned_gpu_assignment": {
+      "0": 0,
+      "1": 1,
+      "2": 1
+    },
+    "concurrency": "GPU0 seed0; GPU1 independent seeds1 and2; no DDP",
+    "training_integrity_mode": "standard_user_requested_v1",
+    "per_update_input_consistency_checks": false,
+    "training_entrypoint": "tools/run_g1c_standard.py",
+    "authorization": "User explicitly requested ordinary legacy-style training without additional input consistency checks",
+    "retained_checks": "finite loss/gradients, normal checkpoints, complete update count and frozen encoder",
+    "known_host_issue": "Prior host read/write discrepancies remain documented; ordinary training does not verify their absence",
+    "gpu_assignment_after_migration": {
+      "0": 0,
+      "1": 1,
+      "2": 0
+    },
+    "migration_audit": "reproducibility/g1c_standard/migration_audit.json"
+  },
+  "process": {
+    "pid": 3295386,
+    "create_time": 1792669965.5,
+    "host": "imss"
+  },
+  "updated_at": "2026-10-22T11:56:09Z",
+  "asset_paths_present": true,
+  "direct_evaluation_audit": "/home/imss/cw/CLIPDenoising_G1C_Standard_20261022/reproducibility/g1c_standard/direct_evaluation_1792669966819249623/direct_evaluation_audit.json",
+  "reason": "Task failed; preserve exit record without retry: evaluation_G1C_seed2",
+  "ended_at": "2026-10-22T11:56:09Z"
+}

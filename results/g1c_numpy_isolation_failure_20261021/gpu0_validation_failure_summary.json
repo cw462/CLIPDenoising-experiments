@@ -1,0 +1,259 @@
+{
+  "schema": "g1c_numpy_isolation_gpu0_failure_v1",
+  "status": "failed",
+  "attempt": "numpy_isolation_r2",
+  "variant": "G1C",
+  "training_seed": 0,
+  "physical_gpu": 0,
+  "diagnostic_tag": "numpy_isolation_validation10000",
+  "configured_training_budget": 300000,
+  "diagnostic_target_updates": 10000,
+  "last_successful_update": 760,
+  "failed_attempted_update": 761,
+  "complete_train_rows": 760,
+  "complete_input_proof_rows": 760,
+  "durable_checkpoint_update": 0,
+  "formal_training_started": false,
+  "final_results_valid": false,
+  "automatic_retry_allowed": false,
+  "timestamp_utc": "2026-10-21T15:14:35Z",
+  "identity": {
+    "scientific_commit": "af56111ad0fe5d9355ff89b16db7568b0a918682",
+    "source_hash": "51c704dfa85f9cbe938e13984cf063e15c92eaebdf358c5b76cdaad994e2ce54",
+    "base_config_sha256": "28b5eb5506852ea40cceb5b111a42bbf83c7d31699b9431d04a75545f6d3f950",
+    "environment_manifest_sha256": "49694f24631539ba926a75876e948827e8d070339057b1c97872bd8c7155c25b",
+    "candidate_config_sha256": "9c8b92485603fa497558af1775e845469cdc1d709adcb4b8d01713e9fe8a1d75",
+    "candidate_config_path": "/home/imss/cw/CLIPDenoising_G1C_Seeds_20261021/reproducibility/candidate_numpy_isolation_r2.yaml",
+    "environment_manifest_path": "/home/imss/cw/CLIPDenoising_G1C_numpy_isolation_20261021/isolation_evidence/environment_manifest_r2.json",
+    "starter_sha256": "44eb10b94e0b273039f868182e343fd4aadd02aba04667c5a5630cf2f7fd56d0",
+    "python": "/home/imss/cw/CLIPDenoising_G1C_numpy_isolation_20261021/bin/python"
+  },
+  "training_config_hash": "27af9c2836f95194000052d0f7ea4eb8ded3a7835599d7baf2838a640e9d297f",
+  "failure_reason": "Repeated actual tensor readback differs",
+  "failure_location": {
+    "phase": "feed_train_data, first Mixup result snapshot before optimization",
+    "source_file": "tools/run_c_only_experiment.py",
+    "call_site_line": 269,
+    "checked_clone_line": 170,
+    "tensor_bytes_failure_line": 133,
+    "actual_tensor": "independent GPU clone of first/gt",
+    "storage_original_device": "cuda:0",
+    "dtype": "torch.float32",
+    "shape": [
+      16,
+      3,
+      128,
+      128
+    ],
+    "stride": [
+      49152,
+      16384,
+      128,
+      1
+    ],
+    "alias_evidence": "The saved actual tensor has its own storage, distinct from first/gt and all raw CPU tensors; its bytes equal first/gt. The trace failed in tensor_bytes(result) while checking the clone.",
+    "cause_boundary": "Original device identifies the checked tensor, not the location of the root cause. GPU-to-CPU transfer and subsequent CPU read/copy are both inside the checked path."
+  },
+  "byte_comparison": {
+    "byte_count": [
+      3145728,
+      3145728
+    ],
+    "different_byte_count": 1,
+    "differences": [
+      {
+        "byte_offset": 131999,
+        "byte_values": [
+          61,
+          63
+        ],
+        "float32_index": 32999,
+        "tensor_coordinate": [
+          0,
+          2,
+          1,
+          103
+        ],
+        "float32_values": [
+          0.0784313753247261,
+          1.2549020051956177
+        ],
+        "float32_xor": "0x2000000"
+      }
+    ],
+    "first_sha256": "3759f1a3533802a58c58b282e9505a024afb8032bd56da56394a1bf534cf31d2",
+    "second_sha256": "286c123c92819bd8778f9ac5c7aebb9ececb569aff960ed98cf7f802a1085e98",
+    "actual_saved_sha256": "3759f1a3533802a58c58b282e9505a024afb8032bd56da56394a1bf534cf31d2"
+  },
+  "saved_tensor_comparison": {
+    "evidence/raw/lq": {
+      "original_device": "cpu",
+      "dtype": "torch.float32",
+      "shape": [
+        16,
+        3,
+        128,
+        128
+      ],
+      "stride": [
+        49152,
+        16384,
+        128,
+        1
+      ],
+      "storage_offset": 0,
+      "aliases_actual": false,
+      "sha256": "f3ed045edf28ed7b16e0b03b896e1561776c61722362462c33d4df0afdb931d9",
+      "matches_first_bytes": false,
+      "matches_second_bytes": false
+    },
+    "evidence/raw/gt": {
+      "original_device": "cpu",
+      "dtype": "torch.float32",
+      "shape": [
+        16,
+        3,
+        128,
+        128
+      ],
+      "stride": [
+        49152,
+        16384,
+        128,
+        1
+      ],
+      "storage_offset": 0,
+      "aliases_actual": false,
+      "sha256": "3759f1a3533802a58c58b282e9505a024afb8032bd56da56394a1bf534cf31d2",
+      "matches_first_bytes": true,
+      "matches_second_bytes": false
+    },
+    "evidence/raw_snapshot/lq": {
+      "original_device": "cpu",
+      "dtype": "torch.float32",
+      "shape": [
+        16,
+        3,
+        128,
+        128
+      ],
+      "stride": [
+        49152,
+        16384,
+        128,
+        1
+      ],
+      "storage_offset": 0,
+      "aliases_actual": false,
+      "sha256": "f3ed045edf28ed7b16e0b03b896e1561776c61722362462c33d4df0afdb931d9",
+      "matches_first_bytes": false,
+      "matches_second_bytes": false
+    },
+    "evidence/raw_snapshot/gt": {
+      "original_device": "cpu",
+      "dtype": "torch.float32",
+      "shape": [
+        16,
+        3,
+        128,
+        128
+      ],
+      "stride": [
+        49152,
+        16384,
+        128,
+        1
+      ],
+      "storage_offset": 0,
+      "aliases_actual": false,
+      "sha256": "3759f1a3533802a58c58b282e9505a024afb8032bd56da56394a1bf534cf31d2",
+      "matches_first_bytes": true,
+      "matches_second_bytes": false
+    },
+    "evidence/first/lq": {
+      "original_device": "cuda:0",
+      "dtype": "torch.float32",
+      "shape": [
+        16,
+        3,
+        128,
+        128
+      ],
+      "stride": [
+        49152,
+        16384,
+        128,
+        1
+      ],
+      "storage_offset": 0,
+      "aliases_actual": false,
+      "sha256": "f3ed045edf28ed7b16e0b03b896e1561776c61722362462c33d4df0afdb931d9",
+      "matches_first_bytes": false,
+      "matches_second_bytes": false
+    },
+    "evidence/first/gt": {
+      "original_device": "cuda:0",
+      "dtype": "torch.float32",
+      "shape": [
+        16,
+        3,
+        128,
+        128
+      ],
+      "stride": [
+        49152,
+        16384,
+        128,
+        1
+      ],
+      "storage_offset": 0,
+      "aliases_actual": false,
+      "sha256": "3759f1a3533802a58c58b282e9505a024afb8032bd56da56394a1bf534cf31d2",
+      "matches_first_bytes": true,
+      "matches_second_bytes": false
+    },
+    "evidence/comparison_failure/actual": {
+      "original_device": "cuda:0",
+      "dtype": "torch.float32",
+      "shape": [
+        16,
+        3,
+        128,
+        128
+      ],
+      "stride": [
+        49152,
+        16384,
+        128,
+        1
+      ],
+      "storage_offset": 0,
+      "aliases_actual": true,
+      "sha256": "3759f1a3533802a58c58b282e9505a024afb8032bd56da56394a1bf534cf31d2",
+      "matches_first_bytes": true,
+      "matches_second_bytes": false
+    }
+  },
+  "private_evidence": {
+    "remote_path": "/home/imss/cw/CLIPDenoising_G1C_Seeds_20261021/runs/g1c_numpy_candidate_r2/full/G1C/seed0/numpy_isolation_validation10000/input_failure/update_000761_1792595675193823293.pth",
+    "bytes": 32187631,
+    "sha256": "d7aef07c65e9904d507ef4c3084d4bb7dc6cc9cbce8b873847840f2a495d6271",
+    "local_sftp_sha256_verified": true,
+    "raw_payload_published": false
+  },
+  "private_log_fingerprints": {
+    "train.jsonl": {
+      "rows": 760,
+      "sha256": "8c806b5c457c2fe22a5415834cb39a5f6165dbaac9ad678aa1897d5868a4ffa6"
+    },
+    "input_protection.jsonl": {
+      "rows": 760,
+      "sha256": "f49253ea06ae3750d83d8d8dc6d03422c8fa5953525a8d641fbdf032b1039b4e"
+    },
+    "failure.txt": {
+      "sha256": "301556d809f708eb216f493edf15f6aa0aaa820e99bc0fdffc5e5ea983b6e306"
+    }
+  },
+  "environment_interpretation": "Official NumPy 1.26.4 wheel isolation and dependency repair did not prevent this observed failure. The unchanged single-thread guarded training path was stopped; no root-cause repair or complete training success is claimed.",
+  "decision": "Retire this environment candidate. Preserve all failed attempts, do not retry automatically, and do not start formal 300k runs on the strength of these diagnostics."
+}

@@ -1,0 +1,659 @@
+{
+  "files": [
+    {
+      "path": "reports/g1c_standard/final/ood_difference_seedwise.csv",
+      "remote_bytes": 481
+    },
+    {
+      "path": "reports/g1c_standard/final/table1_seedwise.csv",
+      "remote_bytes": 3018
+    },
+    {
+      "path": "reports/g1c_standard/final/ood_seedwise.csv",
+      "remote_bytes": 935
+    },
+    {
+      "path": "reports/g1c_standard/final/ood_summary.csv",
+      "remote_bytes": 544
+    },
+    {
+      "path": "reports/g1c_standard/final/ood_difference_summary.csv",
+      "remote_bytes": 331
+    },
+    {
+      "path": "reports/g1c_standard/final/experiment_report.md",
+      "remote_bytes": 1180
+    },
+    {
+      "path": "reports/g1c_standard/final/condition_seedwise.csv",
+      "remote_bytes": 44619
+    },
+    {
+      "path": "reports/g1c_standard/final/table1_conditions.csv",
+      "remote_bytes": 1916
+    },
+    {
+      "path": "reports/g1c_standard/final/per_image_results.csv",
+      "remote_bytes": 10434343
+    },
+    {
+      "path": "reports/g1c_standard/final/condition_summary.csv",
+      "remote_bytes": 14805
+    },
+    {
+      "path": "reports/g1c_standard/final/same_seed_condition_summary.csv",
+      "remote_bytes": 17134
+    },
+    {
+      "path": "reports/g1c_standard/final/id_summary.csv",
+      "remote_bytes": 1380
+    },
+    {
+      "path": "reports/g1c_standard/final/summary.json",
+      "remote_bytes": 839
+    },
+    {
+      "path": "reports/g1c_standard/final/same_seed_comparisons.csv",
+      "remote_bytes": 2919147
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed2/per_image_results.csv",
+      "remote_bytes": 1863944
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed2/summary.json",
+      "remote_bytes": 50892
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed2/access_gate.json",
+      "remote_bytes": 399
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed2/baseline_per_image_results.csv",
+      "remote_bytes": 1603163
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed2/panels/CBSD68_poisson_3.5/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed2/panels/CBSD68_poisson_3.5_panel.png",
+      "remote_bytes": 91586
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed2/panels/Kodak24_salt_pepper_0.02/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed2/panels/CBSD68_spatial_gaussian_55_panel.png",
+      "remote_bytes": 84670
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed2/panels/CBSD68_spatial_gaussian_55/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed2/panels/Urban100_gaussian_50/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed2/panels/McMaster_spatial_gaussian_55_panel.png",
+      "remote_bytes": 88981
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed2/panels/CBSD68_gaussian_50_panel.png",
+      "remote_bytes": 95927
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed2/panels/CBSD68_gaussian_50/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed2/panels/Urban100_gaussian_50_panel.png",
+      "remote_bytes": 92234
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed2/panels/McMaster_spatial_gaussian_55/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed2/panels/Kodak24_salt_pepper_0.02_panel.png",
+      "remote_bytes": 60067
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed1/per_image_results.csv",
+      "remote_bytes": 1864018
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed1/summary.json",
+      "remote_bytes": 50935
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed1/access_gate.json",
+      "remote_bytes": 399
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed1/baseline_per_image_results.csv",
+      "remote_bytes": 1603152
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed1/panels/CBSD68_poisson_3.5/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed1/panels/CBSD68_poisson_3.5_panel.png",
+      "remote_bytes": 91558
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed1/panels/Kodak24_salt_pepper_0.02/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed1/panels/CBSD68_spatial_gaussian_55_panel.png",
+      "remote_bytes": 84540
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed1/panels/CBSD68_spatial_gaussian_55/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed1/panels/Urban100_gaussian_50/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed1/panels/McMaster_spatial_gaussian_55_panel.png",
+      "remote_bytes": 88952
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed1/panels/CBSD68_gaussian_50_panel.png",
+      "remote_bytes": 94717
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed1/panels/CBSD68_gaussian_50/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed1/panels/Urban100_gaussian_50_panel.png",
+      "remote_bytes": 90601
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed1/panels/McMaster_spatial_gaussian_55/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed1/panels/Kodak24_salt_pepper_0.02_panel.png",
+      "remote_bytes": 60311
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed0/per_image_results.csv",
+      "remote_bytes": 1864124
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed0/summary.json",
+      "remote_bytes": 47992
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed0/access_gate.json",
+      "remote_bytes": 443
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed0/baseline_per_image_results.csv",
+      "remote_bytes": 1603165
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed0/panels/CBSD68_poisson_3.5/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed0/panels/CBSD68_poisson_3.5_panel.png",
+      "remote_bytes": 91380
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed0/panels/Kodak24_salt_pepper_0.02/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed0/panels/CBSD68_spatial_gaussian_55_panel.png",
+      "remote_bytes": 84475
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed0/panels/CBSD68_spatial_gaussian_55/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed0/panels/Urban100_gaussian_50/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed0/panels/McMaster_spatial_gaussian_55_panel.png",
+      "remote_bytes": 88916
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed0/panels/CBSD68_gaussian_50_panel.png",
+      "remote_bytes": 93623
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed0/panels/CBSD68_gaussian_50/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed0/panels/Urban100_gaussian_50_panel.png",
+      "remote_bytes": 90383
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed0/panels/McMaster_spatial_gaussian_55/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reports/g1c_standard/evaluation/G1C/seed0/panels/Kodak24_salt_pepper_0.02_panel.png",
+      "remote_bytes": 59936
+    },
+    {
+      "path": "reproducibility/g1c_standard/evaluation_failed_case_recheck.json",
+      "remote_bytes": 1794
+    },
+    {
+      "path": "reproducibility/g1c_standard/launch.json",
+      "remote_bytes": 468
+    },
+    {
+      "path": "reproducibility/g1c_standard/migration_retry_once.json",
+      "remote_bytes": 1709
+    },
+    {
+      "path": "reproducibility/g1c_standard/summarize_direct.py",
+      "remote_bytes": 4631
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670547631207863/evaluation_G1C_seed0.exit.json",
+      "remote_bytes": 586
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670547631207863/evaluation_G1C_seed0.log",
+      "remote_bytes": 967
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670547631207863/failure.txt",
+      "remote_bytes": 614
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670547631207863/pipeline_state_before.json",
+      "remote_bytes": 9302
+    },
+    {
+      "path": "reproducibility/g1c_standard/migration_status.json",
+      "remote_bytes": 1213
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_no_noise_check_1792670415645467947/seed2_partial/access_gate.json",
+      "remote_bytes": 399
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_no_noise_check_1792670415645467947/seed2_partial/panels/CBSD68_poisson_3.5/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_no_noise_check_1792670415645467947/seed2_partial/panels/CBSD68_poisson_3.5_panel.png",
+      "remote_bytes": 91586
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_no_noise_check_1792670415645467947/seed2_partial/panels/Kodak24_salt_pepper_0.02/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_no_noise_check_1792670415645467947/seed2_partial/panels/CBSD68_spatial_gaussian_55_panel.png",
+      "remote_bytes": 84670
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_no_noise_check_1792670415645467947/seed2_partial/panels/CBSD68_spatial_gaussian_55/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_no_noise_check_1792670415645467947/seed2_partial/panels/Urban100_gaussian_50/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_no_noise_check_1792670415645467947/seed2_partial/panels/McMaster_spatial_gaussian_55_panel.png",
+      "remote_bytes": 88981
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_no_noise_check_1792670415645467947/seed2_partial/panels/CBSD68_gaussian_50_panel.png",
+      "remote_bytes": 95927
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_no_noise_check_1792670415645467947/seed2_partial/panels/CBSD68_gaussian_50/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_no_noise_check_1792670415645467947/seed2_partial/panels/Urban100_gaussian_50_panel.png",
+      "remote_bytes": 92234
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_no_noise_check_1792670415645467947/seed2_partial/panels/McMaster_spatial_gaussian_55/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_no_noise_check_1792670415645467947/seed2_partial/panels/Kodak24_salt_pepper_0.02_panel.png",
+      "remote_bytes": 60067
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_no_noise_check_1792670415645467947/authorization.json",
+      "remote_bytes": 162
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_no_noise_check_1792670415645467947/pipeline_state_before.json",
+      "remote_bytes": 9261
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_no_noise_check_1792670415645467947/evaluation_G1C_seed2.exit.json",
+      "remote_bytes": 564
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_no_noise_check_1792670415645467947/evaluation_G1C_seed2.log",
+      "remote_bytes": 3588
+    },
+    {
+      "path": "reproducibility/g1c_standard/evaluate_direct.py",
+      "remote_bytes": 2064
+    },
+    {
+      "path": "reproducibility/g1c_standard/migration_plan.json",
+      "remote_bytes": 2493
+    },
+    {
+      "path": "reproducibility/g1c_standard/resume_parallel_direct.py",
+      "remote_bytes": 1753
+    },
+    {
+      "path": "reproducibility/g1c_standard/child_stop_observations_2946310_1792660656298795901.json",
+      "remote_bytes": 630
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670469877847081/evaluation_G1C_seed0.exit.json",
+      "remote_bytes": 563
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670469877847081/evaluation_G1C_seed0.log",
+      "remote_bytes": 3979
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670469877847081/failure.txt",
+      "remote_bytes": 517
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670469877847081/seed0_partial/access_gate.json",
+      "remote_bytes": 399
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670469877847081/seed0_partial/panels/CBSD68_poisson_3.5/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670469877847081/seed0_partial/panels/CBSD68_poisson_3.5_panel.png",
+      "remote_bytes": 91380
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670469877847081/seed0_partial/panels/Kodak24_salt_pepper_0.02/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670469877847081/seed0_partial/panels/CBSD68_spatial_gaussian_55_panel.png",
+      "remote_bytes": 84475
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670469877847081/seed0_partial/panels/CBSD68_spatial_gaussian_55/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670469877847081/seed0_partial/panels/Urban100_gaussian_50/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670469877847081/seed0_partial/panels/McMaster_spatial_gaussian_55_panel.png",
+      "remote_bytes": 88916
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670469877847081/seed0_partial/panels/CBSD68_gaussian_50_panel.png",
+      "remote_bytes": 93623
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670469877847081/seed0_partial/panels/CBSD68_gaussian_50/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670469877847081/seed0_partial/panels/Urban100_gaussian_50_panel.png",
+      "remote_bytes": 90383
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670469877847081/seed0_partial/panels/McMaster_spatial_gaussian_55/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670469877847081/seed0_partial/panels/Kodak24_salt_pepper_0.02_panel.png",
+      "remote_bytes": 59936
+    },
+    {
+      "path": "reproducibility/g1c_standard/seed0_direct_1792670469877847081/pipeline_state_before.json",
+      "remote_bytes": 9131
+    },
+    {
+      "path": "reproducibility/g1c_standard/run_direct_no_noise_check.py",
+      "remote_bytes": 2124
+    },
+    {
+      "path": "reproducibility/g1c_standard/migration_controller_attempts/1792660103298067632/failed_attempt1_status.json",
+      "remote_bytes": 886
+    },
+    {
+      "path": "reproducibility/g1c_standard/migration_controller_attempts/1792660103298067632/failed_attempt1_plan.json",
+      "remote_bytes": 877
+    },
+    {
+      "path": "reproducibility/g1c_standard/migration_controller_attempts/1792660103298067632/failed_attempt1_audit.json",
+      "remote_bytes": 848
+    },
+    {
+      "path": "reproducibility/g1c_standard/gpu_migration_controller.py",
+      "remote_bytes": 20563
+    },
+    {
+      "path": "reproducibility/g1c_standard/runtime_signal_fixture/child_stop_observations_3208165_1792660223710247486.json",
+      "remote_bytes": 630
+    },
+    {
+      "path": "reproducibility/g1c_standard/evaluation_recovery.py",
+      "remote_bytes": 16035
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_evaluation_1792669966819249623/evaluation_G1C_seed0.exit.json",
+      "remote_bytes": 563
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_evaluation_1792669966819249623/evaluation_G1C_seed0.log",
+      "remote_bytes": 2962
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_evaluation_1792669966819249623/failure.txt",
+      "remote_bytes": 607
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_evaluation_1792669966819249623/seed0_partial/access_gate.json",
+      "remote_bytes": 399
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_evaluation_1792669966819249623/seed0_partial/panels/CBSD68_poisson_3.5/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_evaluation_1792669966819249623/seed0_partial/panels/CBSD68_poisson_3.5_panel.png",
+      "remote_bytes": 91380
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_evaluation_1792669966819249623/seed0_partial/panels/Kodak24_salt_pepper_0.02/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_evaluation_1792669966819249623/seed0_partial/panels/CBSD68_spatial_gaussian_55_panel.png",
+      "remote_bytes": 84475
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_evaluation_1792669966819249623/seed0_partial/panels/CBSD68_spatial_gaussian_55/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_evaluation_1792669966819249623/seed0_partial/panels/CBSD68_gaussian_50_panel.png",
+      "remote_bytes": 93623
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_evaluation_1792669966819249623/seed0_partial/panels/CBSD68_gaussian_50/crop.json",
+      "remote_bytes": 89
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_evaluation_1792669966819249623/seed0_partial/panels/Kodak24_salt_pepper_0.02_panel.png",
+      "remote_bytes": 59936
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_evaluation_1792669966819249623/pipeline_state_before.json",
+      "remote_bytes": 8885
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_evaluation_1792669966819249623/direct_evaluation_audit.json",
+      "remote_bytes": 420
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_evaluation_1792669966819249623/pipeline_failure.txt",
+      "remote_bytes": 583
+    },
+    {
+      "path": "reproducibility/g1c_standard/evaluate_direct_noise_only.py",
+      "remote_bytes": 1098
+    },
+    {
+      "path": "reproducibility/g1c_standard/migration_audit.json",
+      "remote_bytes": 4196
+    },
+    {
+      "path": "reproducibility/g1c_standard/direct_evaluation.py",
+      "remote_bytes": 2551
+    },
+    {
+      "path": "reproducibility/g1c_standard/gpu_migration_controller_retry.py",
+      "remote_bytes": 29924
+    },
+    {
+      "path": "reproducibility/g1c_standard/summary_threading_failure_state.json",
+      "remote_bytes": 9464
+    },
+    {
+      "path": "reproducibility/g1c_standard/migration_attempts/1792660656229110113/original_exit.json",
+      "remote_bytes": 441
+    },
+    {
+      "path": "reproducibility/g1c_standard/migration_attempts/1792660656229110113/before_effective_config.json",
+      "remote_bytes": 6248
+    },
+    {
+      "path": "reproducibility/g1c_standard/migration_attempts/1792660656229110113/before_manifest.json",
+      "remote_bytes": 21733
+    },
+    {
+      "path": "reproducibility/g1c_standard/migration_attempts/1792660656229110113/before_pipeline_state.json",
+      "remote_bytes": 4989
+    },
+    {
+      "path": "reproducibility/g1c_standard/migration_attempts/1792660656229110113/before_status.json",
+      "remote_bytes": 1064
+    },
+    {
+      "path": "reproducibility/g1c_standard/migration_attempts/1792660656229110113/planned_interrupt.txt",
+      "remote_bytes": 975
+    },
+    {
+      "path": "reproducibility/g1c_standard/migration_attempts/1792660656229110113/interrupted_status.json",
+      "remote_bytes": 1136
+    },
+    {
+      "path": "runs/g1c_standard/pipeline_state.json",
+      "remote_bytes": 9569
+    },
+    {
+      "path": "runs/g1c_standard/full/G1C/seed0/status.json",
+      "remote_bytes": 1190
+    },
+    {
+      "path": "runs/g1c_standard/full/G1C/seed0/manifest.json",
+      "remote_bytes": 22049
+    },
+    {
+      "path": "runs/g1c_standard/full/G1C/seed0/summary.json",
+      "remote_bytes": 741
+    },
+    {
+      "path": "runs/g1c_standard/full/G1C/seed0/training_checks.json",
+      "remote_bytes": 838
+    },
+    {
+      "path": "runs/g1c_standard/full/G1C/seed0/effective_config.json",
+      "remote_bytes": 6248
+    },
+    {
+      "path": "runs/g1c_standard/full/G1C/seed0/checkpoints/latest.json",
+      "remote_bytes": 229
+    },
+    {
+      "path": "runs/g1c_standard/full/G1C/seed1/status.json",
+      "remote_bytes": 1188
+    },
+    {
+      "path": "runs/g1c_standard/full/G1C/seed1/manifest.json",
+      "remote_bytes": 22047
+    },
+    {
+      "path": "runs/g1c_standard/full/G1C/seed1/summary.json",
+      "remote_bytes": 739
+    },
+    {
+      "path": "runs/g1c_standard/full/G1C/seed1/training_checks.json",
+      "remote_bytes": 838
+    },
+    {
+      "path": "runs/g1c_standard/full/G1C/seed1/effective_config.json",
+      "remote_bytes": 6248
+    },
+    {
+      "path": "runs/g1c_standard/full/G1C/seed1/checkpoints/latest.json",
+      "remote_bytes": 229
+    },
+    {
+      "path": "runs/g1c_standard/full/G1C/seed2/status.json",
+      "remote_bytes": 1270
+    },
+    {
+      "path": "runs/g1c_standard/full/G1C/seed2/manifest.json",
+      "remote_bytes": 22049
+    },
+    {
+      "path": "runs/g1c_standard/full/G1C/seed2/summary.json",
+      "remote_bytes": 741
+    },
+    {
+      "path": "runs/g1c_standard/full/G1C/seed2/training_checks.json",
+      "remote_bytes": 838
+    },
+    {
+      "path": "runs/g1c_standard/full/G1C/seed2/effective_config.json",
+      "remote_bytes": 6248
+    },
+    {
+      "path": "runs/g1c_standard/full/G1C/seed2/checkpoints/latest.json",
+      "remote_bytes": 229
+    }
+  ],
+  "additional_recovery_prechecks": false,
+  "independent_publication_reaudit": false,
+  "local_disclosure_corrections": [
+    "reports/g1c_standard/final/experiment_report.md",
+    "reports/g1c_standard/final/summary.json",
+    "reproducibility/g1c_standard/summarize_direct.py"
+  ]
+}

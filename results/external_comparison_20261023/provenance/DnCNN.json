@@ -1,0 +1,29 @@
+{
+  "repository": "https://github.com/cszn/DnCNN",
+  "commit": "e93b27812d3ff523a3a79d19e5e50d233d7a8d0a",
+  "retrieved_utc": "2026-10-23T03:45:16.284575+00:00",
+  "weight_role": "Official color Gaussian sigma15 denoising model. Not verified identical to CLIPDenoising Table 1 checkpoint.",
+  "assets": [
+    {
+      "file": "color_sigma=15.mat",
+      "original_path": "model/specifics_color/color_sigma=15.mat",
+      "url": "https://raw.githubusercontent.com/cszn/DnCNN/e93b27812d3ff523a3a79d19e5e50d233d7a8d0a/model/specifics_color/color_sigma%3D15.mat",
+      "bytes": 2775788,
+      "sha256": "c97c63c7cdee39f118c743fb0ada5c54c7074aa7aefa892e667f4f0440b8d893"
+    },
+    {
+      "file": "Demo_test_CDnCNN_Specific.m",
+      "original_path": "Demo_test_CDnCNN_Specific.m",
+      "url": "https://raw.githubusercontent.com/cszn/DnCNN/e93b27812d3ff523a3a79d19e5e50d233d7a8d0a/Demo_test_CDnCNN_Specific.m",
+      "bytes": 2032,
+      "sha256": "15e7e594d90cfa7ea9d6716f1024883a06b34b9a01311efdc69d6babc0347865"
+    },
+    {
+      "file": "README.md",
+      "original_path": "README.md",
+      "url": "https://raw.githubusercontent.com/cszn/DnCNN/e93b27812d3ff523a3a79d19e5e50d233d7a8d0a/README.md",
+      "bytes": 14559,
+      "sha256": "75c42ad580d2675a8089c29f9d35cc0c4cc69a087d36b3b25bfc279dfbb6f316"
+    }
+  ]
+}

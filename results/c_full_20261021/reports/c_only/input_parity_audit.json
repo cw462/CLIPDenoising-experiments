@@ -1,0 +1,51 @@
+{
+  "matched_inputs": 3150,
+  "matched_raw_images": 210,
+  "dataset_counts": {
+    "CBSD68": 68,
+    "Kodak24": 24,
+    "McMaster": 18,
+    "Urban100": 100
+  },
+  "dataset_manifest_hash": "8d0e3f0823f5b7760e4d25266fa62f703c2c79fbb0094d4129f90dbeb50ccacf",
+  "historical_csv": {
+    "path": "/home/imss/cw/CLIPDenoising_20261020/reports/per_image_results.csv",
+    "sha256": "d3fead06b10e8b86363fe8f17484fccbce2a3a723b96cfeb49db75524c900635",
+    "unique_inputs": 3150,
+    "dataset_manifest_hash": "8d0e3f0823f5b7760e4d25266fa62f703c2c79fbb0094d4129f90dbeb50ccacf",
+    "c0_checkpoint_sha256": "123b9091a9c13b17da0e40f25f706efc8e5044ce5d8295bf5701eb1dd8f99675"
+  },
+  "completed": true,
+  "status": "passed",
+  "accepted": true,
+  "completed_at": "2026-10-21T14:19:08Z",
+  "new_model_outcome_access": false,
+  "existing_historical_csv_read": true,
+  "test_images_opened_for_input_provenance": true,
+  "source_hash": "8f102b93c9db2bdf32a6bfa0e10afdfea83ee605dfdd748dd8bf9d864d07f219",
+  "historical_baseline_identities": {
+    "B0": {
+      "checkpoint_sha256": "123b9091a9c13b17da0e40f25f706efc8e5044ce5d8295bf5701eb1dd8f99675",
+      "config_hash": "62054c2c2796f76a87bf339c88d31ffc7635d5eee7ba35754ab8b95860aded62",
+      "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+      "git_commit": "2647bf815df0299a03d16df34b896fa266ceefda",
+      "method": "B0",
+      "training_seed": 0,
+      "stage": "full",
+      "update": 300000,
+      "measurement_origin": "reused_historical_csv"
+    },
+    "G1": {
+      "checkpoint_sha256": "f22904da8ffde41c30d02c739a7a25a8b41d85b86fe83bd40098851048022827",
+      "config_hash": "8e79c5cb4a0edc7c0c05c9b85a5b7ed693e1bfbe7a2100806e24b189e5feb691",
+      "source_hash": "40a2b826983afbcac68e0b4419d759272bbd0703f6614f092301bc3148489eef",
+      "git_commit": "2647bf815df0299a03d16df34b896fa266ceefda",
+      "method": "G1",
+      "training_seed": 0,
+      "stage": "full",
+      "update": 300000,
+      "measurement_origin": "reused_historical_csv"
+    }
+  },
+  "purpose": "input provenance and baseline CSV identity only; no model inference or new denoising scores"
+}
